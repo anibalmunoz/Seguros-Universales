@@ -1,4 +1,5 @@
 package com.example.holaMundo.demo.Service;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,15 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class HolaMundo {
 
-	
-	
+	@GetMapping("/holaMundo/{name}")
+	public String sayHello(@PathVariable("name") String name) {
+		return "Hola " + name + ", ¿Cómo estas?";
+	}
 
-		@GetMapping("/holaMundo/{name}")
-		public String sayHello(@PathVariable("name")String name) {
-			return "Hola :" + name +" como estas?";
-		}
-	
-
-
-	
 }
