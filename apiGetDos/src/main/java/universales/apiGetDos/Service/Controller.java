@@ -12,9 +12,9 @@ public class Controller {
 	@Autowired
 	ModeloRepository modeloRepository;
 
-	@RequestMapping("/find")
+/*	@RequestMapping("/find")
 	public List<Modelo> getAllModelos() {
 		List<Modelo> modelos = modeloRepository.findAll();
 		return modelos;
-	}
+	}*/
 }

@@ -1,16 +1,19 @@
 package universales.curso.apiGet.Service;
+
 import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-
-import universales.curso.apiGet.Modelo;
 
 public interface ModeloRepository {
 
-	ResponseEntity<List<Modelo>> resultado();
+	List<Datos> resultado(String name);
 
-	List<Modelo> buscarComentariosConForEntity();
+	List<DatosPropuestos> resultadoPropuesto(String name);
 
-	//List<Modelo> buscarComentariosConForObject();
+	List<Datos> resultadoItunes(String name) throws Exception;
+
+	List<DatosPropuestos> resultadoItunesPropuesto(String name) throws Exception;
+
+	List<Datos> practicaUno(String name) throws Exception;
+
+	List<DatosPropuestos> practicaPropuesta(String name) throws Exception;
 
 }

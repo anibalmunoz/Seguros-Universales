@@ -1,8 +1,8 @@
 package universales.apiGetDos.Service;
 
-import javax.persistence.Entity;
 
-@Entity
+
+
 public class Modelo {
 	private String artistName;
 	private String trackName;
