@@ -130,7 +130,7 @@ public class ModeloService implements ModeloRepository {
 	}
 	
 	@Override
-	public List<DatosPropuestos> resultadoItunesPropuesto(String name) throws Exception{
+	public List<DatosPropuestos> resultadoItunesPropuesto(String name) throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
 

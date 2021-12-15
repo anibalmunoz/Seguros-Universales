@@ -1,5 +1,6 @@
 package universales.curso.apiGet.Service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -13,8 +14,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "resultCount", "results" })
 @Generated("jsonchema2pojo")
-public class Itunes {
+public class Itunes implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -792935144295449136L;
 	@JsonProperty("resultCount")
 	private Long resultCount;
 	@JsonProperty("results")
