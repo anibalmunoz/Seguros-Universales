@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import univers.curso.practicados.dto.SiniestroDto;
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.repository.SiniestroRepository;
 
@@ -31,8 +32,21 @@ public class SiniestroService {
 	}
 
 	@PostMapping(path = "/guardar")
-	public Siniestro guardar(@RequestBody Siniestro siniestro) {
+	public Siniestro guardar(@RequestBody SiniestroDto siniestroDto) {
+		Siniestro siniestro = convertirSiniestroDtoASiniestro(siniestroDto);
 		return siniestroRepository.save(siniestro);
+	}
+
+	private Siniestro convertirSiniestroDtoASiniestro(SiniestroDto siniestroDto) {
+		Siniestro siniestro = new Siniestro();
+		siniestro.setIdSiniestro(siniestroDto.getIdSiniestro());
+		siniestro.setFechaSiniestro(siniestroDto.getFechaSiniestro());
+		siniestro.setCausas(siniestroDto.getCausas());
+		siniestro.setAceptado(siniestroDto.getAceptado());
+		siniestro.setIndemnizacion(siniestroDto.getIndemnizacion());
+		siniestro.setNumeroPoliza(siniestroDto.getNumeroPoliza());
+		siniestro.setPerito(siniestroDto.getPerito());
+		return siniestro;
 	}
 
 	@DeleteMapping(path = "/eliminar/{idSiniestro}")
@@ -48,18 +62,17 @@ public class SiniestroService {
 	public List<Siniestro> bucarMayorQue(@PathVariable("numeroPoliza") Integer numeroPoliza) {
 		return siniestroRepository.findByNumeroPolizaGreaterThanEqual(numeroPoliza);
 	}
-	
+
 	@GetMapping(path = "/buscar/numeropoliza/menor/{numeroPoliza}")
 	public List<Siniestro> bucarMenorQue(@PathVariable("numeroPoliza") Integer numeroPoliza) {
 		return siniestroRepository.findByNumeroPolizaLessThanEqual(numeroPoliza);
 	}
-	
+
 	@GetMapping(path = "/buscar/fecha/antesde/{fechaSiniestro}")
 	public List<Siniestro> bucarFechaDespuesDe(@PathVariable Date fechaSiniestro) {
 		return siniestroRepository.findByFechaSiniestroBefore(fechaSiniestro);
 	}
-	
-	//localhost:8080/siniestro/buscar/fecha/antesde/2010-10-09
 
-	
+	// localhost:8080/siniestro/buscar/fecha/antesde/2010-10-09
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import univers.curso.practicados.dto.ClienteDto;
 import univers.curso.practicados.entity.Cliente;
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.ClienteRepository;
@@ -36,16 +37,12 @@ public class ClienteService {
 	}
 
 	@PostMapping(path = "/guardar")
-	public Cliente saveCliente(@RequestBody Cliente cliente) {
-
+	public Cliente saveCliente(@RequestBody ClienteDto clienteDto) {
+		Cliente cliente = convertirClienteDtoACliente(clienteDto);	
 		List<Seguro> segurosClienteList = cliente.getSegurosList();
-
 		cliente.setSegurosList(null);
-
 		cliente = clienteRepository.save(cliente);
-
 		cliente.setSegurosList(new LinkedList<>());
-
 		if (segurosClienteList != null) {
 			for (Seguro seguro : segurosClienteList) {
 				seguro.setDniCl(cliente.getDniCl());
@@ -54,9 +51,24 @@ public class ClienteService {
 			}
 
 		}
-
 		return cliente;
+	}
 
+	private Cliente convertirClienteDtoACliente(ClienteDto clienteDto) {
+		Cliente cliente = new Cliente();
+		cliente.setDniCl(clienteDto.getDniCl());		
+		cliente.setNombreCl(clienteDto.getNombreCl());
+		cliente.setApellido1(clienteDto.getApellido1());
+		cliente.setApellido2(clienteDto.getApellido2());
+		cliente.setClaseVia(clienteDto.getClaseVia());
+		cliente.setNombreVia(clienteDto.getNombreCl());
+		cliente.setNumeroVia(clienteDto.getNumeroVia());
+		cliente.setCodPostal(clienteDto.getCodPostal());
+		cliente.setCiudad(clienteDto.getCiudad());
+		cliente.setTelefono(clienteDto.getTelefono());
+		cliente.setObservaciones(clienteDto.getObservaciones());
+		cliente.setSegurosList(clienteDto.getSegurosList());
+		return cliente;
 	}
 
 	@DeleteMapping(path = "/eliminar/{dniCl}")

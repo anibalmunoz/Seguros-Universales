@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "SEGURO")
 public class Seguro implements Serializable {
@@ -54,6 +56,7 @@ public class Seguro implements Serializable {
 			joinColumns = {@JoinColumn(name="NUMERO_POLIZA")},
 			inverseJoinColumns = {@JoinColumn(name="NOMBRE_COMPANIA")}
 			)
+	@JsonIgnore
 	private Set<Compania> companias;
 
 	public Set<Compania> getCompanias() {

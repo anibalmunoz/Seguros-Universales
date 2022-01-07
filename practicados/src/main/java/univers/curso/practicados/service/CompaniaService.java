@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import univers.curso.practicados.dto.CompaniaDto;
 import univers.curso.practicados.entity.Compania;
 import univers.curso.practicados.repository.CompaniaRepository;
 
@@ -29,8 +30,23 @@ public class CompaniaService {
 	}
 
 	@PostMapping(path = "/guardar")
-	public Compania guardar(@RequestBody Compania compania) {
+	public Compania guardar(@RequestBody CompaniaDto companiaDto) {
+		Compania compania = convertirCompaniaDtoACompania(companiaDto);
 		return companiaRepository.save(compania);
+	}
+
+	private Compania convertirCompaniaDtoACompania(CompaniaDto companiaDto) {
+		Compania compania = new Compania();
+		compania.setNombreCompania(companiaDto.getNombreCompania());
+		compania.setClaseVia(companiaDto.getClaseVia());
+		compania.setNombreVia(companiaDto.getNombreVia());
+		compania.setNumeroVia(companiaDto.getNumeroVia());
+		compania.setCodPostal(companiaDto.getCodPostal());
+		compania.setTelefonoContratacion(companiaDto.getTelefonoContratacion());
+		compania.setTelefonoSiniestros(companiaDto.getTelefonoSiniestros());
+		compania.setNotas(companiaDto.getNotas());
+		compania.setSeguros(companiaDto.getSeguros());
+		return compania;
 	}
 
 	@DeleteMapping(path = "/eliminar/{nombreCompania}")
