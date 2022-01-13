@@ -1,36 +1,30 @@
-package univers.curso.practicados.service;
+package univers.curso.practicados.implementation;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.PeritoDto;
 import univers.curso.practicados.entity.Perito;
 import univers.curso.practicados.repository.PeritoRepository;
+import univers.curso.practicados.ws.PeritoServiceInterface;
 
-@RestController
-@RequestMapping("/perito")
-@CrossOrigin
-public class PeritoService {
+@Component
+public class PeritoService implements PeritoServiceInterface {
 
 	@Autowired
 	PeritoRepository peritoRepository;
 
-	@GetMapping(path = "/buscar")
+	@Override
 	public List<Perito> buscar() {
 		return peritoRepository.findAll();
 	}
 
-	@PostMapping(path = "/guardar")
+	@Override
 	public Perito savePerito(@RequestBody PeritoDto peritoDto) {
 		Perito perito = convertirPeritoDtoAPerito(peritoDto);
 		return peritoRepository.save(perito);
@@ -52,7 +46,7 @@ public class PeritoService {
 		return perito;
 	}
 
-	@DeleteMapping(path = "/eliminar/{dniPerito}")
+	@Override
 	public void deletePerito(@PathVariable("dniPerito") Integer dniPerito) {
 		Optional<Perito> perito;
 		perito = peritoRepository.findById(dniPerito);
@@ -61,12 +55,12 @@ public class PeritoService {
 		}
 	}
 
-	@GetMapping(path = "/buscar/apellido2/vacio")
+	@Override
 	public List<Perito> apellido2Vacio() {
 		return peritoRepository.findByApellidoPerito2IsNull();
 	}
 
-	@GetMapping(path = "/buscar/apellido2/ocupado")
+	@Override
 	public List<Perito> apellido2NoVacio() {
 		return peritoRepository.findByApellidoPerito2NotNull();
 	}

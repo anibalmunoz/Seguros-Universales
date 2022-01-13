@@ -1,27 +1,24 @@
-package univers.curso.practicados.service;
+package univers.curso.practicados.implementation;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.SiniestroDto;
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.repository.SiniestroRepository;
+import univers.curso.practicados.ws.SiniestroServiceInterface;
 
-@RestController
-@RequestMapping("/siniestro")
-@CrossOrigin
-public class SiniestroService {
+@Component
+public class SiniestroService implements SiniestroServiceInterface{
 
 	@Autowired
 	SiniestroRepository siniestroRepository;
@@ -50,7 +47,7 @@ public class SiniestroService {
 	}
 
 	@DeleteMapping(path = "/eliminar/{idSiniestro}")
-	public void deleteCompania(@PathVariable("idSiniestro") Integer idSiniestro) {
+	public void deleteSiniestro(@PathVariable("idSiniestro") Integer idSiniestro) {
 		Optional<Siniestro> siniestro;
 		siniestro = siniestroRepository.findById(idSiniestro);
 		if (siniestro.isPresent()) {

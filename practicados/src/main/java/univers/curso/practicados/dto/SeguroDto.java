@@ -6,84 +6,82 @@ import java.util.Set;
 
 import univers.curso.practicados.entity.Compania;
 
-public class SeguroDto implements Serializable{
+public class SeguroDto implements Serializable {
 
-		private static final long serialVersionUID = -4333012104927311458L;
-		
-		private Integer numeroPoliza;
-		private String ramo;
-		private Date fechaInicio;
-		private Date fechaVencimiento;
-		private String condicionesParticulares;
-		private String obervaciones;
-		private Integer dniCl;
-		
-		private Set<Compania> companias;
+	private static final long serialVersionUID = -4333012104927311458L;
 
-		public Integer getNumeroPoliza() {
-			return numeroPoliza;
-		}
+	private Integer numeroPoliza;
+	private String ramo;
+	private Date fechaInicio;
+	private Date fechaVencimiento;
+	private String condicionesParticulares;
+	private String obervaciones;
+	private Integer dniCl;
 
-		public void setNumeroPoliza(Integer numeroPoliza) {
-			this.numeroPoliza = numeroPoliza;
-		}
+	private Set<Compania> companias;
 
-		public String getRamo() {
-			return ramo;
-		}
+	public Integer getNumeroPoliza() {
+		return numeroPoliza;
+	}
 
-		public void setRamo(String ramo) {
-			this.ramo = ramo;
-		}
+	public void setNumeroPoliza(Integer numeroPoliza) {
+		this.numeroPoliza = numeroPoliza;
+	}
 
-		public Date getFechaInicio() {
-			return fechaInicio;
-		}
+	public String getRamo() {
+		return ramo;
+	}
 
-		public void setFechaInicio(Date fechaInicio) {
-			this.fechaInicio = fechaInicio;
-		}
+	public void setRamo(String ramo) {
+		this.ramo = ramo;
+	}
 
-		public Date getFechaVencimiento() {
-			return fechaVencimiento;
-		}
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
 
-		public void setFechaVencimiento(Date fechaVencimiento) {
-			this.fechaVencimiento = fechaVencimiento;
-		}
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
 
-		public String getCondicionesParticulares() {
-			return condicionesParticulares;
-		}
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
+	}
 
-		public void setCondicionesParticulares(String condicionesParticulares) {
-			this.condicionesParticulares = condicionesParticulares;
-		}
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
+	}
 
-		public String getObervaciones() {
-			return obervaciones;
-		}
+	public String getCondicionesParticulares() {
+		return condicionesParticulares;
+	}
 
-		public void setObervaciones(String obervaciones) {
-			this.obervaciones = obervaciones;
-		}
+	public void setCondicionesParticulares(String condicionesParticulares) {
+		this.condicionesParticulares = condicionesParticulares;
+	}
 
-		public Integer getDniCl() {
-			return dniCl;
-		}
+	public String getObervaciones() {
+		return obervaciones;
+	}
 
-		public void setDniCl(Integer dniCl) {
-			this.dniCl = dniCl;
-		}
+	public void setObervaciones(String obervaciones) {
+		this.obervaciones = obervaciones;
+	}
 
-		public Set<Compania> getCompanias() {
-			return companias;
-		}
+	public Integer getDniCl() {
+		return dniCl;
+	}
 
-		public void setCompanias(Set<Compania> companias) {
-			this.companias = companias;
-		}
+	public void setDniCl(Integer dniCl) {
+		this.dniCl = dniCl;
+	}
 
+	public Set<Compania> getCompanias() {
+		return companias;
+	}
 
+	public void setCompanias(Set<Compania> companias) {
+		this.companias = companias;
+	}
 
 }

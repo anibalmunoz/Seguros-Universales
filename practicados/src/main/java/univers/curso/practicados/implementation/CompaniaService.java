@@ -1,35 +1,29 @@
-package univers.curso.practicados.service;
+package univers.curso.practicados.implementation;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.CompaniaDto;
 import univers.curso.practicados.entity.Compania;
 import univers.curso.practicados.repository.CompaniaRepository;
+import univers.curso.practicados.ws.CompaniaServiceInterface;
 
-@RestController
-@RequestMapping("/compania")
-@CrossOrigin
-public class CompaniaService {
+@Component
+public class CompaniaService implements CompaniaServiceInterface {
 	@Autowired
 	CompaniaRepository companiaRepository;
 
-	@GetMapping(path = "/buscar")
+	@Override
 	public List<Compania> buscar() {
 		return companiaRepository.findAll();
 	}
 
-	@PostMapping(path = "/guardar")
+	@Override
 	public Compania guardar(@RequestBody CompaniaDto companiaDto) {
 		Compania compania = convertirCompaniaDtoACompania(companiaDto);
 		return companiaRepository.save(compania);
@@ -49,7 +43,7 @@ public class CompaniaService {
 		return compania;
 	}
 
-	@DeleteMapping(path = "/eliminar/{nombreCompania}")
+	@Override
 	public void deleteCompania(@PathVariable("nombreCompania") String nombreCompania) {
 
 		Optional<Compania> compania;
@@ -60,10 +54,10 @@ public class CompaniaService {
 
 			companiaRepository.delete(compania.get());
 		}
-		
+
 	}
-	
-	@GetMapping(path = "/buscar/codigopostal/termina/{cadena}")
+
+	@Override
 	public List<Compania> bucarContengaNumero(@PathVariable String cadena) {
 		return companiaRepository.findByCodPostalEndingWith(cadena);
 
