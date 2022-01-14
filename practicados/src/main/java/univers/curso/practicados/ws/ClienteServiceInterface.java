@@ -59,7 +59,7 @@ public interface ClienteServiceInterface {
 	/*
 	 * Update
 	 */
-	@GetMapping(path = "/cambiar/int/{dniCl}/{nombreCl}")
+	@GetMapping(path = "/update/nombre/{dniCl}/{nombreCl}")
 	public int cambiarNombreInt(@PathVariable Integer dniCl, @PathVariable String nombreCl);
 
 	/*
