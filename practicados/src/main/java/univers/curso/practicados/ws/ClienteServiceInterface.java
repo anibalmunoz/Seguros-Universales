@@ -29,7 +29,7 @@ public interface ClienteServiceInterface {
 	@DeleteMapping(path = "/eliminar/{dniCl}")
 	public void eliminarCliente(@PathVariable("dniCl") Integer dniCl);
 
-	@GetMapping(path = "/bucar/por/{nombreCl}/{apellido1}")
+	@GetMapping(path = "/buscar/por/{nombreCl}/{apellido1}")
 	public List<Cliente> bucarPorNombreYApellido(@PathVariable("nombreCl") String nombreCl,
 			@PathVariable("apellido1") String apellido1);
 

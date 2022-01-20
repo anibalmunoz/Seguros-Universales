@@ -7,10 +7,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,11 +22,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "SEGURO")
+
+@SequenceGenerator(
+	    name="sqcSeguro",
+	    sequenceName =  "SQC_SEGURO",
+	    allocationSize = 1
+	)
 public class Seguro implements Serializable {
 
 	private static final long serialVersionUID = 5008886135637348016L;
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqcSeguro")
 	@Column(name = "NUMERO_POLIZA")
 	private Integer numeroPoliza;
 

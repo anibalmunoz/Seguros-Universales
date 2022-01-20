@@ -5,10 +5,14 @@ import java.sql.Date;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import univers.curso.practicados.dto.FuncionDto;
 import univers.curso.practicados.dto.ProcedimientoDto;
+import univers.curso.practicados.dto.SeguroDto;
 
 @RestController
 @RequestMapping("/procedimiento")
@@ -26,5 +30,16 @@ public interface ProcedimientoServiceInterface {
 			@PathVariable Date pFechaInicio, @PathVariable Date pFechaVencimiento,
 			@PathVariable String pCondicionesParticulares, @PathVariable String pObservaciones,
 			@PathVariable Integer pDniCl);
+	
+	@PostMapping(path="/insertar/seguro/procedimiento")
+	public ProcedimientoDto insertPolizaReturnPost(@RequestBody SeguroDto seguroDto);
+	
+	@PostMapping(path = "/insertar/seguro")
+	public FuncionDto insertarSeguro(@RequestBody SeguroDto seguroDto);
+	
+	/*Funcion de prueba*/
+	
+	@GetMapping(path="/obtener/nombre/{dniCl}")
+	public ProcedimientoDto obtenerNombre(@PathVariable Integer dniCl);
 
 }
