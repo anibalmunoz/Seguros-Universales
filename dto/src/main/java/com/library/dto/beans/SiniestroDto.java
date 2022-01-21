@@ -1,9 +1,8 @@
-package univers.curso.practicados.dto;
+package com.library.dto.beans;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import univers.curso.practicados.entity.Perito;
 
 public class SiniestroDto implements Serializable {
 
@@ -15,7 +14,7 @@ public class SiniestroDto implements Serializable {
 	private String aceptado;
 	private String indemnizacion;
 	private Integer numeroPoliza;
-	private Perito perito;
+	
 
 	public Integer getIdSiniestro() {
 		return idSiniestro;
@@ -65,12 +64,6 @@ public class SiniestroDto implements Serializable {
 		this.numeroPoliza = numeroPoliza;
 	}
 
-	public Perito getPerito() {
-		return perito;
-	}
 
-	public void setPerito(Perito perito) {
-		this.perito = perito;
-	}
 
 }

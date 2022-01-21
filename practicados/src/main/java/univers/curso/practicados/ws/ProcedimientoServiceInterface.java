@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import univers.curso.practicados.dto.FuncionDto;
-import univers.curso.practicados.dto.ProcedimientoDto;
-import univers.curso.practicados.dto.SeguroDto;
+import com.library.dto.beans.FuncionDto;
+import com.library.dto.beans.ProcedimientoDto;
+import com.library.dto.beans.SeguroDto;
 
 @RestController
 @RequestMapping("/procedimiento")

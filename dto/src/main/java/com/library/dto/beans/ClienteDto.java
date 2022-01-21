@@ -1,9 +1,7 @@
-package univers.curso.practicados.dto;
+package com.library.dto.beans;
 
 import java.io.Serializable;
-import java.util.List;
 
-import univers.curso.practicados.entity.Seguro;
 
 public class ClienteDto implements Serializable{
 
@@ -21,7 +19,6 @@ public class ClienteDto implements Serializable{
 	private Integer telefono;
 	private String observaciones;
 	
-	private List<Seguro> segurosList;
 
 	public Integer getDniCl() {
 		return dniCl;
@@ -111,13 +108,7 @@ public class ClienteDto implements Serializable{
 		this.observaciones = observaciones;
 	}
 
-	public List<Seguro> getSegurosList() {
-		return segurosList;
-	}
 
-	public void setSegurosList(List<Seguro> segurosList) {
-		this.segurosList = segurosList;
-	}
 
 	
 }

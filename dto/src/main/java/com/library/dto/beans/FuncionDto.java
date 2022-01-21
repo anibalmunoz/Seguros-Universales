@@ -1,4 +1,4 @@
-package univers.curso.practicados.dto;
+package com.library.dto.beans;
 
 import java.io.Serializable;
 

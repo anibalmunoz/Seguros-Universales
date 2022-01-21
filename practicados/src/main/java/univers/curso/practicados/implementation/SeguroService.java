@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.library.dto.beans.SeguroDto;
 
-import univers.curso.practicados.dto.SeguroDto;
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.SeguroRepository;
 import univers.curso.practicados.ws.SeguroServiceInterface;

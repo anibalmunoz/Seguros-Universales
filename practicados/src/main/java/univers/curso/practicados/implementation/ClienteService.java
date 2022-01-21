@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import univers.curso.practicados.dto.ClienteDto;
+import com.library.dto.beans.ClienteDto;
+
 import univers.curso.practicados.entity.Cliente;
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.ClienteRepository;
@@ -66,7 +67,6 @@ public class ClienteService implements ClienteServiceInterface {
 		cliente.setCiudad(clienteDto.getCiudad());
 		cliente.setTelefono(clienteDto.getTelefono());
 		cliente.setObservaciones(clienteDto.getObservaciones());
-		cliente.setSegurosList(clienteDto.getSegurosList());
 		return cliente;
 	}
 

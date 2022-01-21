@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import univers.curso.practicados.dto.CompaniaDto;
+import com.library.dto.beans.CompaniaDto;
+
 import univers.curso.practicados.entity.Compania;
 
 @RestController

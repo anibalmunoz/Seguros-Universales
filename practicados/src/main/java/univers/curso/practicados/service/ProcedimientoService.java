@@ -15,8 +15,9 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
-import univers.curso.practicados.dto.FuncionDto;
-import univers.curso.practicados.dto.ProcedimientoDto;
+import com.library.dto.beans.FuncionDto;
+import com.library.dto.beans.ProcedimientoDto;
+
 import univers.curso.practicados.entity.Seguro;
 
 @Service
@@ -25,17 +26,17 @@ public class ProcedimientoService {
 	/*
 	 * Parametros de la tabla Seguro
 	 */
-		static final String P_FECHA_INICIO="P_FECHA_INICIO";
-	static final String P_FECHA_VENCIMIENTO ="P_FECHA_VENCIMIENTO";
-	static final String P_CONDICIONES_PARTICULARES="P_CONDICIONES_PARTICULARES";
-	static final String P_DNI_CL="P_DNI_CL";
-	static final String P_NUMERO_POLIZA="P_NUMERO_POLIZA";
-	static final String P_OBSERVACIONES="P_OBSERVACIONES";
-	static final String P_RAMO="P_RAMO";
+	static final String P_FECHA_INICIO = "P_FECHA_INICIO";
+	static final String P_FECHA_VENCIMIENTO = "P_FECHA_VENCIMIENTO";
+	static final String P_CONDICIONES_PARTICULARES = "P_CONDICIONES_PARTICULARES";
+	static final String P_DNI_CL = "P_DNI_CL";
+	static final String P_NUMERO_POLIZA = "P_NUMERO_POLIZA";
+	static final String P_OBSERVACIONES = "P_OBSERVACIONES";
+	static final String P_RAMO = "P_RAMO";
 	/*
 	 * parametros de la tabal Cliente
 	 */
-	static final String P_NOMBRE_CL="P_NOMBRE_CL";
+	static final String P_NOMBRE_CL = "P_NOMBRE_CL";
 
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -64,9 +65,7 @@ public class ProcedimientoService {
 	public ProcedimientoDto insertPolizaReturn(Integer pNumeroPoliza, String pRamo, Date pFechaInicio,
 			Date pFechaVencimiento, String pCondicionesParticulares, String pObservaciones, Integer pDniCl) {
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
-		simpleJdbcCall.withProcedureName("INSERT_SEGURO_RETURN")
-				// .withCatalogName("nombre_paquete").withSchemaName("nombre_usuario")
-				.withoutProcedureColumnMetaDataAccess()
+		simpleJdbcCall.withProcedureName("INSERT_SEGURO_RETURN").withoutProcedureColumnMetaDataAccess()
 				.declareParameters(new SqlInOutParameter(P_NUMERO_POLIZA, Types.NUMERIC),
 						new SqlParameter(P_RAMO, Types.VARCHAR), new SqlParameter(P_FECHA_INICIO, Types.DATE),
 						new SqlParameter(P_FECHA_VENCIMIENTO, Types.DATE),
@@ -98,9 +97,7 @@ public class ProcedimientoService {
 	public ProcedimientoDto insertPolizaReturnPost(Seguro seguro) {
 
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
-		simpleJdbcCall.withProcedureName("INSERT_SEGURO_RETURN")
-				// .withCatalogName("nombre_paquete").withSchemaName("nombre_usuario")
-				.withoutProcedureColumnMetaDataAccess()
+		simpleJdbcCall.withProcedureName("INSERT_SEGURO_RETURN").withoutProcedureColumnMetaDataAccess()
 				.declareParameters(new SqlOutParameter(P_NUMERO_POLIZA, Types.INTEGER),
 						new SqlParameter(P_RAMO, Types.VARCHAR), new SqlParameter(P_FECHA_INICIO, Types.DATE),
 						new SqlParameter(P_FECHA_VENCIMIENTO, Types.DATE),
@@ -109,8 +106,7 @@ public class ProcedimientoService {
 						new SqlInOutParameter(P_DNI_CL, Types.INTEGER),
 						new SqlOutParameter(P_NOMBRE_CL, Types.VARCHAR));
 
-		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
-				/* .addValue("P_NUMERO_POLIZA", seguro.getNumeroPoliza()) */.addValue(P_RAMO, seguro.getRamo())
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource().addValue(P_RAMO, seguro.getRamo())
 				.addValue(P_FECHA_INICIO, seguro.getFechaInicio())
 				.addValue(P_FECHA_VENCIMIENTO, seguro.getFechaVencimiento())
 				.addValue(P_CONDICIONES_PARTICULARES, seguro.getCondicionesParticulares())
@@ -133,7 +129,6 @@ public class ProcedimientoService {
 	public FuncionDto insertarSeguro(Seguro seguro) {
 
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
-
 		simpleJdbcCall.withFunctionName("INSERTAR_SEGURO").withCatalogName("PAQUETE").withSchemaName("practicados")
 				.declareParameters(new SqlParameter(P_NUMERO_POLIZA, Types.INTEGER),
 						new SqlParameter(P_RAMO, Types.VARCHAR), new SqlParameter(P_FECHA_INICIO, Types.DATE),
@@ -141,16 +136,13 @@ public class ProcedimientoService {
 						new SqlParameter(P_CONDICIONES_PARTICULARES, Types.VARCHAR),
 						new SqlParameter(P_OBSERVACIONES, Types.VARCHAR), new SqlParameter(P_DNI_CL, Types.INTEGER),
 						new SqlOutParameter("POLIZA", Types.INTEGER));
-
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
 				.addValue(P_NUMERO_POLIZA, seguro.getNumeroPoliza()).addValue(P_RAMO, seguro.getRamo())
 				.addValue(P_FECHA_INICIO, seguro.getFechaInicio())
 				.addValue(P_FECHA_VENCIMIENTO, seguro.getFechaVencimiento())
 				.addValue(P_CONDICIONES_PARTICULARES, seguro.getCondicionesParticulares())
 				.addValue(P_OBSERVACIONES, seguro.getObervaciones()).addValue(P_DNI_CL, seguro.getDniCl());
-
 		Integer out = simpleJdbcCall.executeFunction(Integer.class, sqlParameterSource);
-
 		FuncionDto dto = new FuncionDto();
 		dto.setpNumeroPoliza(out);
 
@@ -163,14 +155,10 @@ public class ProcedimientoService {
 	public ProcedimientoDto obtenerNombre(Integer dniCl) {
 
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
-
 		simpleJdbcCall.withFunctionName("OBTENER_NOMBRE").declareParameters(new SqlParameter(P_DNI_CL, Types.INTEGER),
 				new SqlOutParameter("NOMBRE", Types.VARCHAR));
-
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource().addValue(P_DNI_CL, dniCl);
-
 		String out = simpleJdbcCall.executeFunction(String.class, sqlParameterSource);
-
 		ProcedimientoDto dto = new ProcedimientoDto();
 		dto.setpNombreCl(out);
 

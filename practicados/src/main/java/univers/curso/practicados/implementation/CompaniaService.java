@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import univers.curso.practicados.dto.CompaniaDto;
+import com.library.dto.beans.CompaniaDto;
+
 import univers.curso.practicados.entity.Compania;
 import univers.curso.practicados.repository.CompaniaRepository;
 import univers.curso.practicados.ws.CompaniaServiceInterface;
@@ -39,7 +40,6 @@ public class CompaniaService implements CompaniaServiceInterface {
 		compania.setTelefonoContratacion(companiaDto.getTelefonoContratacion());
 		compania.setTelefonoSiniestros(companiaDto.getTelefonoSiniestros());
 		compania.setNotas(companiaDto.getNotas());
-		compania.setSeguros(companiaDto.getSeguros());
 		return compania;
 	}
 

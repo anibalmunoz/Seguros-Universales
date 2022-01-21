@@ -1,10 +1,8 @@
-package univers.curso.practicados.dto;
+package com.library.dto.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
-import univers.curso.practicados.entity.Compania;
 
 public class SeguroDto implements Serializable {
 
@@ -18,7 +16,6 @@ public class SeguroDto implements Serializable {
 	private String obervaciones;
 	private Integer dniCl;
 
-	private Set<Compania> companias;
 
 	public Integer getNumeroPoliza() {
 		return numeroPoliza;
@@ -76,12 +73,5 @@ public class SeguroDto implements Serializable {
 		this.dniCl = dniCl;
 	}
 
-	public Set<Compania> getCompanias() {
-		return companias;
-	}
-
-	public void setCompanias(Set<Compania> companias) {
-		this.companias = companias;
-	}
 
 }

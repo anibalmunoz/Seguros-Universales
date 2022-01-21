@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import univers.curso.practicados.dto.PeritoDto;
+import com.library.dto.beans.PeritoDto;
+
 import univers.curso.practicados.entity.Perito;
 import univers.curso.practicados.repository.PeritoRepository;
 import univers.curso.practicados.ws.PeritoServiceInterface;

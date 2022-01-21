@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import univers.curso.practicados.dto.SiniestroDto;
+import com.library.dto.beans.SiniestroDto;
+
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.repository.SiniestroRepository;
 import univers.curso.practicados.ws.SiniestroServiceInterface;
@@ -42,7 +43,6 @@ public class SiniestroService implements SiniestroServiceInterface{
 		siniestro.setAceptado(siniestroDto.getAceptado());
 		siniestro.setIndemnizacion(siniestroDto.getIndemnizacion());
 		siniestro.setNumeroPoliza(siniestroDto.getNumeroPoliza());
-		siniestro.setPerito(siniestroDto.getPerito());
 		return siniestro;
 	}
 
