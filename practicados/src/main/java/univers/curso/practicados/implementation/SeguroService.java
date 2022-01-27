@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.library.dto.beans.SeguroDto;
 
@@ -27,8 +25,8 @@ public class SeguroService implements SeguroServiceInterface {
 	}
 
 	@Override
-	public Seguro guardar(@RequestBody SeguroDto seguroDto) {
-		Seguro seguro=convertirSeguroDtoASeguro(seguroDto);
+	public Seguro guardar(SeguroDto seguroDto) {
+		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);
 		return seguroRepository.save(seguro);
 	}
 
@@ -45,7 +43,7 @@ public class SeguroService implements SeguroServiceInterface {
 	}
 
 	@Override
-	public void deleteSeguro(@PathVariable("numeroPoliza") Integer numeroPoliza) {
+	public void deleteSeguro(Integer numeroPoliza) {
 		Optional<Seguro> seguro;
 		seguro = seguroRepository.findById(numeroPoliza);
 		if (seguro.isPresent()) {
@@ -53,11 +51,15 @@ public class SeguroService implements SeguroServiceInterface {
 		}
 	}
 
+	/*
+	 * Consulta DSL
+	 */
+	
 	@Override
-	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio) {
+	public List<Seguro> bucarFechaDespuesDe(Date fechaInicio) {
 		return seguroRepository.findByFechaInicioAfter(fechaInicio);
 	}
-	
-	//localhost:8080/seguro/buscar/fecha/despuesde/2010-10-09
-	
+
+	// localhost:8080/seguro/buscar/fecha/despuesde/2010-10-09
+
 }

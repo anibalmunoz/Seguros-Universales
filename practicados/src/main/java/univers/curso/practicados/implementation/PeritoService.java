@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.library.dto.beans.PeritoDto;
 
@@ -26,7 +24,7 @@ public class PeritoService implements PeritoServiceInterface {
 	}
 
 	@Override
-	public Perito savePerito(@RequestBody PeritoDto peritoDto) {
+	public Perito savePerito(PeritoDto peritoDto) {
 		Perito perito = convertirPeritoDtoAPerito(peritoDto);
 		return peritoRepository.save(perito);
 	}
@@ -48,13 +46,17 @@ public class PeritoService implements PeritoServiceInterface {
 	}
 
 	@Override
-	public void deletePerito(@PathVariable("dniPerito") Integer dniPerito) {
+	public void deletePerito(Integer dniPerito) {
 		Optional<Perito> perito;
 		perito = peritoRepository.findById(dniPerito);
 		if (perito.isPresent()) {
 			peritoRepository.delete(perito.get());
 		}
 	}
+	
+	/*
+	 * Consultas DSL
+	 */
 
 	@Override
 	public List<Perito> apellido2Vacio() {

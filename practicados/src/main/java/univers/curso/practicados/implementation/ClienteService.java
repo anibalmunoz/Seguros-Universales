@@ -7,8 +7,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.library.dto.beans.ClienteDto;
 
@@ -37,7 +35,7 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	@Override
-	public Cliente saveCliente(@RequestBody ClienteDto clienteDto) {
+	public Cliente saveCliente(ClienteDto clienteDto) {
 		Cliente cliente = convertirClienteDtoACliente(clienteDto);
 		List<Seguro> segurosClienteList = cliente.getSegurosList();
 		cliente.setSegurosList(null);
@@ -71,7 +69,7 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	@Override
-	public void eliminarCliente(@PathVariable("dniCl") Integer dniCl) {
+	public void eliminarCliente(Integer dniCl) {
 
 		Optional<Cliente> cliente;
 		cliente = clienteRepository.findById(dniCl);
@@ -91,23 +89,26 @@ public class ClienteService implements ClienteServiceInterface {
 	/* Consultas DSL */
 
 	@Override
-	public List<Cliente> bucarPorNombreYApellido(@PathVariable("nombreCl") String nombreCl,
-			@PathVariable("apellido1") String apellido1) {
+	public List<Cliente> bucarPorNombreYApellido(String nombreCl, String apellido1) {
 		return clienteRepository.findByNombreClAndApellido1(nombreCl, apellido1);
 
 	}
 
 	@Override
-	public List<Cliente> bucarContengaNumero(@PathVariable Integer telefono) {
+	public List<Cliente> bucarContengaNumero(Integer telefono) {
 		return clienteRepository.findByTelefonoLike(telefono);
 
 	}
 
 	@Override
-	public List<Cliente> bucarContengaNumero(@PathVariable String cadena) {
+	public List<Cliente> bucarNombreViaComienzaPor(String cadena) {
 		return clienteRepository.findByNombreViaStartingWith(cadena);
 
 	}
+
+	/*
+	 * Queries SQL
+	 */
 
 	@Override
 	public List<Map<String, Object>> buscarClientes() {
@@ -124,10 +125,10 @@ public class ClienteService implements ClienteServiceInterface {
 		catalogosService.cambiarNombre(dniCl, nombreCl);
 	}
 
-	@Override
-	public int cambiarNombreInt(Integer dniCl, String nombreCl) {
-		return catalogosService.cambiarNombreInt(dniCl, nombreCl);
-	}
+	/*
+	 * INSERT, UPDATE, DELETE Y SELECT CON SQL QUERIES 
+	 */
+	
 
 	@Override
 	public int insertCliente(Integer dniCl, String nombreCl, String apellido1, String codPostal, String ciudad,
@@ -135,6 +136,11 @@ public class ClienteService implements ClienteServiceInterface {
 		return catalogosService.insertCliente(dniCl, nombreCl, apellido1, codPostal, ciudad, telefono, observaciones);
 	}
 
+	@Override
+	public int cambiarNombreInt(Integer dniCl, String nombreCl) {
+		return catalogosService.cambiarNombreInt(dniCl, nombreCl);
+	}
+	
 	@Override
 	public int deleteCliente(Integer dniCl) {
 		return catalogosService.deleteCliente(dniCl);

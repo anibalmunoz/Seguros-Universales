@@ -29,6 +29,10 @@ public interface SiniestroServiceInterface {
 
 	@DeleteMapping(path = "/eliminar/{idSiniestro}")
 	public void deleteSiniestro(@PathVariable("idSiniestro") Integer idSiniestro);
+	
+	/*
+	 * Consultas DSL
+	 */
 
 	@GetMapping(path = "/buscar/numeropoliza/mayor/{numeroPoliza}")
 	public List<Siniestro> bucarMayorQue(@PathVariable("numeroPoliza") Integer numeroPoliza);

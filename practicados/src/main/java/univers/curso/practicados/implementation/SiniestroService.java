@@ -6,11 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.library.dto.beans.SiniestroDto;
 
@@ -19,18 +14,18 @@ import univers.curso.practicados.repository.SiniestroRepository;
 import univers.curso.practicados.ws.SiniestroServiceInterface;
 
 @Component
-public class SiniestroService implements SiniestroServiceInterface{
+public class SiniestroService implements SiniestroServiceInterface {
 
 	@Autowired
 	SiniestroRepository siniestroRepository;
 
-	@GetMapping(path = "/buscar")
+	@Override
 	public List<Siniestro> buscar() {
 		return siniestroRepository.findAll();
 	}
 
-	@PostMapping(path = "/guardar")
-	public Siniestro guardar(@RequestBody SiniestroDto siniestroDto) {
+	@Override
+	public Siniestro guardar(SiniestroDto siniestroDto) {
 		Siniestro siniestro = convertirSiniestroDtoASiniestro(siniestroDto);
 		return siniestroRepository.save(siniestro);
 	}
@@ -46,8 +41,8 @@ public class SiniestroService implements SiniestroServiceInterface{
 		return siniestro;
 	}
 
-	@DeleteMapping(path = "/eliminar/{idSiniestro}")
-	public void deleteSiniestro(@PathVariable("idSiniestro") Integer idSiniestro) {
+	@Override
+	public void deleteSiniestro(Integer idSiniestro) {
 		Optional<Siniestro> siniestro;
 		siniestro = siniestroRepository.findById(idSiniestro);
 		if (siniestro.isPresent()) {
@@ -55,18 +50,22 @@ public class SiniestroService implements SiniestroServiceInterface{
 		}
 	}
 
-	@GetMapping(path = "/buscar/numeropoliza/mayor/{numeroPoliza}")
-	public List<Siniestro> bucarMayorQue(@PathVariable("numeroPoliza") Integer numeroPoliza) {
+	/*
+	 * Consultas DSL
+	 */
+
+	@Override
+	public List<Siniestro> bucarMayorQue(Integer numeroPoliza) {
 		return siniestroRepository.findByNumeroPolizaGreaterThanEqual(numeroPoliza);
 	}
 
-	@GetMapping(path = "/buscar/numeropoliza/menor/{numeroPoliza}")
-	public List<Siniestro> bucarMenorQue(@PathVariable("numeroPoliza") Integer numeroPoliza) {
+	@Override
+	public List<Siniestro> bucarMenorQue(Integer numeroPoliza) {
 		return siniestroRepository.findByNumeroPolizaLessThanEqual(numeroPoliza);
 	}
 
-	@GetMapping(path = "/buscar/fecha/antesde/{fechaSiniestro}")
-	public List<Siniestro> bucarFechaDespuesDe(@PathVariable Date fechaSiniestro) {
+	@Override
+	public List<Siniestro> bucarFechaDespuesDe(Date fechaSiniestro) {
 		return siniestroRepository.findByFechaSiniestroBefore(fechaSiniestro);
 	}
 

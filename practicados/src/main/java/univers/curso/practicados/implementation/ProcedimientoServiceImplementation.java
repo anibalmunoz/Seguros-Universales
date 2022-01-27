@@ -33,12 +33,20 @@ public class ProcedimientoServiceImplementation implements ProcedimientoServiceI
 				pCondicionesParticulares, pObservaciones, pDniCl);
 	}
 
+	/*
+	 * Procedmiento almacenado
+	 */
+	
 	@Override
 	public ProcedimientoDto insertPolizaReturnPost(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);
 		return procedimientoService.insertPolizaReturnPost(seguro);
 	}
 
+	/*
+	 * Funcion almacenada en paquete
+	 */
+	
 	@Override
 	public FuncionDto insertarSeguro(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);

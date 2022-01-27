@@ -29,17 +29,25 @@ public interface ClienteServiceInterface {
 
 	@DeleteMapping(path = "/eliminar/{dniCl}")
 	public void eliminarCliente(@PathVariable("dniCl") Integer dniCl);
+	
+	/*
+	 * Consultas DSL
+	 */
 
 	@GetMapping(path = "/buscar/por/{nombreCl}/{apellido1}")
 	public List<Cliente> bucarPorNombreYApellido(@PathVariable("nombreCl") String nombreCl,
 			@PathVariable("apellido1") String apellido1);
 
-	@GetMapping(path = "/bucar/telefono/igual/{telefono}")
+	@GetMapping(path = "/buscar/telefono/igual/{telefono}")
 	public List<Cliente> bucarContengaNumero(@PathVariable Integer telefono);
 
-	@GetMapping(path = "/bucar/nombrevia/comienza/{cadena}")
-	public List<Cliente> bucarContengaNumero(@PathVariable String cadena);
+	@GetMapping(path = "/buscar/nombrevia/comienza/{cadena}")
+	public List<Cliente> bucarNombreViaComienzaPor(@PathVariable String cadena);
 
+	/*
+	 * Scripts de bases de datos
+	 */
+	
 	@GetMapping(path = "/buscar/clientes")
 	public List<Map<String, Object>> buscarClientes();
 

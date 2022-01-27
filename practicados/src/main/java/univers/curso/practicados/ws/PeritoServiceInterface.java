@@ -28,6 +28,10 @@ public interface PeritoServiceInterface {
 
 	@DeleteMapping(path = "/eliminar/{dniPerito}")
 	public void deletePerito(@PathVariable("dniPerito") Integer dniPerito);
+	
+	/*
+	 * Consultas DSL
+	 */
 
 	@GetMapping(path = "/buscar/apellido2/vacio")
 	public List<Perito> apellido2Vacio();

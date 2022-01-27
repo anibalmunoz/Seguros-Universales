@@ -31,8 +31,16 @@ public interface ProcedimientoServiceInterface {
 			@PathVariable String pCondicionesParticulares, @PathVariable String pObservaciones,
 			@PathVariable Integer pDniCl);
 	
+	/*
+	 * Procedimiento almacenado
+	 */
+	
 	@PostMapping(path="/insertar/seguro/procedimiento")
 	public ProcedimientoDto insertPolizaReturnPost(@RequestBody SeguroDto seguroDto);
+	
+	/*
+	 * Funcion en paquete
+	 */
 	
 	@PostMapping(path = "/insertar/seguro")
 	public FuncionDto insertarSeguro(@RequestBody SeguroDto seguroDto);
