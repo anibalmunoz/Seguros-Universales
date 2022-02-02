@@ -35,7 +35,7 @@ class CompaniaServiceImplTest {
 	void guardar() {
 		try {
 			CompaniaDto companiaDto = new CompaniaDto();
-			companiaDto.setNombreCompania("TEST");
+			companiaDto.setNombreCompania("TESTED");
 			companiaDto.setClaseVia("TEST");
 			companiaDto.setNombreVia("TEST");
 			companiaDto.setNumeroVia("TEST");
@@ -56,7 +56,7 @@ class CompaniaServiceImplTest {
 	@Test
 	void eliminar() {
 		try {
-			companiaService.deleteCompania("TEST");
+			companiaService.deleteCompania("TESTED");
 			assert (true);
 			LOG.info("Test de eliminar compania correcta");
 		} catch (Exception ex) {

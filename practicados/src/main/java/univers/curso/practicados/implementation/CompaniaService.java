@@ -3,6 +3,7 @@ package univers.curso.practicados.implementation;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +30,8 @@ public class CompaniaService implements CompaniaServiceInterface {
 	}
 
 	private Compania convertirCompaniaDtoACompania(CompaniaDto companiaDto) {
-		Compania compania = new Compania();
-		compania.setNombreCompania(companiaDto.getNombreCompania());
-		compania.setClaseVia(companiaDto.getClaseVia());
-		compania.setNombreVia(companiaDto.getNombreVia());
-		compania.setNumeroVia(companiaDto.getNumeroVia());
-		compania.setCodPostal(companiaDto.getCodPostal());
-		compania.setTelefonoContratacion(companiaDto.getTelefonoContratacion());
-		compania.setTelefonoSiniestros(companiaDto.getTelefonoSiniestros());
-		compania.setNotas(companiaDto.getNotas());
-		return compania;
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(companiaDto, Compania.class);
 	}
 
 	@Override
@@ -48,7 +41,6 @@ public class CompaniaService implements CompaniaServiceInterface {
 		if (compania.isPresent()) {
 			companiaRepository.delete(compania.get());
 		}
-
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,19 +54,8 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	private Cliente convertirClienteDtoACliente(ClienteDto clienteDto) {
-		Cliente cliente = new Cliente();
-		cliente.setDniCl(clienteDto.getDniCl());
-		cliente.setNombreCl(clienteDto.getNombreCl());
-		cliente.setApellido1(clienteDto.getApellido1());
-		cliente.setApellido2(clienteDto.getApellido2());
-		cliente.setClaseVia(clienteDto.getClaseVia());
-		cliente.setNombreVia(clienteDto.getNombreCl());
-		cliente.setNumeroVia(clienteDto.getNumeroVia());
-		cliente.setCodPostal(clienteDto.getCodPostal());
-		cliente.setCiudad(clienteDto.getCiudad());
-		cliente.setTelefono(clienteDto.getTelefono());
-		cliente.setObservaciones(clienteDto.getObservaciones());
-		return cliente;
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(clienteDto, Cliente.class);
 	}
 
 	@Override
@@ -126,9 +116,8 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	/*
-	 * INSERT, UPDATE, DELETE Y SELECT CON SQL QUERIES 
+	 * INSERT, UPDATE, DELETE Y SELECT CON SQL QUERIES
 	 */
-	
 
 	@Override
 	public int insertCliente(Integer dniCl, String nombreCl, String apellido1, String codPostal, String ciudad,
@@ -140,7 +129,7 @@ public class ClienteService implements ClienteServiceInterface {
 	public int cambiarNombreInt(Integer dniCl, String nombreCl) {
 		return catalogosService.cambiarNombreInt(dniCl, nombreCl);
 	}
-	
+
 	@Override
 	public int deleteCliente(Integer dniCl) {
 		return catalogosService.deleteCliente(dniCl);

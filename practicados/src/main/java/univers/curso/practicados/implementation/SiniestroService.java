@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +32,8 @@ public class SiniestroService implements SiniestroServiceInterface {
 	}
 
 	private Siniestro convertirSiniestroDtoASiniestro(SiniestroDto siniestroDto) {
-		Siniestro siniestro = new Siniestro();
-		siniestro.setIdSiniestro(siniestroDto.getIdSiniestro());
-		siniestro.setFechaSiniestro(siniestroDto.getFechaSiniestro());
-		siniestro.setCausas(siniestroDto.getCausas());
-		siniestro.setAceptado(siniestroDto.getAceptado());
-		siniestro.setIndemnizacion(siniestroDto.getIndemnizacion());
-		siniestro.setNumeroPoliza(siniestroDto.getNumeroPoliza());
-		return siniestro;
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(siniestroDto, Siniestro.class);
 	}
 
 	@Override

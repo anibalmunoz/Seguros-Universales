@@ -3,6 +3,7 @@ package univers.curso.practicados.implementation;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,19 +31,8 @@ public class PeritoService implements PeritoServiceInterface {
 	}
 
 	private Perito convertirPeritoDtoAPerito(PeritoDto peritoDto) {
-		Perito perito = new Perito();
-		perito.setDniPerito(peritoDto.getDniPerito());
-		perito.setNombrePerito(peritoDto.getNombrePerito());
-		perito.setApellidoPerito1(peritoDto.getApellidoPerito1());
-		perito.setApellidoPerito2(peritoDto.getApellidoPerito2());
-		perito.setTelefonoContacto(peritoDto.getTelefonoContacto());
-		perito.setTelefonoOficina(peritoDto.getTelefonoOficina());
-		perito.setClaseVia(peritoDto.getClaseVia());
-		perito.setNombreVia(peritoDto.getNombreVia());
-		perito.setNumeroVia(peritoDto.getNumeroVia());
-		perito.setCodPostal(peritoDto.getCodPostal());
-		perito.setCiudad(peritoDto.getCiudad());
-		return perito;
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(peritoDto, Perito.class);
 	}
 
 	@Override
@@ -53,7 +43,7 @@ public class PeritoService implements PeritoServiceInterface {
 			peritoRepository.delete(perito.get());
 		}
 	}
-	
+
 	/*
 	 * Consultas DSL
 	 */

@@ -83,9 +83,10 @@ public class ProcedimientoService {
 		Map<String, Object> out = simpleJdbcCall.execute(sqlParameterSource);
 
 		ProcedimientoDto dto = new ProcedimientoDto();
-		dto.setpNumeroPoliza(pNumeroPoliza);
-		dto.setpDniCl(pDniCl);
-		dto.setpNombreCl((out.get(P_NOMBRE_CL).toString()));
+	
+		dto.setPNumeroPoliza(pNumeroPoliza);
+		dto.setPDniCl(pDniCl);
+		dto.setPNombreCl((out.get(P_NOMBRE_CL).toString()));		
 
 		return dto;
 
@@ -115,9 +116,9 @@ public class ProcedimientoService {
 		Map<String, Object> out = simpleJdbcCall.execute(sqlParameterSource);
 
 		ProcedimientoDto dto = new ProcedimientoDto();
-		dto.setpNumeroPoliza(Integer.parseInt(out.get(P_NUMERO_POLIZA).toString()));
-		dto.setpDniCl(seguro.getDniCl());
-		dto.setpNombreCl((out.get(P_NOMBRE_CL).toString()));
+		dto.setPNumeroPoliza(Integer.parseInt(out.get(P_NUMERO_POLIZA).toString()));
+		dto.setPDniCl(seguro.getDniCl());
+		dto.setPNombreCl((out.get(P_NOMBRE_CL).toString()));
 
 		return dto;
 
@@ -144,7 +145,7 @@ public class ProcedimientoService {
 				.addValue(P_OBSERVACIONES, seguro.getObervaciones()).addValue(P_DNI_CL, seguro.getDniCl());
 		Integer out = simpleJdbcCall.executeFunction(Integer.class, sqlParameterSource);
 		FuncionDto dto = new FuncionDto();
-		dto.setpNumeroPoliza(out);
+		dto.setPNumeroPoliza(out);
 
 		return dto;
 	}
@@ -160,7 +161,7 @@ public class ProcedimientoService {
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource().addValue(P_DNI_CL, dniCl);
 		String out = simpleJdbcCall.executeFunction(String.class, sqlParameterSource);
 		ProcedimientoDto dto = new ProcedimientoDto();
-		dto.setpNombreCl(out);
+		dto.setPNombreCl(out);
 
 		return dto;
 

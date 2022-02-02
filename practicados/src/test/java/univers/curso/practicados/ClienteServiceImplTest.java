@@ -71,7 +71,7 @@ class ClienteServiceImplTest {
 	@Test
 	void eliminarCliente() {
 		try {
-			clienteService.eliminarCliente(24);
+			clienteService.eliminarCliente(23);
 			assert (true);
 			LOG.info("Prueba de eliminar cliente correcta");
 		} catch (Exception ex) {

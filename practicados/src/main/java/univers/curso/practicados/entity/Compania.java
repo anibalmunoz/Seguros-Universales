@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "COMPANIA")
 public class Compania implements Serializable {
@@ -42,16 +43,6 @@ public class Compania implements Serializable {
 
 	@ManyToMany(mappedBy = "companias")
 	private Set<Seguro> seguros;
-	
-	
-
-	public Set<Seguro> getSeguros() {
-		return seguros;
-	}
-
-	public void setSeguros(Set<Seguro> seguros) {
-		this.seguros = seguros;
-	}
 
 	public String getNombreCompania() {
 		return nombreCompania;
@@ -115,6 +106,14 @@ public class Compania implements Serializable {
 
 	public void setNotas(String notas) {
 		this.notas = notas;
+	}
+
+	public Set<Seguro> getSeguros() {
+		return seguros;
+	}
+
+	public void setSeguros(Set<Seguro> seguros) {
+		this.seguros = seguros;
 	}
 
 }

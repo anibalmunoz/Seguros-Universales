@@ -20,20 +20,19 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "SEGURO")
 
-@SequenceGenerator(
-	    name="sqcSeguro",
-	    sequenceName =  "SQC_SEGURO",
-	    allocationSize = 1
-	)
+@SequenceGenerator(name = "sqcSeguro", sequenceName = "SQC_SEGURO", allocationSize = 1)
+@Data
 public class Seguro implements Serializable {
 
 	private static final long serialVersionUID = 5008886135637348016L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqcSeguro")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqcSeguro")
 	@Column(name = "NUMERO_POLIZA")
 	private Integer numeroPoliza;
 
@@ -56,83 +55,11 @@ public class Seguro implements Serializable {
 
 	@Column(name = "DNI_CL")
 	private Integer dniCl;
-	
-	@ManyToMany(cascade= {
-			CascadeType.PERSIST,
-			CascadeType.MERGE
-	})
-	@JoinTable(
-			name = "COMPANIA_SEGURO",
-			joinColumns = {@JoinColumn(name="NUMERO_POLIZA")},
-			inverseJoinColumns = {@JoinColumn(name="NOMBRE_COMPANIA")}
-			)
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "COMPANIA_SEGURO", joinColumns = { @JoinColumn(name = "NUMERO_POLIZA") }, inverseJoinColumns = {
+			@JoinColumn(name = "NOMBRE_COMPANIA") })
 	@JsonIgnore
 	private Set<Compania> companias;
 
-	public Set<Compania> getCompanias() {
-		return companias;
-	}
-
-	public void setCompanias(Set<Compania> companias) {
-		this.companias = companias;
-	}
-
-	public Integer getNumeroPoliza() {
-		return numeroPoliza;
-	}
-
-	public void setNumeroPoliza(Integer numeroPoliza) {
-		this.numeroPoliza = numeroPoliza;
-	}
-
-	public String getRamo() {
-		return ramo;
-	}
-
-	public void setRamo(String ramo) {
-		this.ramo = ramo;
-	}
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public Date getFechaVencimiento() {
-		return fechaVencimiento;
-	}
-
-	public void setFechaVencimiento(Date fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
-	}
-
-	public String getCondicionesParticulares() {
-		return condicionesParticulares;
-	}
-
-	public void setCondicionesParticulares(String condicionesParticulares) {
-		this.condicionesParticulares = condicionesParticulares;
-	}
-
-	public String getObervaciones() {
-		return obervaciones;
-	}
-
-	public void setObervaciones(String obervaciones) {
-		this.obervaciones = obervaciones;
-	}
-
-	public Integer getDniCl() {
-		return dniCl;
-	}
-
-	public void setDniCl(Integer dniCl) {
-		this.dniCl = dniCl;
-	}
-
-	
-	
 }
