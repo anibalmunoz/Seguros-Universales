@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.library.dto.beans.SiniestroDto;
+import univers.curso.practicados.dto.SiniestroDto;
 
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.implementation.SiniestroService;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.library.dto.beans.SeguroDto;
+import univers.curso.practicados.dto.SeguroDto;
 
 import univers.curso.practicados.entity.Seguro;
 

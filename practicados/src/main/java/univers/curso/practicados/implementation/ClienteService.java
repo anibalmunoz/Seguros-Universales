@@ -9,8 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.dto.beans.ClienteDto;
-
+import univers.curso.practicados.dto.ClienteDto;
 import univers.curso.practicados.entity.Cliente;
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.ClienteRepository;

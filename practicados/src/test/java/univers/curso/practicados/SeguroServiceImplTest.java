@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.library.dto.beans.SeguroDto;
+import univers.curso.practicados.dto.SeguroDto;
 
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.implementation.SeguroService;

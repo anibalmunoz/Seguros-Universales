@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.library.dto.beans.CompaniaDto;
+import univers.curso.practicados.dto.CompaniaDto;
 
 import univers.curso.practicados.entity.Compania;
 import univers.curso.practicados.implementation.CompaniaService;

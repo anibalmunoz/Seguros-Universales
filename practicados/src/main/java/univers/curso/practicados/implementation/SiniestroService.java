@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.dto.beans.SiniestroDto;
+import univers.curso.practicados.dto.SiniestroDto;
 
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.repository.SiniestroRepository;

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.library.dto.beans.PeritoDto;
+import univers.curso.practicados.dto.PeritoDto;
 
 import univers.curso.practicados.entity.Perito;
 import univers.curso.practicados.implementation.PeritoService;

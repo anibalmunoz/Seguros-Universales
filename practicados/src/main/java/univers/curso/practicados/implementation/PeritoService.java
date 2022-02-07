@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.dto.beans.PeritoDto;
+import univers.curso.practicados.dto.PeritoDto;
 
 import univers.curso.practicados.entity.Perito;
 import univers.curso.practicados.repository.PeritoRepository;

@@ -5,9 +5,9 @@ import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.dto.beans.FuncionDto;
-import com.library.dto.beans.ProcedimientoDto;
-import com.library.dto.beans.SeguroDto;
+import univers.curso.practicados.dto.FuncionDto;
+import univers.curso.practicados.dto.ProcedimientoDto;
+import univers.curso.practicados.dto.SeguroDto;
 
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.service.ProcedimientoService;

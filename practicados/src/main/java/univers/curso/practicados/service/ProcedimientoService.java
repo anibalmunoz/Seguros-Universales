@@ -15,8 +15,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
-import com.library.dto.beans.FuncionDto;
-import com.library.dto.beans.ProcedimientoDto;
+import univers.curso.practicados.dto.FuncionDto;
+import univers.curso.practicados.dto.ProcedimientoDto;
 
 import univers.curso.practicados.entity.Seguro;
 

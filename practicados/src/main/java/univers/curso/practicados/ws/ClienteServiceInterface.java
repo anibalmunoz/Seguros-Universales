@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.library.dto.beans.ClienteDto;
-
+import univers.curso.practicados.dto.ClienteDto;
 import univers.curso.practicados.entity.Cliente;
 
 @RestController
