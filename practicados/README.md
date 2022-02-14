@@ -16,13 +16,13 @@
 1. Lo primero que debes hacer es crear tu base de datos para lo cual necesitas tener un usuario **practicados** identificado con la contraseña **practicados**.
 2. Luego de tener tu usuario y tu conexión al esquema, debes ejecutar el documento **practicados(limpio).sql** el cual te creará las tablas, secuencias, paquetes, funciones y procedimientos en tu base de datos.
 
-## Si has modificado el proyecto debes hacer los siguientes pasos, si no lo modificas no es necesario realizar estos pasos:
+#### Si has modificado el proyecto debes hacer los siguientes pasos, si no lo modificas no es necesario realizar estos pasos:
 
 3. Ubicarte en la carpeta del proyecto y ejecutar el siguiente comando para construir el proyecto. Esto modificará la carpeta target y construirá el proyecto con las modificaciones realizadas.
 
 `$ npm clean install package`
 
-## Si no has modificado el proyecto puedes omitir el paso 3
+#### Si no has modificado el proyecto puedes omitir el paso 3
 
 4. En este proyecto ya está el archivo **Dockerfile** el cual es necesario para construir la imagen de Docker, por lo que debes ubicarte en esta carpeta desde una consola y ejecutar el siguiente comando para crear la imagen de docker.
 
