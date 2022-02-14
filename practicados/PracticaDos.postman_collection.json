@@ -1,0 +1,970 @@
+{
+	"info": {
+		"_postman_id": "bfdf1d16-c198-41d6-9863-054e5994da1f",
+		"name": "PracticaDos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD de base de datos",
+			"item": [
+				{
+					"name": "Cliente",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  {\r\n        \"nombreCl\": \"Prueba 3\",\r\n        \"apellido1\": \"MUNOZ\",\r\n        \"apellido2\": \"HERNANDEZ\",\r\n        \"claseVia\": \"VILLA\",\r\n        \"nombreVia\": \"Villa 1\",\r\n        \"numeroVia\": \"0\",\r\n        \"codPostal\": \"01052\",\r\n        \"ciudad\": \"San José Pinula\",\r\n        \"telefono\": 45123844,\r\n        \"observaciones\": \"cliente 3\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/cliente/guardar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"guardar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:9090/cliente/eliminar/23",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"cliente",
+										"eliminar",
+										"23"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Seguro",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/seguro/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"seguro",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"ramo\": \"AUTO\", \r\n    \"fechaInicio\": \"2010-10-10\",\r\n    \"fechaVencimiento\": \"2026-12-12\",\r\n    \"condicionesParticulares\": \"SEGURO\",\r\n    \"obervaciones\": \"AUTO HONDA CIVI 98\",\r\n    \"dniCl\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/seguro/guardar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"seguro",
+										"guardar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/seguro/eliminar/21",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"seguro",
+										"eliminar",
+										"21"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CompaniaSeguro",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/companiaseguro/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companiaseguro",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Compania",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/compania/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"compania",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"nombreCompania\": \"TEST2\",\r\n        \"claseVia\": \"TEST\",\r\n        \"nombreVia\": \"TEST\",\r\n        \"numeroVia\": \"TEST\",\r\n        \"codPostal\": \"TEST\",\r\n        \"telefonoContratacion\": \"TEST\",\r\n        \"telefonoSiniestros\": \"TEST\",\r\n        \"notas\": \"TEST\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/compania/guardar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"compania",
+										"guardar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/compania/eliminar/TEST2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"compania",
+										"eliminar",
+										"TEST2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Perito",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/perito/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"perito",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"dniPerito\": 3,\r\n        \"nombrePerito\": \"TEST\",\r\n        \"apellidoPerito1\": \"TEST\",\r\n        \"apellidoPerito2\": \"TEST\",\r\n        \"telefonoContacto\": 12345678,\r\n        \"telefonoOficina\": 12345678,\r\n        \"claseVia\": \"TEST\",\r\n        \"nombreVia\": \"TEST\",\r\n        \"numeroVia\": \"TEST\",\r\n        \"codPostal\": \"TEST\",\r\n        \"ciudad\": \"TEST\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/perito/guardar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"perito",
+										"guardar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/perito/eliminar/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"perito",
+										"eliminar",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Siniestro",
+					"item": [
+						{
+							"name": "Buscar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/siniestro/buscar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"buscar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/siniestro/eliminar/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"eliminar",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"idSiniestro\": 2,\r\n        \"fechaSiniestro\": null,\r\n        \"causas\": \"TEST\",\r\n        \"aceptado\": \"TEST\",\r\n        \"indemnizacion\": \"TEST\",\r\n        \"numeroPoliza\": 2,\r\n        \"perito\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/siniestro/guardar",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"guardar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Consultas DSL",
+			"item": [
+				{
+					"name": "Cliente",
+					"item": [
+						{
+							"name": "Buscar/por/nombre/y/apellido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar/por/prueba/prueba",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar",
+										"por",
+										"prueba",
+										"prueba"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar telefono igual a:",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar/telefono/igual/4512",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar",
+										"telefono",
+										"igual",
+										"4512"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar nombreVia comienza por:",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar/nombrevia/comienza/via\"",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar",
+										"nombrevia",
+										"comienza",
+										"via\""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Seguro",
+					"item": [
+						{
+							"name": "buscar/despues/de/la/fecha/inicio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/seguro/buscar/fecha/despuesde/2000-10-10",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"seguro",
+										"buscar",
+										"fecha",
+										"despuesde",
+										"2000-10-10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Compania",
+					"item": [
+						{
+							"name": "buscar codigo postal termina en",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/compania/buscar/codigopostal/termina/ST",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"compania",
+										"buscar",
+										"codigopostal",
+										"termina",
+										"ST"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Perito",
+					"item": [
+						{
+							"name": "buscar segundo apellido vacio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/perito/buscar/apellido2/vacio",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"perito",
+										"buscar",
+										"apellido2",
+										"vacio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscar segundo apellido ocupado",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/perito/buscar/apellido2/ocupado",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"perito",
+										"buscar",
+										"apellido2",
+										"ocupado"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Siniestro",
+					"item": [
+						{
+							"name": "Buscar numero poliza mayor que:",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/siniestro/buscar/numeropoliza/mayor/10",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"buscar",
+										"numeropoliza",
+										"mayor",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar numero poliza menor que:",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/siniestro/buscar/numeropoliza/menor/10",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"buscar",
+										"numeropoliza",
+										"menor",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar por fehca de siniestro antes de:",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/siniestro/buscar/fecha/antesde/2010-10-09",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"siniestro",
+										"buscar",
+										"fecha",
+										"antesde",
+										"2010-10-09"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SQL Queries",
+			"item": [
+				{
+					"name": "Cliente",
+					"item": [
+						{
+							"name": "CRUD con SQL Queries",
+							"item": [
+								{
+									"name": "insert",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/cliente/insert/9/2/2/2/2/2/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"cliente",
+												"insert",
+												"9",
+												"2",
+												"2",
+												"2",
+												"2",
+												"2",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/cliente/update/nombre/1/Anibal 1",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"cliente",
+												"update",
+												"nombre",
+												"1",
+												"Anibal 1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"dniCl\": 6,\r\n        \"nombreCl\": \"ANIBAL3\",\r\n        \"apellido1\": \"MUNOZ2\",\r\n        \"apellido2\": \"HERNANDEZ2\",\r\n        \"claseVia\": \"VILLA2\",\r\n        \"nombreVia\": \"ANIBAL2\",\r\n        \"numeroVia\": \"0\",\r\n        \"codPostal\": \"01052\",\r\n        \"ciudad\": \"San José Pinula\",\r\n        \"telefono\": 45123844,\r\n        \"observaciones\": \"Segundo cliente\"\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/cliente/delete/8",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"cliente",
+												"delete",
+												"8"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "select (join) fecha vencimiento esta entre las 2 fechas proporcionadas",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/cliente/select/poliza/01-01-2020/31-12-2026",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"cliente",
+												"select",
+												"poliza",
+												"01-01-2020",
+												"31-12-2026"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Buscar clientes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar/clientes",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar/por/dni",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/buscar/23",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"buscar",
+										"23"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cambiar nombre",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/cliente/cambiar/nombre/1/Anibal",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cliente",
+										"cambiar",
+										"nombre",
+										"1",
+										"Anibal"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Procedimientos Almacenados",
+			"item": [
+				{
+					"name": "procedimiento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/procedimiento/insert/poliza/50/Nulo/2010-10-09/2026-10-09/Sin condiciones particulares/Sin observaciones/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"procedimiento",
+								"insert",
+								"poliza",
+								"50",
+								"Nulo",
+								"2010-10-09",
+								"2026-10-09",
+								"Sin condiciones particulares",
+								"Sin observaciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "procedimiento con in,out e (in-out)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/procedimiento/insert/poliza/return/54/Sin ramo/2021-01-01/2027-10-10/Sin Condiciones/Ningua/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"procedimiento",
+								"insert",
+								"poliza",
+								"return",
+								"54",
+								"Sin ramo",
+								"2021-01-01",
+								"2027-10-10",
+								"Sin Condiciones",
+								"Ningua",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "procedimiento con in,out.e in/out con objeto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"ramo\": \"AUTO\",\r\n    \"fechaInicio\": \"2010-10-10\",\r\n    \"fechaVencimiento\": \"2026-12-12\",\r\n    \"condicionesParticulares\": \"SEGURO\",\r\n    \"obervaciones\": \"AUTO HONDA CIVI 98\",\r\n    \"dniCl\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/procedimiento/insertar/seguro/procedimiento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"procedimiento",
+								"insertar",
+								"seguro",
+								"procedimiento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funciones en paquetes",
+			"item": [
+				{
+					"name": "Funcion Insertar Seguro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"ramo\": \"AUTO\",\r\n    \"fechaInicio\": \"2010-10-10\",\r\n    \"fechaVencimiento\": \"2026-12-12\",\r\n    \"condicionesParticulares\": \"SEGURO\",\r\n    \"obervaciones\": \"AUTO HONDA CIVI 98\",\r\n    \"dniCl\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/procedimiento/insertar/seguro",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"procedimiento",
+								"insertar",
+								"seguro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcion obtener nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/procedimiento/obtener/nombre/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"procedimiento",
+								"obtener",
+								"nombre",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
