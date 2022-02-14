@@ -5,11 +5,11 @@
 **1.0.0**
 
 # Requisitos para integración y ejecución:
-Se necesita tener JDK 8.
-Se recomienda Spring Tool Suite (solamente si necesitas editar el proyecto).
-Se debe tener maven instalado (versión 3.8.4 recomendada).
-Motor de base de datos Oracle (Se recomienda versión 11g XE).
-Docker (version 19.03.5 recomendada).
+* Se necesita tener JDK 8.
+* Se recomienda Spring Tool Suite (solamente si necesitas editar el proyecto).
+* Se debe tener maven instalado (versión 3.8.4 recomendada).
+* Motor de base de datos Oracle (Se recomienda versión 11g XE).
+* Docker (version 19.03.5 recomendada).
 
 # Guia para instalación y funcionamiento
 
