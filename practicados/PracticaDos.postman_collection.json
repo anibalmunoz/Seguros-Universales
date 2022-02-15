@@ -17,11 +17,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar",
+									"raw": "localhost:9595/cliente/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar"
@@ -45,11 +45,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/cliente/guardar",
+									"raw": "localhost:9595/cliente/guardar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"guardar"
@@ -64,15 +64,15 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:9090/cliente/eliminar/23",
+									"raw": "localhost:9595/cliente/eliminar/41",
 									"host": [
 										"localhost"
 									],
-									"port": "9090",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"eliminar",
-										"23"
+										"41"
 									]
 								}
 							},
@@ -89,11 +89,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/seguro/buscar",
+									"raw": "localhost:9595/seguro/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"seguro",
 										"buscar"
@@ -117,11 +117,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/seguro/guardar",
+									"raw": "localhost:9595/seguro/guardar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"seguro",
 										"guardar"
@@ -136,11 +136,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/seguro/eliminar/21",
+									"raw": "localhost:9595/seguro/eliminar/21",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"seguro",
 										"eliminar",
@@ -161,11 +161,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/companiaseguro/buscar",
+									"raw": "localhost:9595/companiaseguro/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"companiaseguro",
 										"buscar"
@@ -185,11 +185,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/compania/buscar",
+									"raw": "localhost:9595/compania/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"compania",
 										"buscar"
@@ -213,11 +213,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/compania/guardar",
+									"raw": "localhost:9595/compania/guardar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"compania",
 										"guardar"
@@ -232,11 +232,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/compania/eliminar/TEST2",
+									"raw": "localhost:9595/compania/eliminar/TEST2",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"compania",
 										"eliminar",
@@ -257,11 +257,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/perito/buscar",
+									"raw": "localhost:9595/perito/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"perito",
 										"buscar"
@@ -285,11 +285,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/perito/guardar",
+									"raw": "localhost:9595/perito/guardar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"perito",
 										"guardar"
@@ -304,11 +304,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/perito/eliminar/1",
+									"raw": "localhost:9595/perito/eliminar/1",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"perito",
 										"eliminar",
@@ -329,11 +329,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/siniestro/buscar",
+									"raw": "localhost:9595/siniestro/buscar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"buscar"
@@ -348,11 +348,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/siniestro/eliminar/1",
+									"raw": "localhost:9595/siniestro/eliminar/1",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"eliminar",
@@ -377,11 +377,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/siniestro/guardar",
+									"raw": "localhost:9595/siniestro/guardar",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"guardar"
@@ -406,11 +406,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar/por/prueba/prueba",
+									"raw": "localhost:9595/cliente/buscar/por/prueba/prueba",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar",
@@ -428,11 +428,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar/telefono/igual/4512",
+									"raw": "localhost:9595/cliente/buscar/telefono/igual/4512",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar",
@@ -450,11 +450,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar/nombrevia/comienza/via\"",
+									"raw": "localhost:9595/cliente/buscar/nombrevia/comienza/via\"",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar",
@@ -477,11 +477,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/seguro/buscar/fecha/despuesde/2000-10-10",
+									"raw": "localhost:9595/seguro/buscar/fecha/despuesde/2000-10-10",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"seguro",
 										"buscar",
@@ -504,11 +504,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/compania/buscar/codigopostal/termina/ST",
+									"raw": "localhost:9595/compania/buscar/codigopostal/termina/ST",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"compania",
 										"buscar",
@@ -531,11 +531,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/perito/buscar/apellido2/vacio",
+									"raw": "localhost:9595/perito/buscar/apellido2/vacio",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"perito",
 										"buscar",
@@ -552,11 +552,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/perito/buscar/apellido2/ocupado",
+									"raw": "localhost:9595/perito/buscar/apellido2/ocupado",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"perito",
 										"buscar",
@@ -578,11 +578,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/siniestro/buscar/numeropoliza/mayor/10",
+									"raw": "localhost:9595/siniestro/buscar/numeropoliza/mayor/10",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"buscar",
@@ -600,11 +600,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/siniestro/buscar/numeropoliza/menor/10",
+									"raw": "localhost:9595/siniestro/buscar/numeropoliza/menor/10",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"buscar",
@@ -622,11 +622,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/siniestro/buscar/fecha/antesde/2010-10-09",
+									"raw": "localhost:9595/siniestro/buscar/fecha/antesde/2010-10-09",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"siniestro",
 										"buscar",
@@ -657,11 +657,11 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "localhost:8080/cliente/insert/9/2/2/2/2/2/2",
+											"raw": "localhost:9595/cliente/insert/9/2/2/2/2/2/2",
 											"host": [
 												"localhost"
 											],
-											"port": "8080",
+											"port": "9595",
 											"path": [
 												"cliente",
 												"insert",
@@ -683,11 +683,11 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "localhost:8080/cliente/update/nombre/1/Anibal 1",
+											"raw": "localhost:9595/cliente/update/nombre/1/Anibal 1",
 											"host": [
 												"localhost"
 											],
-											"port": "8080",
+											"port": "9595",
 											"path": [
 												"cliente",
 												"update",
@@ -717,11 +717,11 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/cliente/delete/8",
+											"raw": "localhost:9595/cliente/delete/8",
 											"host": [
 												"localhost"
 											],
-											"port": "8080",
+											"port": "9595",
 											"path": [
 												"cliente",
 												"delete",
@@ -737,11 +737,11 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "localhost:8080/cliente/select/poliza/01-01-2020/31-12-2026",
+											"raw": "localhost:9595/cliente/select/poliza/01-01-2020/31-12-2026",
 											"host": [
 												"localhost"
 											],
-											"port": "8080",
+											"port": "9595",
 											"path": [
 												"cliente",
 												"select",
@@ -761,11 +761,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar/clientes",
+									"raw": "localhost:9595/cliente/buscar/clientes",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar",
@@ -781,15 +781,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/buscar/23",
+									"raw": "localhost:9595/cliente/buscar/41",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"buscar",
-										"23"
+										"41"
 									]
 								}
 							},
@@ -801,11 +801,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/cliente/cambiar/nombre/1/Anibal",
+									"raw": "localhost:9595/cliente/cambiar/nombre/1/Anibal",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "9595",
 									"path": [
 										"cliente",
 										"cambiar",
@@ -830,11 +830,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/procedimiento/insert/poliza/50/Nulo/2010-10-09/2026-10-09/Sin condiciones particulares/Sin observaciones/1",
+							"raw": "localhost:9595/procedimiento/insert/poliza/50/Nulo/2010-10-09/2026-10-09/Sin condiciones particulares/Sin observaciones/1",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9595",
 							"path": [
 								"procedimiento",
 								"insert",
@@ -857,11 +857,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/procedimiento/insert/poliza/return/54/Sin ramo/2021-01-01/2027-10-10/Sin Condiciones/Ningua/1",
+							"raw": "localhost:9595/procedimiento/insert/poliza/return/54/Sin ramo/2021-01-01/2027-10-10/Sin Condiciones/Ningua/1",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9595",
 							"path": [
 								"procedimiento",
 								"insert",
@@ -894,11 +894,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/procedimiento/insertar/seguro/procedimiento",
+							"raw": "localhost:9595/procedimiento/insertar/seguro/procedimiento",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9595",
 							"path": [
 								"procedimiento",
 								"insertar",
@@ -929,11 +929,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/procedimiento/insertar/seguro",
+							"raw": "localhost:9595/procedimiento/insertar/seguro",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9595",
 							"path": [
 								"procedimiento",
 								"insertar",
@@ -949,11 +949,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/procedimiento/obtener/nombre/1",
+							"raw": "localhost:9595/procedimiento/obtener/nombre/1",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9595",
 							"path": [
 								"procedimiento",
 								"obtener",
