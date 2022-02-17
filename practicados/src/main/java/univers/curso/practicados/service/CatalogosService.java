@@ -42,6 +42,13 @@ public class CatalogosService {
 		namedParameterJdbcTemplate.update(query, sqlParameterSource);
 	}
 
+	
+	public List<Map<String,Object>> buscarPolizasCliente(Integer dniCl){
+		String query = "SELECT NUMERO_POLIZA , FECHA_INICIO , FECHA_VENCIMIENTO FROM SEGURO WHERE DNI_CL = :dniCl";
+		SqlParameterSource sqlParameterSource =  new MapSqlParameterSource().addValue(DNI, dniCl);
+		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
+	}
+	
 	/*
 	 * Insert
 	 */
@@ -65,6 +72,10 @@ public class CatalogosService {
 		return namedParameterJdbcTemplate.update(query, sqlParameterSource);
 	}
 
+	
+	
+	
+	
 	/*
 	 * Delete
 	 */

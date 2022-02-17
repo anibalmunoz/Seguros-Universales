@@ -2,6 +2,7 @@ package univers.curso.practicados.implementation;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import univers.curso.practicados.dto.SeguroDto;
 
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.SeguroRepository;
+import univers.curso.practicados.service.CatalogosService;
 import univers.curso.practicados.ws.SeguroServiceInterface;
 
 @Component
@@ -19,7 +21,10 @@ public class SeguroService implements SeguroServiceInterface {
 
 	@Autowired
 	SeguroRepository seguroRepository;
-
+	
+	@Autowired
+	CatalogosService catalogosService;
+	
 	@Override
 	public List<Seguro> buscar() {
 		return seguroRepository.findAll();
@@ -45,6 +50,13 @@ public class SeguroService implements SeguroServiceInterface {
 		}
 	}
 
+
+	@Override
+	public List<Map<String, Object>> buscarSegurosCliente(Integer dniCl) {
+		return catalogosService.buscarPolizasCliente(dniCl);
+	}
+
+	
 	/*
 	 * Consulta DSL
 	 */
@@ -53,6 +65,7 @@ public class SeguroService implements SeguroServiceInterface {
 	public List<Seguro> bucarFechaDespuesDe(Date fechaInicio) {
 		return seguroRepository.findByFechaInicioAfter(fechaInicio);
 	}
+
 
 	// localhost:8080/seguro/buscar/fecha/despuesde/2010-10-09
 

@@ -2,6 +2,7 @@ package univers.curso.practicados.ws;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,9 @@ public interface SeguroServiceInterface {
 	@GetMapping(path = "/buscar")
 	public List<Seguro> buscar();
 	
+	@GetMapping(path = "/buscar/porcliente/{dniCl}")
+	public List<Map<String, Object>> buscarSegurosCliente(@PathVariable("dniCl") Integer dniCl);
+	
 	@PostMapping(path = "/guardar")
 	public Seguro guardar(@RequestBody SeguroDto seguroDto) ;
 	
@@ -32,5 +36,7 @@ public interface SeguroServiceInterface {
 	
 	@GetMapping(path = "/buscar/fecha/despuesde/{fechaInicio}")
 	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio) ;
+	
+	
 	
 }
