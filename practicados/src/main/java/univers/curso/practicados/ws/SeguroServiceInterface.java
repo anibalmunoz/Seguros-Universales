@@ -24,19 +24,17 @@ public interface SeguroServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Seguro> buscar();
-	
+
 	@GetMapping(path = "/buscar/porcliente/{dniCl}")
 	public List<Map<String, Object>> buscarSegurosCliente(@PathVariable("dniCl") Integer dniCl);
-	
+
 	@PostMapping(path = "/guardar")
-	public Seguro guardar(@RequestBody SeguroDto seguroDto) ;
-	
+	public Seguro guardar(@RequestBody SeguroDto seguroDto);
+
 	@DeleteMapping(path = "/eliminar/{numeroPoliza}")
 	public void deleteSeguro(@PathVariable("numeroPoliza") Integer numeroPoliza);
-	
+
 	@GetMapping(path = "/buscar/fecha/despuesde/{fechaInicio}")
-	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio) ;
-	
-	
-	
+	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio);
+
 }

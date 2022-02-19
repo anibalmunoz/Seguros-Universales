@@ -12,6 +12,7 @@ public class SeguroDto implements Serializable {
 	private Integer numeroPoliza;
 	private String ramo;
 	private Date fechaInicio;
+	//@JsonFormat(shape=JsonFormat,Shape.STRING,pattern="dd/MM/yyyy",timezone "GMT-6")
 	private Date fechaVencimiento;
 	private String condicionesParticulares;
 	private String obervaciones;

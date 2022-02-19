@@ -20,7 +20,7 @@
 
 3. Ubicarte en la carpeta del proyecto y ejecutar el siguiente comando para construir el proyecto. Esto modificará la carpeta target y construirá el proyecto con las modificaciones realizadas.
 
-`$ npm clean install package`
+`$ mvn clean install package`
 
 #### Si no has modificado el proyecto puedes omitir el paso 3
 
@@ -37,3 +37,7 @@
 `localhost:9595/cliente/buscar`
 
 7. Para tener todos los enlaces disponibles en el proyecto puedes acceder al archivo **PracticaDos.postman_collection.json** en el cual se encuentran todos los url de los servicios de los que se compone el proyecto.
+
+8. Una vez tengas tu imagen de docker corriendo, puedes utilizar el siguiente comando para ver el log en tu consola.
+
+`docker logs --tail 1000 -f flamboyant_taussig`
