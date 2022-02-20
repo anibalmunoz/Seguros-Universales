@@ -7,6 +7,11 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.SeguroDto;
@@ -68,5 +73,23 @@ public class SeguroService implements SeguroServiceInterface {
 
 
 	// localhost:8080/seguro/buscar/fecha/despuesde/2010-10-09
+	
+	
+	
+	/*Implementacioón Servico A. Jeronimo */
+	@Override
+	public Page<Seguro> segurosForPage(Integer pagina, Integer cantidad) {
 
+		Pageable paginador = PageRequest.of(pagina,cantidad,Sort.by(Direction.DESC,"numeroPoliza"));		
+		return seguroRepository.findAll(paginador);
+	}
+
+	@Override
+	public Page<Seguro> bucarFechaDespuesDePaginado(Date fechaInicio, Integer pagina, Integer cantidad) {
+
+		Pageable paginador = PageRequest.of(pagina, cantidad);
+		return seguroRepository.findByFechaInicioAfter(paginador, fechaInicio);
+		
+	}
+	
 }

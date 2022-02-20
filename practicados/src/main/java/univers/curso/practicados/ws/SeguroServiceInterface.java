@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,14 @@ public interface SeguroServiceInterface {
 	public void deleteSeguro(@PathVariable("numeroPoliza") Integer numeroPoliza);
 
 	@GetMapping(path = "/buscar/fecha/despuesde/{fechaInicio}")
-	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio);
-
+	public List<Seguro> bucarFechaDespuesDe(@PathVariable Date fechaInicio) ;
+	
+	
+	/*Servicio Alex Jeronimo*/
+	@GetMapping(path= "/paginado/{pagina}/{cantidad}")
+	public Page<Seguro> segurosForPage(@PathVariable Integer pagina, @PathVariable Integer cantidad);
+	
+	@GetMapping(path = "/buscar/fecha/despuesde/{fechaInicio}/{pagina}/{cantidad}")
+	public Page<Seguro> bucarFechaDespuesDePaginado(@PathVariable Date fechaInicio, @PathVariable Integer pagina, @PathVariable Integer cantidad) ;
+	
 }
