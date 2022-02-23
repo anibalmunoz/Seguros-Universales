@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.PeritoDto;
 
@@ -47,7 +48,7 @@ class PeritoServiceImplTest {
 			peritoDto.setCodPostal("TEST");
 			peritoDto.setCiudad("TEST");
 
-			Perito perito = peritoService.savePerito(peritoDto);
+			ResponseEntity<Perito> perito = peritoService.savePerito(peritoDto);
 			assertNotNull(perito, "El perito se guarda o se modifica correctamente");
 			LOG.info("El perito se guarda o se modifica correctamente");
 		} catch (Exception ex) {

@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.CompaniaDto;
 
@@ -44,7 +45,7 @@ class CompaniaServiceImplTest {
 			companiaDto.setTelefonoSiniestros("TEST");
 			companiaDto.setNotas("TEST");
 
-			Compania compania = companiaService.guardar(companiaDto);
+			ResponseEntity<Compania> compania = companiaService.guardar(companiaDto);
 			assertNotNull(compania, "La compania se guarda o se modifica correctamente");
 			LOG.info("La compania se guarda o se modifica correctamente");
 		} catch (Exception ex) {

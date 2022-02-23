@@ -3,6 +3,8 @@ package univers.curso.practicados.implementation;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.FuncionDto;
@@ -36,21 +38,29 @@ public class ProcedimientoServiceImplementation implements ProcedimientoServiceI
 	/*
 	 * Procedmiento almacenado
 	 */
-	
+
 	@Override
-	public ProcedimientoDto insertPolizaReturnPost(SeguroDto seguroDto) {
+	public ResponseEntity<ProcedimientoDto> insertPolizaReturnPost(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);
-		return procedimientoService.insertPolizaReturnPost(seguro);
+		try {
+			return new ResponseEntity<>(procedimientoService.insertPolizaReturnPost(seguro), null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/*
 	 * Funcion almacenada en paquete
 	 */
-	
+
 	@Override
-	public FuncionDto insertarSeguro(SeguroDto seguroDto) {
+	public ResponseEntity<FuncionDto> insertarSeguro(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);
-		return procedimientoService.insertarSeguro(seguro);
+		try {
+			return new ResponseEntity<>(procedimientoService.insertarSeguro(seguro), null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private Seguro convertirSeguroDtoASeguro(SeguroDto seguroDto) {

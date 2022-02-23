@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.SiniestroDto;
@@ -26,9 +28,13 @@ public class SiniestroService implements SiniestroServiceInterface {
 	}
 
 	@Override
-	public Siniestro guardar(SiniestroDto siniestroDto) {
+	public ResponseEntity<Siniestro> guardar(SiniestroDto siniestroDto) {
 		Siniestro siniestro = convertirSiniestroDtoASiniestro(siniestroDto);
-		return siniestroRepository.save(siniestro);
+		try {
+			return new ResponseEntity<>(siniestroRepository.save(siniestro), null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private Siniestro convertirSiniestroDtoASiniestro(SiniestroDto siniestroDto) {

@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.FuncionDto;
 import univers.curso.practicados.dto.ProcedimientoDto;
@@ -33,7 +34,7 @@ class ProcedimientoServiceImplTest {
 		seguroDto.setObervaciones("TEST");
 		seguroDto.setDniCl(1);
 
-		ProcedimientoDto procedimientoDto = procedimientoServiceImplementation.insertPolizaReturnPost(seguroDto);
+		ResponseEntity<ProcedimientoDto> procedimientoDto = procedimientoServiceImplementation.insertPolizaReturnPost(seguroDto);
 		assertNotNull(procedimientoDto, "Insercion creada exitosamente");
 		LOG.info("Insercion creada exitosamente");
 	}
@@ -49,7 +50,7 @@ class ProcedimientoServiceImplTest {
 		seguroDto.setObervaciones("TEST");
 		seguroDto.setDniCl(1);
 		
-		FuncionDto funcionDto = procedimientoServiceImplementation.insertarSeguro(seguroDto);
+		ResponseEntity<FuncionDto> funcionDto = procedimientoServiceImplementation.insertarSeguro(seguroDto);
 		assertNotNull(funcionDto, "Insercion creada exitosamente");
 		LOG.info("Insercion creada exitosamente");
 		

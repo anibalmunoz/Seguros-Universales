@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.SiniestroDto;
 
@@ -40,7 +41,7 @@ class SiniestroServiceImplTest {
 		siniestroDto.setIndemnizacion("TEST");
 		siniestroDto.setNumeroPoliza(2);
 
-		Siniestro siniestro = siniestroService.guardar(siniestroDto);
+		ResponseEntity<Siniestro> siniestro = siniestroService.guardar(siniestroDto);
 		assertNotNull(siniestro, "Siniestro agregado o modificado exitosamente");
 		LOG.info("Siniestro agreagdo o modificado exitosamente");
 	}

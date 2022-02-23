@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.PeritoDto;
@@ -25,9 +27,13 @@ public class PeritoService implements PeritoServiceInterface {
 	}
 
 	@Override
-	public Perito savePerito(PeritoDto peritoDto) {
+	public ResponseEntity<Perito> savePerito(PeritoDto peritoDto) {
 		Perito perito = convertirPeritoDtoAPerito(peritoDto);
-		return peritoRepository.save(perito);
+		try {
+			return new ResponseEntity<>(peritoRepository.save(perito), null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private Perito convertirPeritoDtoAPerito(PeritoDto peritoDto) {

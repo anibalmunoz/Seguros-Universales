@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.SeguroDto;
@@ -26,19 +28,23 @@ public class SeguroService implements SeguroServiceInterface {
 
 	@Autowired
 	SeguroRepository seguroRepository;
-	
+
 	@Autowired
 	CatalogosService catalogosService;
-	
+
 	@Override
 	public List<Seguro> buscar() {
 		return seguroRepository.findAll();
 	}
 
 	@Override
-	public Seguro guardar(SeguroDto seguroDto) {
+	public ResponseEntity<Seguro> guardar(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);
-		return seguroRepository.save(seguro);
+		try {
+			return new ResponseEntity<>(seguroRepository.save(seguro), null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private Seguro convertirSeguroDtoASeguro(SeguroDto seguroDto) {
@@ -55,32 +61,27 @@ public class SeguroService implements SeguroServiceInterface {
 		}
 	}
 
-
 	@Override
 	public List<Map<String, Object>> buscarSegurosCliente(Integer dniCl) {
 		return catalogosService.buscarPolizasCliente(dniCl);
 	}
 
-	
 	/*
 	 * Consulta DSL
 	 */
-	
+
 	@Override
 	public List<Seguro> bucarFechaDespuesDe(Date fechaInicio) {
 		return seguroRepository.findByFechaInicioAfter(fechaInicio);
 	}
 
-
 	// localhost:8080/seguro/buscar/fecha/despuesde/2010-10-09
-	
-	
-	
-	/*Implementacioón Servico A. Jeronimo */
+
+	/* Implementacioón Servico A. Jeronimo */
 	@Override
 	public Page<Seguro> segurosForPage(Integer pagina, Integer cantidad) {
 
-		Pageable paginador = PageRequest.of(pagina,cantidad,Sort.by(Direction.DESC,"numeroPoliza"));		
+		Pageable paginador = PageRequest.of(pagina, cantidad, Sort.by(Direction.DESC, "numeroPoliza"));
 		return seguroRepository.findAll(paginador);
 	}
 
@@ -89,7 +90,7 @@ public class SeguroService implements SeguroServiceInterface {
 
 		Pageable paginador = PageRequest.of(pagina, cantidad);
 		return seguroRepository.findByFechaInicioAfter(paginador, fechaInicio);
-		
+
 	}
-	
+
 }

@@ -2,6 +2,7 @@ package univers.curso.practicados.ws;
 
 import java.sql.Date;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,14 +37,14 @@ public interface ProcedimientoServiceInterface {
 	 */
 	
 	@PostMapping(path="/insertar/seguro/procedimiento")
-	public ProcedimientoDto insertPolizaReturnPost(@RequestBody SeguroDto seguroDto);
+	public ResponseEntity<ProcedimientoDto> insertPolizaReturnPost(@RequestBody SeguroDto seguroDto);
 	
 	/*
 	 * Funcion en paquete
 	 */
 	
 	@PostMapping(path = "/insertar/seguro")
-	public FuncionDto insertarSeguro(@RequestBody SeguroDto seguroDto);
+	public ResponseEntity<FuncionDto> insertarSeguro(@RequestBody SeguroDto seguroDto);
 	
 	/*Funcion de prueba*/
 	

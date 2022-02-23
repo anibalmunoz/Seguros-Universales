@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.ClienteDto;
 
@@ -59,23 +60,12 @@ class ClienteServiceImplTest {
 			clienteDto.setTelefono(122345678);
 			clienteDto.setObservaciones("Prueba");
 
-			Cliente cliente = clienteService.saveCliente(clienteDto);
+			ResponseEntity<Cliente> cliente = clienteService.saveCliente(clienteDto);
 			assertNotNull(cliente, "El cliente se guarda o se modifica correctamente");
 			LOG.info("El cliente se guarda o se modifica correctamente");
 		} catch (Exception ex) {
 			LOG.error(ex.getMessage());
 			fail("Error al guardar el cliente: " + ex.getMessage());
-		}
-	}
-
-	@Test
-	void eliminarCliente() {
-		try {
-			clienteService.eliminarCliente(23);
-			assert (true);
-			LOG.info("Prueba de eliminar cliente correcta");
-		} catch (Exception ex) {
-			LOG.error(ex.getMessage());
 		}
 	}
 

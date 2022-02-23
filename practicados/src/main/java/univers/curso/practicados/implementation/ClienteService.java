@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.ClienteDto;
@@ -35,21 +37,27 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	@Override
-	public Cliente saveCliente(ClienteDto clienteDto) {
+	public ResponseEntity<Cliente> saveCliente(ClienteDto clienteDto) {
 		Cliente cliente = convertirClienteDtoACliente(clienteDto);
-		List<Seguro> segurosClienteList = cliente.getSegurosList();
-		cliente.setSegurosList(null);
-		cliente = clienteRepository.save(cliente);
-		cliente.setSegurosList(new LinkedList<>());
-		if (segurosClienteList != null) {
-			for (Seguro seguro : segurosClienteList) {
-				seguro.setDniCl(cliente.getDniCl());
-				seguroRepository.save(seguro);
-				cliente.getSegurosList().add(seguro);
-			}
 
+		try {
+			List<Seguro> segurosClienteList = cliente.getSegurosList();
+			cliente.setSegurosList(null);
+			cliente = clienteRepository.save(cliente);
+			cliente.setSegurosList(new LinkedList<>());
+			if (segurosClienteList != null) {
+				for (Seguro seguro : segurosClienteList) {
+					seguro.setDniCl(cliente.getDniCl());
+					seguroRepository.save(seguro);
+					cliente.getSegurosList().add(seguro);
+				}
+
+			}
+			return new ResponseEntity<>(cliente, null, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return cliente;
+
 	}
 
 	private Cliente convertirClienteDtoACliente(ClienteDto clienteDto) {

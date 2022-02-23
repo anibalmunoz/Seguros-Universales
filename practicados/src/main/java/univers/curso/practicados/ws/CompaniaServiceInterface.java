@@ -2,6 +2,7 @@ package univers.curso.practicados.ws;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public interface CompaniaServiceInterface {
 	public List<Compania> buscar();
 
 	@PostMapping(path = "/guardar")
-	public Compania guardar(@RequestBody CompaniaDto companiaDto);
+	public ResponseEntity<Compania> guardar(@RequestBody CompaniaDto companiaDto);
 
 	@DeleteMapping(path = "/eliminar/{nombreCompania}")
 	public void deleteCompania(@PathVariable("nombreCompania") String nombreCompania);

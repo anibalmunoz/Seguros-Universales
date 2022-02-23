@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import univers.curso.practicados.dto.SeguroDto;
 
@@ -43,7 +44,7 @@ class SeguroServiceImplTest {
 			seguroDto.setObervaciones("TEST");
 			seguroDto.setDniCl(1);
 
-			Seguro seguro = seguroService.guardar(seguroDto);
+			ResponseEntity<Seguro> seguro = seguroService.guardar(seguroDto);
 			assertNotNull(seguro, "El seguro se guarda o se modifica correctamente");
 			LOG.info("El seguro se guarda o se modifica correctamente");
 		} catch (Exception ex) {
