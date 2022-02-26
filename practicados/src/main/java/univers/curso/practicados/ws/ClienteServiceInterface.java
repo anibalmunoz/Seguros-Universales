@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.ClienteDto;
+import univers.curso.practicados.dto.GroupByDto;
 import univers.curso.practicados.entity.Cliente;
 
 @RestController
@@ -95,20 +96,13 @@ public interface ClienteServiceInterface {
 
 	@GetMapping(path = "/buscar/todos")
 	public List<Cliente> buscarTodos();
-	
-	@GetMapping(path="/prueba")
-	public List <Cliente> prueba();
-	
-	@GetMapping(path="/groupby/ciudad")
-	public List<Map<String,Object>> groupBy();
-	
-	/*
-	 * JOIN
-	 */
 
-	@GetMapping(path="/join")
+	@GetMapping(path = "/groupby/ciudad")
+	public List<Map<String, Object>> groupByCatalogo();
+
+	@GetMapping(path = "/join")
 	public List<Cliente> join();
-	
-	@GetMapping(path="/funcion")
-	public List<Object[]> agregacion();
+
+	@GetMapping(path = "/funcion")
+	public List<GroupByDto> groupBy();
 }

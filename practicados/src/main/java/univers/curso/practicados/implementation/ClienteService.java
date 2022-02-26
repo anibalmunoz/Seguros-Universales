@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.ClienteDto;
+import univers.curso.practicados.dto.GroupByDto;
 import univers.curso.practicados.entity.Cliente;
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.ClienteRepository;
@@ -171,13 +171,7 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	@Override
-	public List<Cliente> prueba() {
-		TypedQuery<Cliente> query = entityManager.createQuery("SELECT c FROM Seguro s JOIN s.cliente c", Cliente.class);
-		return query.getResultList();
-	}
-	
-	@Override
-	public List<Map<String,Object>> groupBy(){
+	public List<Map<String, Object>> groupByCatalogo() {
 		return catalogosService.groupBy();
 	}
 
@@ -187,8 +181,8 @@ public class ClienteService implements ClienteServiceInterface {
 	}
 
 	@Override
-	public List<Object[]> agregacion() {
-		return clienteRepository.agregacion();
+	public List<GroupByDto> groupBy() {
+		return clienteRepository.groupBy();
 	}
 
 }

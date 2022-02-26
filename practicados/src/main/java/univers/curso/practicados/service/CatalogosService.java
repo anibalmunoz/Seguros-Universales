@@ -102,9 +102,5 @@ public class CatalogosService {
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource();
 		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
 	}
-	
-	/*
-	 * Función de agregación
-	 */
 
 }

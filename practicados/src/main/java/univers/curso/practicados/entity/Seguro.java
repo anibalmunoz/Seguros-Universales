@@ -58,13 +58,6 @@ public class Seguro implements Serializable {
 	@Column(name = "DNI_CL")
 	private Integer dniCl;
 
-	// @ManyToOne()
-	// private Cliente cliente;
-
-	// @OneToMany(mappedBy = "numeroPoliza", cascade = CascadeType.ALL,
-	// orphanRemoval = false)
-	// private List<Siniestro> siniestrosList;
-
 	@OneToMany(mappedBy = "numeroPoliza", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<CompaniaSeguro> companiasList;
 
