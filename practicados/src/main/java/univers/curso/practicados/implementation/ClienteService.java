@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -30,6 +36,9 @@ public class ClienteService implements ClienteServiceInterface {
 
 	@Autowired
 	CatalogosService catalogosService;
+
+	@Autowired
+	EntityManager entityManager;
 
 	@Override
 	public List<Cliente> buscar() {
@@ -145,6 +154,41 @@ public class ClienteService implements ClienteServiceInterface {
 	@Override
 	public List<Map<String, Object>> selectClienteSeguro(String fechaInicio, String fechaVencimiento) {
 		return catalogosService.selectClienteSeguro(fechaInicio, fechaVencimiento);
+	}
+
+	/*
+	 * JPQL
+	 */
+	@Override
+	public Page<Cliente> buscarGuatemala(String ciudad, int pagina, int cantidad) {
+		Pageable paginador = PageRequest.of(pagina, cantidad);
+		return clienteRepository.buscarGuatemala(paginador, ciudad);
+	}
+
+	@Override
+	public List<Cliente> buscarTodos() {
+		return clienteRepository.buscarTodos();
+	}
+
+	@Override
+	public List<Cliente> prueba() {
+		TypedQuery<Cliente> query = entityManager.createQuery("SELECT c FROM Seguro s JOIN s.cliente c", Cliente.class);
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Map<String,Object>> groupBy(){
+		return catalogosService.groupBy();
+	}
+
+	@Override
+	public List<Cliente> join() {
+		return clienteRepository.join();
+	}
+
+	@Override
+	public List<Object[]> agregacion() {
+		return clienteRepository.agregacion();
 	}
 
 }

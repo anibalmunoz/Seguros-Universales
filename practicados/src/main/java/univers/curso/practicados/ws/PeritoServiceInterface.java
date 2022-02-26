@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import univers.curso.practicados.dto.GroupByDto;
 import univers.curso.practicados.dto.PeritoDto;
 
 import univers.curso.practicados.entity.Perito;
@@ -39,5 +40,8 @@ public interface PeritoServiceInterface {
 
 	@GetMapping(path = "/buscar/apellido2/ocupado")
 	public List<Perito> apellido2NoVacio();
+	
+	@GetMapping(path="/prueba")
+	public List<Object[]> prueba();
 
 }

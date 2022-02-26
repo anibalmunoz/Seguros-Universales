@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,6 +21,8 @@ import lombok.Data;
 
 @SequenceGenerator(name = "sqcCliente", sequenceName = "SQC_CLIENTE", allocationSize = 1)
 @Data
+@NamedQuery(name = "Cliente.buscarTodos", query = "SELECT c FROM Cliente c")
+
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = -2401368180924723332L;

@@ -49,8 +49,5 @@ public class Perito implements Serializable {
 
 	@Column(name = "CIUDAD")
 	private String ciudad;
-	
-	
-
 
 }

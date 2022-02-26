@@ -3,6 +3,7 @@ package univers.curso.practicados.ws;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +30,7 @@ public interface ClienteServiceInterface {
 
 	@DeleteMapping(path = "/eliminar/{dniCl}")
 	public void eliminarCliente(@PathVariable("dniCl") Integer dniCl);
-	
+
 	/*
 	 * Consultas DSL
 	 */
@@ -47,7 +48,7 @@ public interface ClienteServiceInterface {
 	/*
 	 * Scripts de bases de datos
 	 */
-	
+
 	@GetMapping(path = "/buscar/clientes")
 	public List<Map<String, Object>> buscarClientes();
 
@@ -81,6 +82,33 @@ public interface ClienteServiceInterface {
 	 * Select
 	 */
 	@GetMapping(path = "/select/poliza/{fechaInicio}/{fechaVencimiento}")
-	public List<Map<String, Object>> selectClienteSeguro(@PathVariable String fechaInicio, @PathVariable String fechaVencimiento);
+	public List<Map<String, Object>> selectClienteSeguro(@PathVariable String fechaInicio,
+			@PathVariable String fechaVencimiento);
 
+	/*
+	 * JPQL
+	 */
+
+	@GetMapping(path = "/buscar/{ciudad}/{pagina}/{cantidad}")
+	public Page<Cliente> buscarGuatemala(@PathVariable("ciudad") String ciudad, @PathVariable("pagina") int pagina,
+			@PathVariable("cantidad") int cantidad);
+
+	@GetMapping(path = "/buscar/todos")
+	public List<Cliente> buscarTodos();
+	
+	@GetMapping(path="/prueba")
+	public List <Cliente> prueba();
+	
+	@GetMapping(path="/groupby/ciudad")
+	public List<Map<String,Object>> groupBy();
+	
+	/*
+	 * JOIN
+	 */
+
+	@GetMapping(path="/join")
+	public List<Cliente> join();
+	
+	@GetMapping(path="/funcion")
+	public List<Object[]> agregacion();
 }

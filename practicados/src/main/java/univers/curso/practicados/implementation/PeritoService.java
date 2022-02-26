@@ -1,6 +1,7 @@
 package univers.curso.practicados.implementation;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import univers.curso.practicados.dto.GroupByDto;
 import univers.curso.practicados.dto.PeritoDto;
 
 import univers.curso.practicados.entity.Perito;
@@ -62,6 +64,11 @@ public class PeritoService implements PeritoServiceInterface {
 	@Override
 	public List<Perito> apellido2NoVacio() {
 		return peritoRepository.findByApellidoPerito2NotNull();
+	}
+
+	@Override
+	public List<Object[]> prueba() {
+		return peritoRepository.prueba();
 	}
 
 }

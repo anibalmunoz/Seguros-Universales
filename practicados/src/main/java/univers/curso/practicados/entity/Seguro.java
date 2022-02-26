@@ -2,6 +2,7 @@ package univers.curso.practicados.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -55,6 +57,16 @@ public class Seguro implements Serializable {
 
 	@Column(name = "DNI_CL")
 	private Integer dniCl;
+
+	// @ManyToOne()
+	// private Cliente cliente;
+
+	// @OneToMany(mappedBy = "numeroPoliza", cascade = CascadeType.ALL,
+	// orphanRemoval = false)
+	// private List<Siniestro> siniestrosList;
+
+	@OneToMany(mappedBy = "numeroPoliza", cascade = CascadeType.ALL, orphanRemoval = false)
+	private List<CompaniaSeguro> companiasList;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "COMPANIA_SEGURO", joinColumns = { @JoinColumn(name = "NUMERO_POLIZA") }, inverseJoinColumns = {

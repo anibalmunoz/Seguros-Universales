@@ -42,13 +42,12 @@ public class CatalogosService {
 		namedParameterJdbcTemplate.update(query, sqlParameterSource);
 	}
 
-	
-	public List<Map<String,Object>> buscarPolizasCliente(Integer dniCl){
+	public List<Map<String, Object>> buscarPolizasCliente(Integer dniCl) {
 		String query = "SELECT NUMERO_POLIZA , FECHA_INICIO , FECHA_VENCIMIENTO FROM SEGURO WHERE DNI_CL = :dniCl";
-		SqlParameterSource sqlParameterSource =  new MapSqlParameterSource().addValue(DNI, dniCl);
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource().addValue(DNI, dniCl);
 		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
 	}
-	
+
 	/*
 	 * Insert
 	 */
@@ -72,10 +71,6 @@ public class CatalogosService {
 		return namedParameterJdbcTemplate.update(query, sqlParameterSource);
 	}
 
-	
-	
-	
-	
 	/*
 	 * Delete
 	 */
@@ -94,8 +89,22 @@ public class CatalogosService {
 				+ "WHERE FECHA_VENCIMIENTO BETWEEN TO_DATE (:fechaInicio,'DD/MM/YY') AND TO_DATE(:fechaVencimiento,'DD/MM/YY')";
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource().addValue("fechaInicio", fechaInicio)
 				.addValue("fechaVencimiento", fechaVencimiento);
-		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);			
-		//localhost:8080/cliente/select/poliza/01-01-2021/31-12-2026
+		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
+		// localhost:8080/cliente/select/poliza/01-01-2021/31-12-2026
 	}
+
+	/*
+	 * GROUP BY Y FUNCION DE AGREGACION *
+	 */
+
+	public List<Map<String, Object>> groupBy() {
+		String query = "select apellido_1, count(*) , ciudad from cliente group by apellido_1 , ciudad";
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
+	}
+	
+	/*
+	 * Función de agregación
+	 */
 
 }

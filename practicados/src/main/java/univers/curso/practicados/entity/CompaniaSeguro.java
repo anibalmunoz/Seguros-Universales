@@ -25,4 +25,5 @@ public class CompaniaSeguro implements Serializable {
 
 	@Column(name = "NOMBRE_COMPANIA")
 	private String nombreCompania;
+
 }

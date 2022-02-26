@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
+import univers.curso.practicados.entity.Perito;
 
 @Data
 public class SiniestroDto implements Serializable {
@@ -16,5 +17,6 @@ public class SiniestroDto implements Serializable {
 	private String aceptado;
 	private String indemnizacion;
 	private Integer numeroPoliza;
+	private Perito perito;
 
 }
