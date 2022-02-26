@@ -98,7 +98,7 @@ public class CatalogosService {
 	 */
 
 	public List<Map<String, Object>> groupBy() {
-		String query = "select apellido_1, count(*) , ciudad from cliente group by apellido_1 , ciudad";
+		String query = "select apellido_1 Apellidos, count(*) Cantidad, ciudad Ciudad from cliente group by apellido_1 , ciudad";
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource();
 		return namedParameterJdbcTemplate.queryForList(query, sqlParameterSource);
 	}
