@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ejemplo1';
+
+  irClientes() {
+    location.href = "/clientes";
+  }
+
+  irBienvenida() {
+    location.href ="";
+  }
+
 }

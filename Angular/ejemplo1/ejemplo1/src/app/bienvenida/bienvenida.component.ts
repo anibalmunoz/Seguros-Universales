@@ -20,5 +20,7 @@ export class BienvenidaComponent implements OnInit {
     this.saludo = "Hola "+ this.nombre + " mucho gusto";
   }
 
+    
+
 
 }
