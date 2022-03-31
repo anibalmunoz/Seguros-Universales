@@ -10,8 +10,6 @@ import { MessageService } from 'primeng/api';
 })
 export class ClientesComponent implements OnInit {
 
-  //private messageService: MessageService
-  constructor(private clienteService: ClienteService) { }
 
   clientes: any = [];
   clienteNuevo: any = {};
@@ -21,11 +19,17 @@ export class ClientesComponent implements OnInit {
   finalPagina: boolean = false;
   pagina: number = 0;
   filas: number = 5;
-  posiblesPaginas:any=["5","10","15"];
+  paginasTotales: number = 0;
+  cantidadClientes:number=0;
 
   //customers: any = [];
   first = 0;
   rows = 10;
+
+  //private messageService: MessageService
+  constructor(private clienteService: ClienteService) { }
+
+
 
 
   ngOnInit(): void {
@@ -58,7 +62,7 @@ export class ClientesComponent implements OnInit {
 
   finalizarGurdar(respuesta: any) {
     console.log(respuesta);
-    this.obtenerClientes();
+    this.obtenerPaginado(this.pagina,this.filas);
   }
 
   mostrarFormularios() {
@@ -78,11 +82,12 @@ export class ClientesComponent implements OnInit {
   mostrarPaginado(pageable: any) {
     this.paginado = pageable;
     this.clientes = pageable.content;
+    this.paginasTotales = pageable.totalPages;
+    this.cantidadClientes=pageable.totalElements;
     console.log(pageable);
     if (pageable.last) {
       this.finalPagina = true;
     }
-
     if (pageable.first) {
       this.primeraPagina = true;
     }
