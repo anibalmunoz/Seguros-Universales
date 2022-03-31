@@ -41,5 +41,10 @@ export class SeguroService {
     return this.consumirPost("seguro/guardar", cliente);
   }
 
+  //PRUEBA DE CONSUMO DE PAGEABLE
+
+  seguroPaginado(pagina:number,cantidad:number){
+    return this.consumirGet("seguro/paginado/"+pagina+"/"+cantidad)
+  }
 
 }

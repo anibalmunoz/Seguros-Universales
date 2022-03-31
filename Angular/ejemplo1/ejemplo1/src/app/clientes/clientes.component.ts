@@ -10,6 +10,13 @@ import { MessageService } from 'primeng/api';
 })
 export class ClientesComponent implements OnInit {
 
+  lang = [
+    { name: 5 },
+    { name: 10 },
+    { name: 15 },
+  ];
+
+  paginas: any = { name: 5 };
 
   clientes: any = [];
   clienteNuevo: any = {};
@@ -20,7 +27,8 @@ export class ClientesComponent implements OnInit {
   pagina: number = 0;
   filas: number = 5;
   paginasTotales: number = 0;
-  cantidadClientes:number=0;
+  cantidadClientes: number = 0;
+  listaSeguros: any = [];
 
   //customers: any = [];
   first = 0;
@@ -61,8 +69,7 @@ export class ClientesComponent implements OnInit {
   }
 
   finalizarGurdar(respuesta: any) {
-    console.log(respuesta);
-    this.obtenerPaginado(this.pagina,this.filas);
+    this.obtenerPaginado(this.pagina, this.filas);
   }
 
   mostrarFormularios() {
@@ -83,8 +90,9 @@ export class ClientesComponent implements OnInit {
     this.paginado = pageable;
     this.clientes = pageable.content;
     this.paginasTotales = pageable.totalPages;
-    this.cantidadClientes=pageable.totalElements;
-    console.log(pageable);
+    this.cantidadClientes = pageable.totalElements;
+    this.listaSeguros = this.clientes.segurosList;
+    this.filas = this.paginas.name;
     if (pageable.last) {
       this.finalPagina = true;
     }
@@ -103,6 +111,7 @@ export class ClientesComponent implements OnInit {
     if (!this.finalPagina) {
       this.pagina = this.pagina + 1;
       this.primeraPagina = false;
+      this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
     //this.first = this.first + this.rows;
@@ -112,6 +121,7 @@ export class ClientesComponent implements OnInit {
     if (!this.primeraPagina) {
       this.pagina = this.pagina - 1;
       this.finalPagina = false;
+      this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
     //this.first = this.first - this.rows;
@@ -119,10 +129,11 @@ export class ClientesComponent implements OnInit {
 
   reset() {
     //this.first = 0;
-    this.obtenerPaginado(0, this.filas);
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;
+    this.filas = this.paginas.name;
+    this.obtenerPaginado(0, this.filas);
   }
   /*
     isLastPage(): boolean {

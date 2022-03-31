@@ -160,7 +160,7 @@
         </ng-template>
 
     </p-table>
-    <div class="col-md-8 text-center">
+    <div class="col-md-9 text-center">
         <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]=finalPagina
             styleClass="p-button-text" class="float-end"></p-button>
         <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text" class="float-end">
@@ -170,8 +170,10 @@
         <font class="float-end" color="white">__</font>
         <font [size]="5" class="float-end">Página {{ pagina +1}} de {{paginasTotales}} </font>
         <font class="float-end" color="white">__</font>
-        <input type="number" pInputText required max="15" [(ngModel)]="filas" class="float-end">
-        <font [size]="5" class="float-end">Filas: </font>
+        <p-dropdown [options]="lang" placeholder="Filas" optionLabel="name" [showClear]="false" [(ngModel)]="paginas" class="float-end">
+        </p-dropdown>
+        <font class="float-end" color="white">__</font>
+        <font [size]="5" class="float-end">Filas</font>     
     </div>
 </div>
 
