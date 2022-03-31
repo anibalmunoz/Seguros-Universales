@@ -99,6 +99,7 @@ export class ClientesComponent implements OnInit {
     if (pageable.first) {
       this.primeraPagina = true;
     }
+    console.log(this.pagina);
   }
 
 
@@ -114,7 +115,15 @@ export class ClientesComponent implements OnInit {
       this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
-    //this.first = this.first + this.rows;
+  }
+
+  last() {
+    if (!this.finalPagina) {
+      this.pagina = this.paginasTotales - 1;
+      this.primeraPagina = false;
+      this.filas = this.paginas.name;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
   }
 
   prev() {
@@ -124,11 +133,18 @@ export class ClientesComponent implements OnInit {
       this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
-    //this.first = this.first - this.rows;
+  }
+
+  primero() {
+    if (!this.primeraPagina) {
+      this.pagina = 0;
+      this.finalPagina = false;
+      this.filas = this.paginas.name;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
   }
 
   reset() {
-    //this.first = 0;
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;

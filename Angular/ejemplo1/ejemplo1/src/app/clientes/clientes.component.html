@@ -12,6 +12,10 @@
         </div>
     </div>
     <br>
+
+
+
+
     <form id="crearCliente" *ngIf="mostrarFormulario">
         <font COLOR="white">
             <h3>Crear un nuevo cliente</h3>
@@ -142,6 +146,7 @@
                 <th>Ciudad</th>
                 <th>Teléfono</th>
                 <th>Observaciones</th>
+                <th>Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>
@@ -156,24 +161,36 @@
                 <td>{{c.ciudad}}</td>
                 <td>{{c.telefono}}</td>
                 <td>{{c.observaciones}}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit"
+                        class="p-button-rounded p-button-warning"></button>
+                    &nbsp;
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger"></button>
+                </td>
             </tr>
         </ng-template>
 
     </p-table>
-    <div class="col-md-9 text-center">
+    <div class="col-md-8 text-center">
+        <p-button type="button" icon="pi pi-angle-double-right" (click)="last()" [disabled]=finalPagina
+            styleClass="p-button-text" class="float-end"></p-button>
         <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]=finalPagina
             styleClass="p-button-text" class="float-end"></p-button>
         <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text" class="float-end">
         </p-button>
         <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]=primeraPagina
             styleClass="p-button-text" class="float-end"></p-button>
+        <p-button type="button" icon="pi pi-angle-double-left" (click)="primero()" [disabled]=primeraPagina
+            styleClass="p-button-text" class="float-end"></p-button>
         <font class="float-end" color="white">__</font>
         <font [size]="5" class="float-end">Página {{ pagina +1}} de {{paginasTotales}} </font>
         <font class="float-end" color="white">__</font>
-        <p-dropdown [options]="lang" placeholder="Filas" optionLabel="name" [showClear]="false" [(ngModel)]="paginas" class="float-end">
+        <p-dropdown [options]="lang" placeholder="Filas" optionLabel="name" [showClear]="false" [(ngModel)]="paginas"
+            class="float-end">
         </p-dropdown>
         <font class="float-end" color="white">__</font>
-        <font [size]="5" class="float-end">Filas</font>     
+        <font [size]="5" class="float-end">Filas</font>
     </div>
 </div>
 

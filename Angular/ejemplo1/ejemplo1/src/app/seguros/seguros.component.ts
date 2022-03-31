@@ -110,6 +110,16 @@ export class SegurosComponent implements OnInit {
     //this.first = this.first + this.rows;
   }
 
+  last() {
+    if (!this.finalPagina) {
+      this.pagina = this.paginasTotales - 1;
+      this.primeraPagina = false;
+      this.filas = this.paginas.name;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
+  }
+
+
   prev() {
     if (!this.primeraPagina) {
       this.pagina = this.pagina - 1;
@@ -118,6 +128,15 @@ export class SegurosComponent implements OnInit {
       this.obtenerPaginado(this.pagina, this.filas);
     }
     //this.first = this.first - this.rows;
+  }
+
+  primero() {
+    if (!this.primeraPagina) {
+      this.pagina = 0;
+      this.finalPagina=false;
+      this.filas=this.paginas.name;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
   }
 
   reset() {
