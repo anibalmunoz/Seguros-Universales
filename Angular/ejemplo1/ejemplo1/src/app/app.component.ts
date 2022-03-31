@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {MenuItem} from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,10 @@ export class AppComponent {
 
   irClientes() {
     location.href = "/clientes";
+  }
+
+  irSeguros() {
+    location.href = "/seguros";
   }
 
   irBienvenida() {

@@ -6,10 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class SeguroService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http:HttpClient) { }
 
+  
   private consumirGet(url: string): Observable<any> {
     return this.http.get<any>(environment.urlService + url).pipe(
       catchError(e => this.manejarError(e))
@@ -31,12 +32,13 @@ export class ClienteService {
     return throwError("Ha ocurrido un error");
   }
 
-  buscarClientes() {
-    return this.consumirGet("cliente/buscar");
+  buscarSeguros() {
+    return this.consumirGet("seguro/buscar")
   }
 
-  guardarCliente(cliente: any) {
-    return this.consumirPost("cliente/guardar", cliente);
+  
+  guardarSeguro(cliente: any) {
+    return this.consumirPost("seguro/guardar", cliente);
   }
 
 
