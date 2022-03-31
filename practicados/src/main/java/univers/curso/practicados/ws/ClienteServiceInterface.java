@@ -105,4 +105,12 @@ public interface ClienteServiceInterface {
 
 	@GetMapping(path = "/funcion")
 	public List<GroupByDto> groupBy();
+	
+	
+	/*
+	 * Paginador de clientes
+	 */
+	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
+	public Page<Cliente> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
+	
 }

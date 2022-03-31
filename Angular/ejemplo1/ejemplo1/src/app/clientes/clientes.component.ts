@@ -16,10 +16,22 @@ export class ClientesComponent implements OnInit {
   clientes: any = [];
   clienteNuevo: any = {};
   mostrarFormulario: boolean = false;
+  paginado: any = {};
+  primeraPagina: boolean = false;
+  finalPagina: boolean = false;
+  pagina: number = 0;
+  filas: number = 5;
+  posiblesPaginas:any=["5","10","15"];
+
+  //customers: any = [];
+  first = 0;
+  rows = 10;
+
 
   ngOnInit(): void {
-    this.obtenerClientes();
-    //setInterval(()=>this.obtenerClientes(),1000)
+    //this.obtenerClientes();
+    this.obtenerPaginado(0, this.filas);
+    //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
   }
 
   obtenerClientes() {
@@ -53,20 +65,67 @@ export class ClientesComponent implements OnInit {
     this.mostrarFormulario = !this.mostrarFormulario;
   }
 
- 
+
+  //PRUEBA DE CONSUMO DE PAGEABLE 
+
+  obtenerPaginado(pagina: number, cantidad: number) {
+    //clientePaginado(pagina,cantidad)
+    this.clienteService.clientePaginado(pagina, cantidad).subscribe(
+      (res: any) => this.mostrarPaginado(res)
+    );
+  }
+
+  mostrarPaginado(pageable: any) {
+    this.paginado = pageable;
+    this.clientes = pageable.content;
+    console.log(pageable);
+    if (pageable.last) {
+      this.finalPagina = true;
+    }
+
+    if (pageable.first) {
+      this.primeraPagina = true;
+    }
+  }
+
+
+  //IMPLEMENTACION DE LAS TABLAS CON PAGINACIÓN CUSTOM
+
+
+  //    this.customerService.getCustomersLarge().then(customers => this.customers = customers);
+
+  next() {
+    if (!this.finalPagina) {
+      this.pagina = this.pagina + 1;
+      this.primeraPagina = false;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
+    //this.first = this.first + this.rows;
+  }
+
+  prev() {
+    if (!this.primeraPagina) {
+      this.pagina = this.pagina - 1;
+      this.finalPagina = false;
+      this.obtenerPaginado(this.pagina, this.filas);
+    }
+    //this.first = this.first - this.rows;
+  }
+
+  reset() {
+    //this.first = 0;
+    this.obtenerPaginado(0, this.filas);
+    this.finalPagina = false;
+    this.primeraPagina = true;
+    this.pagina = 0;
+  }
   /*
-    addSingle() {
-      this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+    isLastPage(): boolean {
+      return this.clientes ? this.first === (this.clientes.length - this.rows) : true;
     }
   
-    addMultiple() {
-      this.messageService.addAll([{ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' },
-      { severity: 'info', summary: 'Info Message', detail: 'Via MessageService' }]);
-    }
-  
-    clear() {
-      this.messageService.clear();
+    isFirstPage(): boolean {
+      return this.clientes ? this.first === 0 : true;
     }
   */
-
 }

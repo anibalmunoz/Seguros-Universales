@@ -12,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
 
 import univers.curso.practicados.dto.ClienteDto;
 import univers.curso.practicados.dto.GroupByDto;
@@ -185,4 +188,15 @@ public class ClienteService implements ClienteServiceInterface {
 		return clienteRepository.groupBy();
 	}
 
+	
+	/*
+	 * Paginador de clientes
+	 */
+	@Override
+	public Page<Cliente> buscarPaginado(int pagina, int cantidad) {
+		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "dniCl"));
+		return clienteRepository.findAll(pageable);
+	}
+
+	
 }

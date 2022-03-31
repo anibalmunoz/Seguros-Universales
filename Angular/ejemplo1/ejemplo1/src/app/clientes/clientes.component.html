@@ -123,38 +123,60 @@
 <br>
 <br>
 <br>
+
+<br><br><br><br>
+<div class="col">
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<br><br><br>
 <div class="card">
-    <h3>Lista de clientes</h3>
-    <p-table [value]="clientes" [scrollable]="true" scrollHeight="400px">
+    <div class="col-md-7">
+        <h3 class="float-end">Lista de clientes</h3>
+    </div>
+    <p-table [value]="clientes" [paginator]="false" [rows]="rows" [showCurrentPageReport]="false" [(first)]="first"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5,10,15]">
+
         <ng-template pTemplate="header">
             <tr>
-                <th style="min-width:100px">DNI</th>
-                <th style="min-width:100px">Nombre</th>
-                <th style="min-width:100px">Apellidos</th>
-                <th style="min-width:100px;">Clase vía</th>
-                <th style="min-width:100px;">Nombre vía</th>
-                <th style="min-width:100px;">Número vía</th>
-                <th style="min-width:100px;">Código postal</th>
-                <th style="min-width:100px">Ciudad</th>
-                <th style="min-width:100px">Teléfono</th>
-                <th style="min-width:100px">Observaciones</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Clase Vía</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>
             <tr>
-                <td style="min-width:100px">{{c.dniCl}}</td>
-                <td style="min-width:100px">{{c.nombreCl}}</td>
-                <td style="min-width:100px">{{c.apellido1}} {{c.apellido2}}</td>
-                <td style="min-width:100px">{{c.claseVia}}</td>
-                <td style="min-width:100px">{{c.nombreVia}}</td>
-                <td style="min-width:100px">{{c.numeroVia}}</td>
-                <td style="min-width:100px">{{c.codPostal}}</td>
-                <td style="min-width:100px">{{c.ciudad}}</td>
-                <td style="min-width:100px">{{c.telefono}}</td>
-                <td style="min-width:100px">{{c.observaciones}}</td>
+                <td>{{c.dniCl}}</td>
+                <td>{{c.nombreCl}}</td>
+                <td>{{c.apellido1}} {{c.apellido2}}</td>
+                <td>{{c.claseVia}}</td>
             </tr>
         </ng-template>
+
     </p-table>
+    <div class="col-md-7">
+        <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]=finalPagina
+            styleClass="p-button-text" class="float-end"></p-button>
+        <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text" class="float-end">
+        </p-button>
+        <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]=primeraPagina
+            styleClass="p-button-text" class="float-end"></p-button>
+    </div>
+    <font [size]="10">{{ pagina +1}}</font>
 </div>
 
 <br><br><br><br><br><br><br><br>

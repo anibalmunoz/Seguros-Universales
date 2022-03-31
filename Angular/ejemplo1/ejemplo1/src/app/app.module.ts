@@ -11,6 +11,9 @@ import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {MenubarModule} from 'primeng/menubar';
 import {TabMenuModule} from 'primeng/tabmenu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {DropdownModule} from 'primeng/dropdown';
+
 
 
 
@@ -37,6 +40,8 @@ import { SegurosComponent } from './seguros/seguros.component';
     ToastModule,
     MenubarModule,
     TabMenuModule,
+    BrowserAnimationsModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

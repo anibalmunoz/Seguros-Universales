@@ -39,5 +39,10 @@ export class ClienteService {
     return this.consumirPost("cliente/guardar", cliente);
   }
 
+  //PRUEBA DE CONSUMO DE PAGEABLE
+
+  clientePaginado(pagina:number,cantidad:number){
+    return this.consumirGet("cliente/paginado/"+pagina+"/"+cantidad)
+  }
 
 }
