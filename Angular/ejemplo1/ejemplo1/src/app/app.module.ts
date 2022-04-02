@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {InputTextModule} from 'primeng/inputtext';
+import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import {ButtonModule} from 'primeng/button';
-import {TableModule} from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
-import {MenubarModule} from 'primeng/menubar';
-import {TabMenuModule} from 'primeng/tabmenu';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { MenubarModule } from 'primeng/menubar';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {DropdownModule} from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import { MessagesModule } from 'primeng/messages';
 
 
 
@@ -42,6 +45,9 @@ import { SegurosComponent } from './seguros/seguros.component';
     TabMenuModule,
     BrowserAnimationsModule,
     DropdownModule,
+    ConfirmDialogModule,
+    DynamicDialogModule,
+    MessagesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

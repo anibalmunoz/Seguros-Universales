@@ -1,0 +1,204 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Usuarios Encargados de Pedidos</h1>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row"> 
+        <div class="col-md-12">
+            <a href="/home-admin">Regresar</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row" *ngIf="loading">
+        <div class="col-md-12">
+            <div class="spinner-border text-info float-right" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+ 
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Encargados de Pedidos: <button class="btn btn-info" (click)="agregar()">Nuevo Encargado</button></h2>
+        </div>
+    </div>
+
+
+    <form (ngSubmit)="crear()" id="crear" *ngIf="creando">
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" 
+                    placeholder="Usuario del encargado" class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" 
+                    placeholder="Nombre de encargado" class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="password" 
+                    placeholder="Password de encargado" class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Telefonos: <button class="btn btn-warning btn-sm" (click)="agregarTelefono()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="row" *ngFor="let telefono of usuario.telefonoList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="text"
+                    placeholder="Numero" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="eliminarTelefono(telefono)"> Borrar</button>
+            </div>
+
+        </div>
+
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Correos: <button class="btn btn-warning btn-sm" (click)="agregarCorreo()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row" *ngFor="let correo of usuario.correoList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="email"
+                    placeholder="Correo" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="eliminarCorreo(correo)"> Borrar</button>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Direcciones: <button class="btn btn-warning btn-sm" (click)="agregarDireccion()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="row" *ngFor="let direccion of usuario.direccionList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="text"
+                    placeholder="Direccion" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="eliminarDireccion(direccion)">Borrar</button>
+            </div>
+
+        </div>
+
+
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <input class="btn btn-success float-right" type="submit" value="Guardar">
+            </div>
+        </div>
+    </form>
+
+    <br>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                        <th>Password</th>
+                        <th>Teléfonos</th>
+                        <th>Correos</th>
+                        <th>Direcciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>
+                            {{usuario.usuario}}
+                        </td>
+                        <td>
+                            {{usuario.nombre}}
+                        </td>
+                        <td>
+                            {{usuario.password}}
+                        </td>
+                        <td>
+                            <ul>
+                                <li *ngFor=" let telefono of usuario.telefonoList">{{telefono.telefonoUsuario}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li *ngFor=" let correo of usuario.correoList">{{correo.correoUsuario}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li *ngFor=" let direccion of usuario.direccionList">{{direccion.direccionUsuario}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" (click)="modificarEncargado(usuario)">Modificar</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="eliminarEncargado(usuario)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>

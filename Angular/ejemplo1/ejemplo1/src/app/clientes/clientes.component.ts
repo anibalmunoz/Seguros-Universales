@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteService } from '../servicios/cliente/cliente.service';
+import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { Message } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+
 
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css'],
+  providers: [ConfirmationService, MessageService],
+
 })
 export class ClientesComponent implements OnInit {
 
@@ -29,21 +35,99 @@ export class ClientesComponent implements OnInit {
   paginasTotales: number = 0;
   cantidadClientes: number = 0;
   listaSeguros: any = [];
+  //cliente: any = {};
 
   //customers: any = [];
   first = 0;
   rows = 10;
 
+  msgs: Message[] = [];
+
+  position: string = "";
+
   //private messageService: MessageService
-  constructor(private clienteService: ClienteService) { }
+  //private confirmationService: ConfirmationService,
+  constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, private messageService: MessageService) { }
+
+  //  onConfirm() {
+  //  this.messageService.clear('c');
+  // }
+
+  //onReject() {
+  // this.messageService.clear('c');
+  //}
+
+  //clear() {
+  //    this.messageService.clear();
+  //  }
 
 
+  confirm1(cliente: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de editar el cliente?',
+      header: 'Edicion',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
+        this.modificarCliente(cliente);
+      },
+      reject: () => {
+        // this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+      }
+    });
+  }
 
+  confirm2(cliente: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar este cliente?',
+      header: 'Confirmación de eliminación',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' }];
+        this.eliminarCliente(cliente);
+        this.reset();
+      },
+      reject: () => {
+        //this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+      }
+    });
+  }
+
+  confirmPosition(position: string) {
+    this.position = position;
+
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' }];
+      },
+      reject: () => {
+        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+      },
+      key: "positionDialog"
+    });
+  }
+
+
+  //toast
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+  }
+  showTopCenter() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
+  }
+  showTopDelete() {
+    this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Cliente eliminado correctamente' });
+  }
 
   ngOnInit(): void {
     //this.obtenerClientes();
     this.obtenerPaginado(0, this.filas);
     //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
+    this.primengConfig.ripple = true;
+
   }
 
   obtenerClientes() {
@@ -63,8 +147,10 @@ export class ClientesComponent implements OnInit {
       this.clienteService.guardarCliente(this.clienteNuevo).subscribe(
         (res: any) => this.finalizarGurdar(res)
       )
-      alert("Cliente guardado correctamente");
+      this.showTopCenter();
       formulario.reset();
+      this.clienteNuevo = {};
+      this.mostrarFormulario = false;
     }
   }
 
@@ -99,7 +185,6 @@ export class ClientesComponent implements OnInit {
     if (pageable.first) {
       this.primeraPagina = true;
     }
-    console.log(this.pagina);
   }
 
 
@@ -144,7 +229,7 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  reset() {
+    reset() {
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;
@@ -160,4 +245,25 @@ export class ClientesComponent implements OnInit {
       return this.clientes ? this.first === 0 : true;
     }
   */
+
+  //Modificar cliente
+
+  modificarCliente(cliente: any) {
+    this.clienteNuevo = cliente
+    this.mostrarFormulario = true;
+  }
+
+  //Eliminar Cliente
+
+  eliminarCliente(cliente: any) {
+    this.clienteService.eliminarCliente(cliente.dniCl).subscribe();
+    this.showTopDelete();
+    this.reset();
+  }
+
+  cancelarEditar() {
+    this.mostrarFormulario = false;
+    this.clienteNuevo = {};
+  }
+
 }

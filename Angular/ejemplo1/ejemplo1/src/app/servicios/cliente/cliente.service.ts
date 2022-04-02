@@ -27,6 +27,12 @@ export class ClienteService {
     );
   }
 
+  private consumirDelete(url: string, parametro: any): Observable<any> {
+    return this.http.delete<any>(environment.urlService + url + parametro).pipe(
+      catchError(e => this.manejarError(e))
+    )
+  }
+
   private manejarError(e: any) {
     return throwError("Ha ocurrido un error");
   }
@@ -41,8 +47,14 @@ export class ClienteService {
 
   //PRUEBA DE CONSUMO DE PAGEABLE
 
-  clientePaginado(pagina:number,cantidad:number){
-    return this.consumirGet("cliente/paginado/"+pagina+"/"+cantidad)
+  clientePaginado(pagina: number, cantidad: number) {
+    return this.consumirGet("cliente/paginado/" + pagina + "/" + cantidad)
+  }
+
+  //Eliminar cliente
+  eliminarCliente(cliente: any) {
+    return this.consumirDelete("cliente/eliminar/", cliente);
+
   }
 
 }

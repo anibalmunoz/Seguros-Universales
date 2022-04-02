@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <button type="button" class="btn btn-outline-dark float-end" (click)=mostrarFormularios()>
+            <button type="button" class="btn btn-outline-primary " (click)=mostrarFormularios()>
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
                     <path
@@ -11,7 +11,7 @@
     </div>
     <br>
     <form id="crearSeguro" *ngIf=mostrarFormulario>
-        <font COLOR="white">
+        <font COLOR="black">
             <h3>Crear un nuevo Seguro</h3>
         </font>
         <br>
@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="mb-4">
                     <label class="form-label"> <b>
-                            <font color="white">Fecha de Inicio</font>
+                            <font color="black">Fecha de Inicio</font>
                         </b> </label>
                     <input type="date" pInputText class="form-control" required [(ngModel)]="seguroNuevo.fechaI"
                         [ngModelOptions]="{standalone: true}">

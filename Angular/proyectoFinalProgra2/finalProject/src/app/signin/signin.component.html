@@ -1,0 +1,140 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Crea tu cuenta ahora!</h1>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="loading">
+        <div class="col-md-12">
+            <div class="spinner-border text-info float-right" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <form (ngSubmit)="crear()" id="crear">
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" 
+                    placeholder="Nombre de usuario (este te servira para iniciar sesion en nuestra página)"
+                    class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" 
+                    placeholder="Nombre" class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="password" 
+                    placeholder="Password" class="form-control" required>
+            </div>
+        </div>
+
+        <br>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Telefonos: <button class="btn btn-warning btn-sm" (click)="agregarTelefono()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="row" *ngFor="let telefono of usuario.telefonoList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="text" 
+                    placeholder="Numero" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="borrarTelefono(telefono)"> borrar</button>
+            </div>
+
+        </div>
+
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Correos: <button class="btn btn-warning btn-sm" (click)="agregarCorreo()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row" *ngFor="let correo of usuario.correoList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="email" 
+                    placeholder="Correo" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="borrarCorreo(correo)"> borrar</button>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                Direcciones: <button class="btn btn-warning btn-sm" (click)="agregarDireccion()"> Agregar</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="row" *ngFor="let direccion of usuario.direccionList">
+            <br>
+            <br>
+            <div class="col-md-11">
+                <input type="text" 
+                    placeholder="Direccion" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger btn-sm" (click)="borrarDireccion(direccion)">borrar</button>
+            </div>
+
+        </div>
+
+
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <input class="btn btn-success float-right" type="submit" value="Crear">
+            </div>
+        </div>
+
+        <br>
+
+    </form>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <label class="float-right"><a href="#" (click)="regresar()">Regresar</a>.</label>
+        </div>
+    </div>
+</div>

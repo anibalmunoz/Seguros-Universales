@@ -1,7 +1,10 @@
+<p-messages [value]="msgs"></p-messages>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="top-center" key="td"></p-toast>
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <button type="button" class="btn btn-outline-dark float-end" (click)=mostrarFormularios()>
+            <button type="button" class="btn btn-outline-primary float-start" (click)=mostrarFormularios()>
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-person-plus" viewBox="0 0 16 16">
                     <path
@@ -11,14 +14,10 @@
                 </svg> Crear nuevo cliente</button>
         </div>
     </div>
-    <br>
-
-
-
 
     <form id="crearCliente" *ngIf="mostrarFormulario">
         <font COLOR="white">
-            <h3>Crear un nuevo cliente</h3>
+
         </font>
         <br>
         <div class="row">
@@ -118,7 +117,17 @@
                         class="bi bi-check-square-fill" viewBox="0 0 16 16">
                         <path
                             d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
-                    </svg> Guardar</button>
+
+                    </svg> Guardar </button>
+                &nbsp; &nbsp;
+
+                <button type="button" class="btn btn-outline-danger float-end" (click)=cancelarEditar()>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                    </svg> Cancelar </button>
             </div>
         </div>
     </form>
@@ -163,10 +172,10 @@
                 <td>{{c.observaciones}}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-user-edit"
-                        class="p-button-rounded p-button-warning"></button>
+                        class="p-button-rounded p-button-warning" (click)="confirm1(c)"></button>
                     &nbsp;
-                    <button pButton pRipple type="button" icon="pi pi-times"
-                        class="p-button-rounded p-button-danger"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                        (click)="confirm2(c)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -193,6 +202,14 @@
         <font [size]="5" class="float-end">Filas</font>
     </div>
 </div>
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+
+<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000">
+</p-confirmDialog>
+
+
+
 
 <br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br>
