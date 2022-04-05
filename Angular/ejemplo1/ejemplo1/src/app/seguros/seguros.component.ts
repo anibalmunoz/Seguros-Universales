@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SeguroService } from '../servicios/seguro/seguro.service';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { FormseguroComponent } from '../formseguro/formseguro.component';
+
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
+
+
 
 @Component({
   selector: 'app-seguros',
   templateUrl: './seguros.component.html',
-  styleUrls: ['./seguros.component.css']
+  styleUrls: ['./seguros.component.css'],
+  providers: [ConfirmationService, MessageService, DialogService],
 })
 export class SegurosComponent implements OnInit {
 
@@ -19,7 +28,6 @@ export class SegurosComponent implements OnInit {
   paginasTotales: number = 0;
   cantidadSeguros: number = 0;
 
-  //customers: any = [];
   first = 0;
   rows = 10;
 
@@ -31,13 +39,14 @@ export class SegurosComponent implements OnInit {
   ];
 
   paginas: any = { name: 5 };
+  ref?: DynamicDialogRef;
 
-  constructor(private seguroService: SeguroService) { }
+
+  constructor(private seguroService: SeguroService, private confirmationService: ConfirmationService, private messageService: MessageService,
+    public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    //this.obtenerSeguros();
     this.obtenerPaginado(0, this.filas);
-    //setInterval(()=>this.obtenerClientes(),1000)
   }
 
   obtenerSeguros() {
@@ -59,8 +68,11 @@ export class SegurosComponent implements OnInit {
       this.seguroService.guardarSeguro(this.seguroNuevo).subscribe(
         (res: any) => this.finalizarGuardar(res)
       )
-      alert("Seguro guardado correctamente");
+      this.mostrarGuardarToast();
       formulario.reset();
+      this.seguroNuevo = {};
+      this.mostrarFormulario = false;
+      this.reset();
     }
   }
 
@@ -98,8 +110,6 @@ export class SegurosComponent implements OnInit {
   //IMPLEMENTACION DE LAS TABLAS CON PAGINACIÓN CUSTOM
 
 
-  //    this.customerService.getCustomersLarge().then(customers => this.customers = customers);
-
   next() {
     if (!this.finalPagina) {
       this.pagina = this.pagina + 1;
@@ -107,7 +117,6 @@ export class SegurosComponent implements OnInit {
       this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
-    //this.first = this.first + this.rows;
   }
 
   last() {
@@ -127,14 +136,13 @@ export class SegurosComponent implements OnInit {
       this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
-    //this.first = this.first - this.rows;
   }
 
   primero() {
     if (!this.primeraPagina) {
       this.pagina = 0;
-      this.finalPagina=false;
-      this.filas=this.paginas.name;
+      this.finalPagina = false;
+      this.filas = this.paginas.name;
       this.obtenerPaginado(this.pagina, this.filas);
     }
   }
@@ -146,6 +154,74 @@ export class SegurosComponent implements OnInit {
     this.pagina = 0;
     this.filas = this.paginas.name;
     this.obtenerPaginado(0, this.filas);
+  }
+
+  editarSeguro(seguro: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de editar el seguro?',
+      header: 'Edicion',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.modificarSeguro(seguro);
+      },
+      reject: () => {
+      }
+    });
+  }
+
+  eliminar(seguro: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar este seguro?',
+      header: 'Confirmación de eliminación',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.eliminarSeguro(seguro);
+        this.reset();
+      },
+      reject: () => {
+      }
+    });
+  }
+
+  modificarSeguro(seguro: any) {
+    this.seguroNuevo = seguro
+    this.mostrarFormulario = true;
+  }
+
+  cancelarEditar() {
+    this.mostrarFormulario = false;
+    this.seguroNuevo = {};
+  }
+
+  eliminarSeguro(seguro: any) {
+    this.seguroService.eliminarSeguro(seguro.numeroPoliza).subscribe();
+    this.mostrarDeleteToast();
+    this.reset();
+  }
+
+  mostrarGuardarToast(){
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
+  }
+
+  mostrarDeleteToast() {
+    this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Seguro eliminado correctamente' });
+  }
+
+  formularioComponent() {
+    this.ref = this.dialogService.open(FormseguroComponent, {
+      header: 'Seguro',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000
+    });
+
+    this.ref.onClose.subscribe((respuesta: any) => {
+      if (respuesta) {
+        this.mostrarDeleteToast();
+        this.reset();
+        //this.ngOnInit();
+      }
+    });
   }
 
 }

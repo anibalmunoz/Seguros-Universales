@@ -5,13 +5,15 @@ import { MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 
-
+import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormclienteComponent } from '../formcliente/formcliente.component';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, DialogService],
 
 })
 export class ClientesComponent implements OnInit {
@@ -35,32 +37,25 @@ export class ClientesComponent implements OnInit {
   paginasTotales: number = 0;
   cantidadClientes: number = 0;
   listaSeguros: any = [];
-  //cliente: any = {};
 
-  //customers: any = [];
   first = 0;
   rows = 10;
 
   msgs: Message[] = [];
-
+  ref?: DynamicDialogRef;
   position: string = "";
 
-  //private messageService: MessageService
-  //private confirmationService: ConfirmationService,
-  constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, private messageService: MessageService) { }
 
-  //  onConfirm() {
-  //  this.messageService.clear('c');
-  // }
+  constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService,
+    private primengConfig: PrimeNGConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
-  //onReject() {
-  // this.messageService.clear('c');
-  //}
 
-  //clear() {
-  //    this.messageService.clear();
-  //  }
-
+  ngOnInit(): void {
+    //this.obtenerClientes();
+    this.obtenerPaginado(0, this.filas);
+    //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
+    //this.primengConfig.ripple = true;
+  }
 
   confirm1(cliente: any) {
     this.confirmationService.confirm({
@@ -118,16 +113,28 @@ export class ClientesComponent implements OnInit {
   showTopCenter() {
     this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
   }
+  showTopEdit() {
+    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Cliente editado correctamente' });
+  }
   showTopDelete() {
     this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Cliente eliminado correctamente' });
   }
 
-  ngOnInit(): void {
-    //this.obtenerClientes();
-    this.obtenerPaginado(0, this.filas);
-    //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
-    this.primengConfig.ripple = true;
+  show() {
+    this.ref = this.dialogService.open(FormclienteComponent, {
+      header: 'Cliente',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000
+    });
 
+    this.ref.onClose.subscribe((respuesta: any) => {
+      if (respuesta) {
+        this.showTopCenter();
+        this.reset();
+        this.ngOnInit();
+      }
+    });
   }
 
   obtenerClientes() {
@@ -147,10 +154,11 @@ export class ClientesComponent implements OnInit {
       this.clienteService.guardarCliente(this.clienteNuevo).subscribe(
         (res: any) => this.finalizarGurdar(res)
       )
-      this.showTopCenter();
+      this.showTopEdit();
       formulario.reset();
       this.clienteNuevo = {};
       this.mostrarFormulario = false;
+      this.reset();
     }
   }
 
@@ -229,22 +237,14 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-    reset() {
+  reset() {
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;
     this.filas = this.paginas.name;
     this.obtenerPaginado(0, this.filas);
   }
-  /*
-    isLastPage(): boolean {
-      return this.clientes ? this.first === (this.clientes.length - this.rows) : true;
-    }
-  
-    isFirstPage(): boolean {
-      return this.clientes ? this.first === 0 : true;
-    }
-  */
+
 
   //Modificar cliente
 

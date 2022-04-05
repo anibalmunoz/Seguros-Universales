@@ -55,7 +55,6 @@ export class SeguroService {
 
    //Eliminar cliente
    eliminarSeguro(seguro: any) {
-    return this.consumirDelete("cliente/eliminar/", seguro);
-
+    return this.consumirDelete("seguro/eliminar/", seguro);
   }
 }

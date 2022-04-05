@@ -1,10 +1,13 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 <p-messages [value]="msgs"></p-messages>
 <p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="top-center" key="te"></p-toast>
 <p-toast position="top-center" key="td"></p-toast>
+
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <button type="button" class="btn btn-outline-primary float-start" (click)=mostrarFormularios()>
+            <button type="button" class="btn btn-outline-primary float-start" (click)="show()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-person-plus" viewBox="0 0 16 16">
                     <path
@@ -112,7 +115,7 @@
                 </div>
             </div>
             <div>
-                <button type="button" class="btn btn-outline-success float-end" (click)=enviarFormulario()>
+                <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-check-square-fill" viewBox="0 0 16 16">
                         <path
@@ -121,7 +124,7 @@
                     </svg> Guardar </button>
                 &nbsp; &nbsp;
 
-                <button type="button" class="btn btn-outline-danger float-end" (click)=cancelarEditar()>
+                <button type="button" class="btn btn-outline-danger float-end" (click)="cancelarEditar()">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-x-square-fill" viewBox="0 0 16 16">
@@ -141,7 +144,7 @@
     <h5 class="float-start">Cantidad de resultados: {{cantidadClientes}}</h5>
     <p-table [value]="clientes" [paginator]="false" [rows]="rows" [showCurrentPageReport]="false" [(first)]="first"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[5,10,15]">
+        [rowsPerPageOptions]="[5,10,15]" [scrollable]="true">
 
         <ng-template pTemplate="header">
             <tr>
@@ -202,14 +205,3 @@
         <font [size]="5" class="float-end">Filas</font>
     </div>
 </div>
-
-<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
-
-<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000">
-</p-confirmDialog>
-
-
-
-
-<br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>

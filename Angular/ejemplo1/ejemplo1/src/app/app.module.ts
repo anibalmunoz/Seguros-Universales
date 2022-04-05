@@ -13,24 +13,25 @@ import { MenubarModule } from 'primeng/menubar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownModule } from 'primeng/dropdown';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MessagesModule } from 'primeng/messages';
-
-
-
-
+import { DialogModule } from 'primeng/dialog';
 
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { SegurosComponent } from './seguros/seguros.component';
+import { FormclienteComponent } from './formcliente/formcliente.component';
+import { FormseguroComponent } from './formseguro/formseguro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BienvenidaComponent,
     ClientesComponent,
-    SegurosComponent
+    SegurosComponent,
+    FormclienteComponent,
+    FormseguroComponent
   ],
   imports: [
     BrowserModule,
