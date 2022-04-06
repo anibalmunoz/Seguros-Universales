@@ -3,7 +3,6 @@ import { SeguroService } from '../servicios/seguro/seguro.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { FormseguroComponent } from '../formseguro/formseguro.component';
-
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 
@@ -40,7 +39,7 @@ export class SegurosComponent implements OnInit {
 
   paginas: any = { name: 5 };
   ref?: DynamicDialogRef;
-
+  mostrarBotonNuevo = true;
 
   constructor(private seguroService: SeguroService, private confirmationService: ConfirmationService, private messageService: MessageService,
     public dialogService: DialogService) { }
@@ -68,11 +67,12 @@ export class SegurosComponent implements OnInit {
       this.seguroService.guardarSeguro(this.seguroNuevo).subscribe(
         (res: any) => this.finalizarGuardar(res)
       )
-      this.mostrarGuardarToast();
+      this.mostrarEditarToast();
       formulario.reset();
       this.seguroNuevo = {};
       this.mostrarFormulario = false;
       this.reset();
+      this.mostrarBotonNuevo = true;
     }
   }
 
@@ -156,7 +156,7 @@ export class SegurosComponent implements OnInit {
     this.obtenerPaginado(0, this.filas);
   }
 
-  editarSeguro(seguro: any) {
+  flotanteEditar(seguro: any) {
     this.confirmationService.confirm({
       message: '¿Estas seguro de editar el seguro?',
       header: 'Edicion',
@@ -169,7 +169,7 @@ export class SegurosComponent implements OnInit {
     });
   }
 
-  eliminar(seguro: any) {
+  flotanteEliminar(seguro: any) {
     this.confirmationService.confirm({
       message: '¿Estas seguro de eliminar este seguro?',
       header: 'Confirmación de eliminación',
@@ -185,12 +185,16 @@ export class SegurosComponent implements OnInit {
 
   modificarSeguro(seguro: any) {
     this.seguroNuevo = seguro
+    this.seguroNuevo.fechaI = seguro.fechaInicio;
+    this.seguroNuevo.fechaV = seguro.fechaVencimiento;
     this.mostrarFormulario = true;
+    this.mostrarBotonNuevo = false;
   }
 
   cancelarEditar() {
     this.mostrarFormulario = false;
     this.seguroNuevo = {};
+    this.mostrarBotonNuevo = true;
   }
 
   eliminarSeguro(seguro: any) {
@@ -199,8 +203,12 @@ export class SegurosComponent implements OnInit {
     this.reset();
   }
 
-  mostrarGuardarToast(){
-    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
+  mostrarGuardarToast() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Seguro guardado correctamente' });
+  }
+
+  mostrarEditarToast() {
+    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Cliente editado correctamente' });
   }
 
   mostrarDeleteToast() {
@@ -217,11 +225,15 @@ export class SegurosComponent implements OnInit {
 
     this.ref.onClose.subscribe((respuesta: any) => {
       if (respuesta) {
-        this.mostrarDeleteToast();
+        this.mostrarGuardarToast();
         this.reset();
         //this.ngOnInit();
       }
     });
+  }
+
+  irClienteSeguros(seguro: any) {
+    location.href = "/clienteseguros/" + seguro.dniCl;
   }
 
 }

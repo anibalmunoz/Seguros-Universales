@@ -5,9 +5,9 @@
 <p-toast position="top-center" key="td"></p-toast>
 
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="mostrarBotonNuevo">
         <div class="col-md-7">
-            <button type="button" class="btn btn-outline-primary float-start" (click)="show()">
+            <button type="button" class="btn btn-outline-primary float-start" (click)="formularioComponent()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-person-plus" viewBox="0 0 16 16">
                     <path
@@ -51,7 +51,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -60,7 +60,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -69,7 +69,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="number" pInputText class="form-control" required maxlength="40"
@@ -78,7 +78,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="number" pInputText class="form-control" required maxlength="40"
@@ -87,7 +87,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -96,7 +96,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="number" pInputText class="form-control" required maxlength="40"
@@ -105,7 +105,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" maxlength="75"
@@ -158,7 +158,8 @@
                 <th>Ciudad</th>
                 <th>Teléfono</th>
                 <th>Observaciones</th>
-                <th>Acciones</th>
+                <th>Editar/Eliminar</th>
+                <th>Detalles</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>
@@ -175,10 +176,17 @@
                 <td>{{c.observaciones}}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-user-edit"
-                        class="p-button-rounded p-button-warning" (click)="confirm1(c)"></button>
+                        class="p-button-rounded p-button-warning" (click)="flotanteEditar(c)">
+                    </button>
                     &nbsp;
                     <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
-                        (click)="confirm2(c)"></button>
+                        (click)="flotanteEliminar(c)">
+                    </button>
+                </td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-list" class="p-button-rounded p-button-primary"
+                        (click)="irClienteSeguros(c)">
+                    </button>
                 </td>
             </tr>
         </ng-template>
@@ -205,3 +213,4 @@
         <font [size]="5" class="float-end">Filas</font>
     </div>
 </div>
+<br>

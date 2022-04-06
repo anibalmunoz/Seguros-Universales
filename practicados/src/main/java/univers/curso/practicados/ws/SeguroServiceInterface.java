@@ -47,4 +47,7 @@ public interface SeguroServiceInterface {
 	@GetMapping(path = "/buscar/fecha/despuesde/{fechaInicio}/{pagina}/{cantidad}")
 	public Page<Seguro> bucarFechaDespuesDePaginado(@PathVariable Date fechaInicio, @PathVariable Integer pagina, @PathVariable Integer cantidad) ;
 	
+	@GetMapping(path = "/paginado/cliente/{dniCl}/{pagina}/{cantidad}")
+	public Page<Seguro> buscarPaginadoCliente(@PathVariable Integer dniCl, @PathVariable Integer pagina, @PathVariable Integer cantidad) ;
+	
 }

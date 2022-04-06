@@ -1,5 +1,135 @@
-<form id="crearSeguro">
+<p-dialog header="Title" [(visible)]="display">
+    No existe cliente con el DNI ingresado, por favor ingrese un DNI válido
+</p-dialog>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+
+<div class="row">
+    <label class="form-label">
+        <b>
+            <font color="black">Buscar DNI del cliente</font>
+        </b>
+    </label>
+    <div class="col-md-3">
+        <div class="mb-4">
+           
+            <input type="number" pInputText class="form-control" required [(ngModel)]="seguroNuevo.dniCl"
+                [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-4">
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
+                (click)="buscarCliente(seguroNuevo.dniCl)">
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<form id="cliente" *ngIf="mostrarDatosCliente">
+    <font COLOR="black" [size]="6">
+        Información del cliente
+    </font>
     <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.nombreCl" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Nombre</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.apellido1" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Primer Apellido</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" maxlength="40" [(ngModel)]="cliente.apellido2"
+                        [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Segundo Apellido</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.claseVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Clase Vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Nombre Vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="number" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Número Vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="number" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.codPostal" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Código Postal</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.ciudad" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Ciudad</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="number" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.telefono" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Teléfono</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" maxlength="75"
+                        [(ngModel)]="cliente.observaciones" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Observaciones</label>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="crearSeguro" *ngIf="mostrarFormulario">
+    <br>
+    <h3>Nuevo seguro</h3>
     <div class="row">
         <div class="col-md-6">
             <div class="mb-4">
@@ -35,7 +165,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"

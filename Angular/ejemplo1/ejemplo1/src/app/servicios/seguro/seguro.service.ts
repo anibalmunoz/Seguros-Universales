@@ -53,6 +53,11 @@ export class SeguroService {
     return this.consumirGet("seguro/paginado/"+pagina+"/"+cantidad)
   }
 
+  //Paginado filtrado
+  seguroPaginadoPorDNI(dniCliente:number,pagina:number,cantidad:number){
+    return this.consumirGet("seguro/paginado/cliente/"+dniCliente+"/"+pagina+"/"+cantidad)
+  }
+
    //Eliminar cliente
    eliminarSeguro(seguro: any) {
     return this.consumirDelete("seguro/eliminar/", seguro);

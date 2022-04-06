@@ -92,5 +92,11 @@ public class SeguroService implements SeguroServiceInterface {
 		return seguroRepository.findByFechaInicioAfter(paginador, fechaInicio);
 
 	}
+	
+	@Override
+	public Page<Seguro>buscarPaginadoCliente(Integer dniCl, Integer pagina, Integer cantidad) {
+		Pageable paginador = PageRequest.of(pagina, cantidad);
+		return seguroRepository.findByDniCl(paginador, dniCl);
+	}
 
 }

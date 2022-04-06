@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClienteService } from '../servicios/cliente/cliente.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -9,35 +10,39 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
   templateUrl: './formcliente.component.html',
   styleUrls: ['./formcliente.component.css']
 })
+
 export class FormclienteComponent implements OnInit {
 
   clienteNuevo: any = {};
   respuesta: boolean = true;
+  parametro: any;
 
 
-  constructor(private clienteService: ClienteService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) { }
+  constructor(private clienteService: ClienteService, public ref: DynamicDialogRef, public config: DynamicDialogConfig,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe(parametros => {
+      this.parametro = parametros['param1'];
+      console.log(this.parametro);
+    });
+
   }
 
   enviarFormulario() {
     let formulario: any = document.getElementById("crearCliente");
-    // this.clienteNuevo.fechacreacion= new Date(this.clienteNuevo.fecha+"T00:00:00");
     if (formulario.reportValidity()) {
       this.clienteService.guardarCliente(this.clienteNuevo).subscribe(
         (res: any) => this.finalizarGurdar(res)
       )
-      //this.showTopCenter();
       formulario.reset();
       this.clienteNuevo = {};
-      // this.mostrarFormulario = false;
-      //this.reset();
+      this.ref.close(this.respuesta);
     }
-    this.ref.close(this.respuesta);
   }
 
   finalizarGurdar(respuesta: any) {
-    //this.obtenerPaginado(this.pagina, this.filas);
   }
 
 }

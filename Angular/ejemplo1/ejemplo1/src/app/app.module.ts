@@ -23,6 +23,9 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { SegurosComponent } from './seguros/seguros.component';
 import { FormclienteComponent } from './formcliente/formcliente.component';
 import { FormseguroComponent } from './formseguro/formseguro.component';
+import { ClientesegurosComponent } from './clienteseguros/clienteseguros.component';
+import { SiniestrosComponent } from './siniestros/siniestros.component';
+import { CompaniasComponent } from './companias/companias.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { FormseguroComponent } from './formseguro/formseguro.component';
     ClientesComponent,
     SegurosComponent,
     FormclienteComponent,
-    FormseguroComponent
+    FormseguroComponent,
+    ClientesegurosComponent,
+    SiniestrosComponent,
+    CompaniasComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +55,7 @@ import { FormseguroComponent } from './formseguro/formseguro.component';
     ConfirmDialogModule,
     DynamicDialogModule,
     MessagesModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

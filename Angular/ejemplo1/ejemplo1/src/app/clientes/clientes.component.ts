@@ -8,6 +8,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormclienteComponent } from '../formcliente/formcliente.component';
+import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'app-clientes',
@@ -25,7 +26,6 @@ export class ClientesComponent implements OnInit {
   ];
 
   paginas: any = { name: 5 };
-
   clientes: any = [];
   clienteNuevo: any = {};
   mostrarFormulario: boolean = false;
@@ -44,20 +44,19 @@ export class ClientesComponent implements OnInit {
   msgs: Message[] = [];
   ref?: DynamicDialogRef;
   position: string = "";
-
+  mostrarBotonNuevo = true;
 
   constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
 
   ngOnInit(): void {
-    //this.obtenerClientes();
     this.obtenerPaginado(0, this.filas);
     //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
     //this.primengConfig.ripple = true;
   }
 
-  confirm1(cliente: any) {
+  flotanteEditar(cliente: any) {
     this.confirmationService.confirm({
       message: '¿Estas seguro de editar el cliente?',
       header: 'Edicion',
@@ -67,41 +66,21 @@ export class ClientesComponent implements OnInit {
         this.modificarCliente(cliente);
       },
       reject: () => {
-        // this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
       }
     });
   }
 
-  confirm2(cliente: any) {
+  flotanteEliminar(cliente: any) {
     this.confirmationService.confirm({
       message: '¿Estas seguro de eliminar este cliente?',
       header: 'Confirmación de eliminación',
       icon: 'pi pi-info-circle',
       accept: () => {
-        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' }];
         this.eliminarCliente(cliente);
         this.reset();
       },
       reject: () => {
-        //this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
       }
-    });
-  }
-
-  confirmPosition(position: string) {
-    this.position = position;
-
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' }];
-      },
-      reject: () => {
-        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
-      },
-      key: "positionDialog"
     });
   }
 
@@ -110,32 +89,51 @@ export class ClientesComponent implements OnInit {
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
-  showTopCenter() {
+  mostrarGuardarToast() {
     this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
   }
-  showTopEdit() {
+  mostrarEditarToast() {
     this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Cliente editado correctamente' });
   }
-  showTopDelete() {
+  mostrarDeleteToast() {
     this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Cliente eliminado correctamente' });
   }
 
-  show() {
+  formularioComponent() {
     this.ref = this.dialogService.open(FormclienteComponent, {
       header: 'Cliente',
       width: '70%',
       contentStyle: { "max-height": "500px", "overflow": "auto" },
-      baseZIndex: 10000
+      baseZIndex: 10000,
     });
 
     this.ref.onClose.subscribe((respuesta: any) => {
       if (respuesta) {
-        this.showTopCenter();
+        this.mostrarGuardarToast();
         this.reset();
         this.ngOnInit();
       }
     });
   }
+
+  formularioComponentEditar() {
+    this.ref = this.dialogService.open(FormclienteComponent, {
+      header: 'Cliente',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000,
+      data: this.clienteNuevo,
+    });
+
+    this.ref.onClose.subscribe((respuesta: any) => {
+      if (respuesta) {
+        this.mostrarGuardarToast();
+        this.reset();
+        this.ngOnInit();
+      }
+    });
+  }
+
 
   obtenerClientes() {
     this.clienteService.buscarClientes().subscribe(
@@ -149,16 +147,16 @@ export class ClientesComponent implements OnInit {
 
   enviarFormulario() {
     let formulario: any = document.getElementById("crearCliente");
-    // this.clienteNuevo.fechacreacion= new Date(this.clienteNuevo.fecha+"T00:00:00");
     if (formulario.reportValidity()) {
       this.clienteService.guardarCliente(this.clienteNuevo).subscribe(
         (res: any) => this.finalizarGurdar(res)
       )
-      this.showTopEdit();
+      this.mostrarEditarToast();
       formulario.reset();
       this.clienteNuevo = {};
       this.mostrarFormulario = false;
       this.reset();
+      this.mostrarBotonNuevo = true;
     }
   }
 
@@ -198,8 +196,6 @@ export class ClientesComponent implements OnInit {
 
   //IMPLEMENTACION DE LAS TABLAS CON PAGINACIÓN CUSTOM
 
-
-  //    this.customerService.getCustomersLarge().then(customers => this.customers = customers);
 
   next() {
     if (!this.finalPagina) {
@@ -249,6 +245,7 @@ export class ClientesComponent implements OnInit {
   //Modificar cliente
 
   modificarCliente(cliente: any) {
+    this.mostrarBotonNuevo = false;
     this.clienteNuevo = cliente
     this.mostrarFormulario = true;
   }
@@ -257,13 +254,20 @@ export class ClientesComponent implements OnInit {
 
   eliminarCliente(cliente: any) {
     this.clienteService.eliminarCliente(cliente.dniCl).subscribe();
-    this.showTopDelete();
+    this.mostrarDeleteToast();
     this.reset();
   }
 
   cancelarEditar() {
     this.mostrarFormulario = false;
     this.clienteNuevo = {};
+    this.mostrarBotonNuevo = true;
   }
+
+  irClienteSeguros(cliente: any) {
+    location.href = "/clienteseguros/" + cliente.dniCl;
+  }
+
+
 
 }

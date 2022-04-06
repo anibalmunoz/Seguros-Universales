@@ -22,6 +22,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Serializable> 
 
 	public List<Cliente> findByNombreViaStartingWith(String cadena);
 	
+	public List<Cliente> findByDniClEquals(Integer dniCl);
+	
 
 	/*
 	 * JPQL y QUERIES NATIVOS

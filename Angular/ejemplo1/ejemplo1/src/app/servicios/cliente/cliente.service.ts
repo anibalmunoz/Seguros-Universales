@@ -41,6 +41,10 @@ export class ClienteService {
     return this.consumirGet("cliente/buscar");
   }
 
+  buscarClientePorDNI(dni:any) {
+    return this.consumirGet("cliente/buscar/dni/"+dni);
+  }
+
   guardarCliente(cliente: any) {
     return this.consumirPost("cliente/guardar", cliente);
   }

@@ -47,6 +47,11 @@ public class ClienteService implements ClienteServiceInterface {
 	public List<Cliente> buscar() {
 		return clienteRepository.findAll();
 	}
+	
+	@Override
+	public List<Cliente> buscarDni(Integer dniCl) {
+		return clienteRepository.findByDniClEquals(dniCl);
+	}
 
 	@Override
 	public ResponseEntity<Cliente> saveCliente(ClienteDto clienteDto) {

@@ -25,6 +25,9 @@ public interface ClienteServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Cliente> buscar();
+	
+	@GetMapping(path = "/buscar/dni/{dniCl}")
+	public List<Cliente> buscarDni(@PathVariable Integer dniCl);
 
 	@PostMapping(path = "/guardar")
 	public ResponseEntity<Cliente> saveCliente(@RequestBody ClienteDto clienteDto);

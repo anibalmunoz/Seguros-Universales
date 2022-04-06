@@ -16,5 +16,6 @@ public interface SeguroRepository  extends JpaRepository<Seguro, Serializable>{
 
 	public List<Seguro> findByFechaInicioAfter (Date fechaInicio);
 	public Page<Seguro> findByFechaInicioAfter (Pageable pageable, Date fechaInicio);
+	public Page<Seguro> findByDniCl (Pageable pageable, Integer dniCl);
 	
 }
