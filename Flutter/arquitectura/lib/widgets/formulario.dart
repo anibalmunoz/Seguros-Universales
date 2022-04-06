@@ -24,13 +24,13 @@ class _Formulario extends State {
               FormularioPersonalizado(
                 hintText: 'Email',
                 validator: (val) {
-                  if (!val.isValidEmail) 'Enter valid email';
+                  //  if (!val.isValidEmail) 'Enter valid email';
                 },
               ),
               FormularioPersonalizado(
                 hintText: 'Password',
                 validator: (val) {
-                  if (!val.isValidPassword) return 'Enter valid password';
+                  //  if (!val.isValidPassword) return 'Enter valid password';
                 },
               ),
               ElevatedButton(

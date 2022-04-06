@@ -1,5 +1,6 @@
 import 'package:arquitectura/pages/page_one/page_one.dart';
 import 'package:arquitectura/widgets/formulario.dart';
+import 'package:arquitectura/widgets/formulario_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const Formulario(),
+      home: Formulario2(),
     );
   }
 }
