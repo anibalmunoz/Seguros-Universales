@@ -1,4 +1,5 @@
 import 'package:arquitectura/pages/page_one/page_one.dart';
+import 'package:arquitectura/widgets/formulario.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const PageOne(title: 'Flutter Demo Home Page'),
+      home: const Formulario(),
     );
   }
 }

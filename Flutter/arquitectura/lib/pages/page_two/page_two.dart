@@ -1,12 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PageTwo extends StatelessWidget {
   final String title;
-  const PageTwo({Key? key}) : super(key: key);
+  const PageTwo({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text(this.title),
+      ),
+    );
   }
 }
