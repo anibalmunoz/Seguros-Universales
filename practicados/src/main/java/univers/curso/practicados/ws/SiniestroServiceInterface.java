@@ -3,6 +3,7 @@ package univers.curso.practicados.ws;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.SiniestroDto;
-
 import univers.curso.practicados.entity.Siniestro;
-
 @RestController
 @RequestMapping("/siniestro")
 @CrossOrigin
@@ -43,5 +42,10 @@ public interface SiniestroServiceInterface {
 
 	@GetMapping(path = "/buscar/fecha/antesde/{fechaSiniestro}")
 	public List<Siniestro> bucarFechaDespuesDe(@PathVariable Date fechaSiniestro);
+	
+	//Paginador de siniestros
+	
+	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
+	public Page<Siniestro> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
 
 }

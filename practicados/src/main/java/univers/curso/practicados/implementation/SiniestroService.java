@@ -6,6 +6,11 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -71,5 +76,12 @@ public class SiniestroService implements SiniestroServiceInterface {
 	}
 
 	// localhost:8080/siniestro/buscar/fecha/antesde/2010-10-09
+	
+	//Paginado
+	
+	public Page<Siniestro> buscarPaginado(int pagina, int cantidad){
+		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "idSiniestro"));
+		return siniestroRepository.findAll(pageable);
+	}
 
 }
