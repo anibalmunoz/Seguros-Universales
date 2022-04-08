@@ -2,12 +2,14 @@ import 'package:arquitectura/bloc/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura/pages/page_two/page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura/util/extension.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Formulario2 extends StatelessWidget {
+  Formulario2({Key? key}) : super(key: key);
+
   final correo = "munoz4hernandez@gmail.com";
   final password = "@Anibal12345";
+  final nombre = "Anibal";
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -17,8 +19,6 @@ class Formulario2 extends StatelessWidget {
       primary: Colors.red,
       onPrimary: Colors.white,
     );
-
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
@@ -135,12 +135,10 @@ class Formulario2 extends StatelessWidget {
                                           onPressed: () {
                                             if (_keyForm.currentState!
                                                 .validate()) {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (_) => const PageTwo(
-                                                      title: "Login correcto"),
-                                                ),
-                                              );
+                                              BlocProvider.of<BasicBloc>(
+                                                      context)
+                                                  .add(LoginButtonPressed(
+                                                      nombre: this.nombre));
                                             }
                                           },
                                           child: const Text('Login'),

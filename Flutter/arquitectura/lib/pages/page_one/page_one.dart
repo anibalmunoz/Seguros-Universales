@@ -40,7 +40,8 @@ class PageOne extends StatelessWidget {
                   Text('Pagina uno'),
                   ElevatedButton(
                     onPressed: () {
-                      BlocProvider.of<BasicBloc>(context).add(ButtonPressed());
+                      //BlocProvider.of<BasicBloc>(context)
+                      //  .add(LoginButtonPressed());
                     },
                     child: Text('Pagina dos'),
                   )
