@@ -1,20 +1,23 @@
 import 'package:arquitectura/bloc/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura/pages/page_two/page_two.dart';
+
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Formulario2 extends StatelessWidget {
   Formulario2({Key? key}) : super(key: key);
-
-  final correo = "munoz4hernandez@gmail.com";
-  final password = "@Anibal12345";
-  final nombre = "Anibal";
-
+  String nombre = "Anibal";
   final _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    // Firebase.initializeApp();
+
+    // String correo = FirebaseRemoteConfig.instance.getString("correo");
+    // String password = FirebaseRemoteConfig.instance.getString("password");
+
     final estiloBoton = ElevatedButton.styleFrom(
       primary: Colors.red,
       onPrimary: Colors.white,
@@ -79,7 +82,9 @@ class Formulario2 extends StatelessWidget {
                                           if (!valor.isValidEmail) {
                                             return 'Correo Inválido';
                                           }
-                                          if (valor != correo) {
+                                          if (valor !=
+                                              FirebaseRemoteConfig.instance
+                                                  .getString("correo")) {
                                             return 'El correo no está registrado';
                                           }
                                           return null;
@@ -109,7 +114,9 @@ class Formulario2 extends StatelessWidget {
                                                 "Al menos un dígito\n"
                                                 "Al menos 1 caracter especial";
                                           }
-                                          if (valor != password) {
+                                          if (valor !=
+                                              FirebaseRemoteConfig.instance
+                                                  .getString("password")) {
                                             return "La contraseña no está registrada";
                                           }
                                           return null;
@@ -138,8 +145,16 @@ class Formulario2 extends StatelessWidget {
                                               BlocProvider.of<BasicBloc>(
                                                       context)
                                                   .add(LoginButtonPressed(
-                                                      nombre: this.nombre));
+                                                      nombre: nombre));
                                             }
+                                            //   //else {
+                                            //   //   ScaffoldMessenger.of(context)
+                                            //   //       .showSnackBar(
+                                            //   //     const SnackBar(
+                                            //   //         content: Text(
+                                            //   //             "Información incorrecta")),
+                                            //   //   );
+                                            //   // }
                                           },
                                           child: const Text('Login'),
                                         ),
