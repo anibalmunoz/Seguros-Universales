@@ -14,12 +14,22 @@ class PageTwo extends StatelessWidget {
         ),
         body: Column(children: [
           ElevatedButton(
-              onPressed: () {
-                FirebaseCrashlytics.instance.crash();
-              },
-              child: const Text("Generar Error")),
+            child: const Text("Generar Error"),
+            onPressed: () {
+              print(
+                  FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled);
+            },
+          ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (FirebaseCrashlytics
+                    .instance.isCrashlyticsCollectionEnabled) {
+                  FirebaseCrashlytics.instance.crash();
+                } else {
+                  print(FirebaseCrashlytics
+                      .instance.isCrashlyticsCollectionEnabled);
+                }
+              },
               child: const Text("Enviar Parámetros a Crashlitycs")),
         ]));
   }

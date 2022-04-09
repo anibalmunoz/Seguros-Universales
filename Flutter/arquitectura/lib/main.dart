@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runZonedGuarded(() => runApp(const MyApp()),
@@ -18,6 +19,19 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
+
+  /*
+Implementación de dark light mode
+ */
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.light);
+
+  Future<bool?> recuperarModo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool? modo = prefs.getBool('modo');
+    return modo;
+  }
+/**/
 }
 
 class _MyAppState extends State<MyApp> {
@@ -32,7 +46,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _inicializarCrashlytics() async {
     await FirebaseCrashlytics.instance
-        .setCrashlyticsCollectionEnabled(!kDebugMode);
+        .setCrashlyticsCollectionEnabled(kDebugMode);
 
     Function onOriginalError = FlutterError.onError as Function;
     FlutterError.onError = (FlutterErrorDetails detallesDeError) async {
@@ -78,14 +92,30 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: _firebase,
         builder: (context, snapshot) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            home: Formulario2(),
-          );
+          return ValueListenableBuilder<ThemeMode>(
+              valueListenable: MyApp.themeNotifier,
+              builder: (_, ThemeMode currentMode, __) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: currentMode,
+                  home: Formulario2(),
+                );
+              });
         });
   }
+
+  // Future<String?> obtenerModo() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final String? modo = prefs.getString('modo');
+  //   if (modo == null) {
+  //     await prefs.setString('modo', 'ThemeMode.dark');
+  //   }
+  //   return modo;
+  // }
 }

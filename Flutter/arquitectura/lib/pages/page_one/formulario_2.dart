@@ -1,10 +1,12 @@
 import 'package:arquitectura/bloc/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura/main.dart';
 import 'package:arquitectura/pages/page_two/page_two.dart';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Formulario2 extends StatelessWidget {
   Formulario2({Key? key}) : super(key: key);
@@ -14,7 +16,6 @@ class Formulario2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Firebase.initializeApp();
-
     // String correo = FirebaseRemoteConfig.instance.getString("correo");
     // String password = FirebaseRemoteConfig.instance.getString("password");
 
@@ -24,7 +25,26 @@ class Formulario2 extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+      //backgroundColor:  Color.fromARGB(255, 240, 240, 240),
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: const Text('Login'),
+        actions: [
+          IconButton(
+              icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode),
+              onPressed: () {
+                MyApp.themeNotifier.value =
+                    MyApp.themeNotifier.value == ThemeMode.light
+                        ? ThemeMode.dark
+                        : ThemeMode.light;
+                print(
+                    "EL VALOR DEL THEME NOTIFIER ES ${MyApp.themeNotifier.value}");
+                enviarDato(true);
+              })
+        ],
+      ),
       body: BlocProvider(
         create: (BuildContext context) => BasicBloc(),
         child: BlocListener<BasicBloc, BasicState>(
@@ -175,4 +195,9 @@ class Formulario2 extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> enviarDato(bool modo) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('modo', modo);
 }

@@ -9,3 +9,11 @@ class LoginButtonPressed extends BasicEvent {
   @override
   List<Object?> get props => [];
 }
+
+class CambiarModoPressed extends BasicEvent {
+  bool modo;
+  CambiarModoPressed({required this.modo});
+
+  @override
+  List<Object?> get props => [];
+}
