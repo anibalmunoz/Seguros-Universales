@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 class PageTwo extends StatelessWidget {
@@ -23,7 +24,10 @@ class PageTwo extends StatelessWidget {
             },
           ),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                FirebaseCrashlytics.instance.log(
+                    "Envío de prueba de parte del correo: " +
+                        FirebaseRemoteConfig.instance.getString("correo"));
                 FirebaseCrashlytics.instance.crash();
               },
               child: const Text("Enviar Parámetros a Crashlitycs")),

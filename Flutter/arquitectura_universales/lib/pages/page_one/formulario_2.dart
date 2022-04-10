@@ -1,8 +1,10 @@
 import 'package:arquitectura_universales/bloc/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
+import 'package:arquitectura_universales/pages/page_two/page_two.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Formulario2 extends StatelessWidget {
   Formulario2({Key? key}) : super(key: key);

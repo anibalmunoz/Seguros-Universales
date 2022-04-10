@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 Implementación de dark light mode
  */
   static final ValueNotifier<ThemeMode> themeNotifier =
-      ValueNotifier(ThemeMode.light);
+      ValueNotifier(ThemeMode.system);
 
   // Future<bool?> recuperarModo() async {
   //   final prefs = await SharedPreferences.getInstance();
@@ -57,6 +57,11 @@ class _MyAppState extends State<MyApp> {
     FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
     firebaseRemoteConfig.setDefaults(
         {"correo": "munoz2hernandez@gmail.com", "password": "@Anibal12345"});
+
+    await firebaseRemoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(minutes: 5),
+    ));
 
     firebaseRemoteConfig.fetchAndActivate();
 
@@ -102,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   darkTheme: ThemeData.dark(),
                   themeMode: currentMode,
-                  home: PageTwo(title: "Prueba"),
+                  home: Formulario2(),
                 );
               });
         });
