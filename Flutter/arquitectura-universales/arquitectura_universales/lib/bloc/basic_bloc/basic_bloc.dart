@@ -1,7 +1,5 @@
-import 'package:arquitectura_universales/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'basic_state.dart';
 part 'basic_event.dart';
