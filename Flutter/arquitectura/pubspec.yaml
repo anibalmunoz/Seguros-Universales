@@ -40,8 +40,7 @@ dependencies:
   firebase_crashlytics: ^2.6.1
   firebase_remote_config: ^2.0.3
   firebase_core: ^1.14.0
-  firebase_messaging: ^11.2.12
-  firebase_analytics: ^9.1.4
+  firebase_messaging: ^11.2.12 
   shared_preferences: ^2.0.13
 
 

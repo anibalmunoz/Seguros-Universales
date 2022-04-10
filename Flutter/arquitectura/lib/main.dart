@@ -45,8 +45,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _inicializarCrashlytics() async {
-    await FirebaseCrashlytics.instance
-        .setCrashlyticsCollectionEnabled(kDebugMode);
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
     Function onOriginalError = FlutterError.onError as Function;
     FlutterError.onError = (FlutterErrorDetails detallesDeError) async {

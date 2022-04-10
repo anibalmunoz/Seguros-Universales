@@ -18,6 +18,8 @@ class PageTwo extends StatelessWidget {
             onPressed: () {
               print(
                   FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled);
+              FirebaseCrashlytics.instance
+                  .log("Higgs-Boson detected! Bailing out");
             },
           ),
           ElevatedButton(
