@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "582714890128",
+    "project_id": "arquitectura-universales2",
+    "storage_bucket": "arquitectura-universales2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582714890128:android:e33f66613af82084a34515",
+        "android_client_info": {
+          "package_name": "com.example.arquitectura_universales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582714890128-9thtqc6aajss02383jpd2l08t05l2qjd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arquitectura_universales",
+            "certificate_hash": "3a94f1e16a3480f86d9139196238f511a429be1b"
+          }
+        },
+        {
+          "client_id": "582714890128-nl1lhr0kmnl07l80bjclcd36uetrmuga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVyAnpqek91KZnCQPdAL7WaGKqw4RyMEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582714890128-nl1lhr0kmnl07l80bjclcd36uetrmuga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
