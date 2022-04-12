@@ -19,9 +19,18 @@
 
     <form id="crearSeguro" *ngIf=mostrarFormulario>
         <font COLOR="black">
-            <h3>Crear un nuevo Seguro</h3>
+            <h3>Editar Seguro</h3>
         </font>
         <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="seguroNuevo.numeroPoliza" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Número de poliza</label>
+                </span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-4">
@@ -91,7 +100,7 @@
 <br>
 <div class="card">
     <div class="col-md-7">
-        <h3 class="float-end">Lista de seguros</h3>
+        <h3 class="float-end">Lista de Seguros</h3>
     </div>
     <h5 class="float-start">Cantidad de resultados: {{cantidadSeguros}}</h5>
     <p-table [value]="seguros" [paginator]="false" [rows]="rows" [showCurrentPageReport]="false" [(first)]="first"

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.PeritoDto;
-
 import univers.curso.practicados.entity.Perito;
 
 @RestController
@@ -23,7 +22,16 @@ public interface PeritoServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Perito> buscar();
-
+	/*
+	 * Buscar por DNI
+	 */
+	
+	@GetMapping(path = "/buscar/dni/{dniPerito}")
+	public List<Perito> buscarDni(@PathVariable Integer dniPerito);
+	
+	/*
+	 * 
+	 */
 	@PostMapping(path = "/guardar")
 	public ResponseEntity<Perito> savePerito(@RequestBody PeritoDto peritoDto);
 

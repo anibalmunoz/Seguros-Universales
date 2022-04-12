@@ -233,7 +233,7 @@ export class SegurosComponent implements OnInit {
   }
 
   irClienteSeguros(seguro: any) {
-    location.href = "/clienteseguros/" + seguro.dniCl;
+    location.href = "/clienteseguros/" + seguro.dniCl + "/cliente";
   }
 
 }

@@ -1,27 +1,30 @@
 <p-dialog header="Title" [(visible)]="display">
-    No existe cliente con el DNI ingresado, por favor ingrese un DNI válido
+    No existe la poliza ingresada, por favor ingrese una poliza válida
 </p-dialog>
 
+<p-dialog header="Title" [(visible)]="display2">
+    No existe perito con este DNI asignado, escriba un DNI válido.
+</p-dialog>
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 
 <div class="row">
     <label class="form-label">
         <b>
-            <font color="black">Buscar DNI del cliente</font>
+            <font color="black">Buscar Poliza existente</font>
         </b>
     </label>
     <div class="col-md-3">
         <div class="mb-4">
-           
-            <input type="number" pInputText class="form-control" required [(ngModel)]="seguroNuevo.dniCl"
-                [ngModelOptions]="{standalone: true}" max="10">
+
+            <input type="number" pInputText class="form-control" required [(ngModel)]="siniestroNuevo.numeroPoliza"
+                [ngModelOptions]="{standalone: true}" [min]="0" [max]="9999999999">
         </div>
     </div>
     <div class="col-md-3">
         <div class="mb-4">
             <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
-                (click)="buscarCliente(seguroNuevo.dniCl)">
+                (click)="buscarSeguro(siniestroNuevo.numeroPoliza)">
             </button>
         </div>
     </div>
@@ -29,12 +32,17 @@
 
 
 <form id="cliente" *ngIf="mostrarDatosCliente">
-    <font COLOR="black" [size]="6">
-        Información del cliente
-    </font>
+    <h3>Información del cliente</h3>
     <br>
-    <br>
-    <br>
+    <div class="col-md-2">
+        <div class="mb-5">
+            <span class="p-float-label">
+                <input type="text" pInputText class="form-control" required maxlength="40" [(ngModel)]="cliente.dniCl"
+                    [ngModelOptions]="{standalone: true}" disabled>
+                <label class="form-label">DNI</label>
+            </span>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 ">
             <div class="mb-4">
@@ -129,31 +137,43 @@
     </div>
 </form>
 
-<form id="crearSeguro" *ngIf="mostrarFormulario">
+
+
+<form id="crearSeguro" *ngIf="mostrarDatosCliente">
     <br>
-    <h3>Nuevo seguro</h3>
+    <h3>Información de la poliza</h3>
+    <br>
+    <div class="col-md-3">
+        <div class="mb-4">
+            <span class="p-float-label">
+                <input type="text" pInputText class="form-control" required maxlength="40"
+                    [(ngModel)]="siniestroNuevo.numeroPoliza" [ngModelOptions]="{standalone: true}" disabled>
+                <label class="form-label">Numero de Poliza</label>
+            </span>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="mb-4">
                 <label class="form-label"> <b>
-                        <font color="black">Fecha de Inicio</font>
+                        <font color="black">Fecha del siniestro</font>
                     </b> </label>
-                <input type="date" pInputText class="form-control" required [(ngModel)]="seguroNuevo.fechaI"
-                    [ngModelOptions]="{standalone: true}">
+                <input type="date" pInputText class="form-control" required [(ngModel)]="seguro.fechaInicio"
+                    [ngModelOptions]="{standalone: true}" disabled>
             </div>
         </div>
         <div class="col-md-6">
             <div class="mb-4">
                 <label class="form-label"><b>Fecha de Vencimiento</b></label>
-                <input type="date" pInputText class="form-control" [(ngModel)]="seguroNuevo.fechaV"
-                    [ngModelOptions]="{standalone: true}">
+                <input type="date" pInputText class="form-control" [(ngModel)]="seguro.fechaVencimiento"
+                    [ngModelOptions]="{standalone: true}" disabled>
             </div>
         </div>
         <div class="col-md-6">
             <div class="mb-4">
                 <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.ramo" [ngModelOptions]="{standalone: true}">
+                    <input type="text" pInputText class="form-control" required maxlength="40" [(ngModel)]="seguro.ramo"
+                        [ngModelOptions]="{standalone: true}" disabled>
                     <label class="form-label">Ramo</label>
                 </span>
             </div>
@@ -162,7 +182,7 @@
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.condicionesParticulares" [ngModelOptions]="{standalone: true}">
+                        [(ngModel)]="seguro.condicionesParticulares" [ngModelOptions]="{standalone: true}" disabled>
                     <label class="form-label">condiciones particulares</label>
                 </span>
             </div>
@@ -171,13 +191,70 @@
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.obervaciones" [ngModelOptions]="{standalone: true}">
+                        [(ngModel)]="seguro.obervaciones" [ngModelOptions]="{standalone: true}" disabled>
                     <label class="form-label">Observaciones</label>
                 </span>
             </div>
         </div>
+    </div>
+</form>
+
+<form id="crearSiniestro" *ngIf="mostrarFormulario">
+    <font COLOR="black">
+        <h3>Registrar Siniestro</h3>
+    </font>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-4">
+                <label class="form-label"> <b>
+                        <font color="black">Fecha de Inicio</font>
+                    </b> </label>
+                <input type="date" pInputText class="form-control" required [(ngModel)]="siniestroNuevo.fechaS"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <label class="form-label"><b>Causas</b></label>
+                <input type="text" pInputText class="form-control" [(ngModel)]="siniestroNuevo.causas"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="siniestroNuevo.aceptado" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Aceptado</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="siniestroNuevo.indemnizacion" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Indemnización</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="siniestroNuevo.perito.dniPerito" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">DNI del perito que registra</label>
+                </span>
+            </div>
+        </div>
+        <div class="mb-4">
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
+                (click)="buscarPerito(siniestroNuevo.perito.dniPerito)">
+            </button>
+        </div>
         <div>
-            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()">
+            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()" *ngIf="mostrarGuardar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-check-square-fill" viewBox="0 0 16 16">
                     <path
@@ -187,3 +264,5 @@
         </div>
     </div>
 </form>
+
+<br>

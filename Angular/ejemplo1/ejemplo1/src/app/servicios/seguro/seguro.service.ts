@@ -39,7 +39,11 @@ export class SeguroService {
   }
 
   buscarSeguros() {
-    return this.consumirGet("seguro/buscar")
+    return this.consumirGet("seguro/buscar");
+  }
+
+  buscarPorPoliza(poliza:any) {
+    return this.consumirGet("seguro/buscar/poliza/"+poliza);
   }
 
   

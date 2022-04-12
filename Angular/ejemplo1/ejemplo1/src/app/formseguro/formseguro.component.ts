@@ -3,7 +3,6 @@ import { SeguroService } from '../servicios/seguro/seguro.service';
 import { ClienteService } from '../servicios/cliente/cliente.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({

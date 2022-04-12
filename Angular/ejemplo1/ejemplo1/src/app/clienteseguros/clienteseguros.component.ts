@@ -5,6 +5,7 @@ import { ClienteService } from '../servicios/cliente/cliente.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ThisReceiver } from '@angular/compiler';
 
 
 
@@ -39,18 +40,41 @@ export class ClientesegurosComponent implements OnInit {
   ref?: DynamicDialogRef;
   mostrarBotonNuevo = true;
 
+  tipoDeRespuesta: any;
+  polizaABuscar: any;
+  seguro: any = [];
+
   constructor(private seguroService: SeguroService, private clienteService: ClienteService, private activatedRoute: ActivatedRoute,
     private confirmationService: ConfirmationService, private messageService: MessageService,) { }
 
   ngOnInit(): void {
 
     this.activatedRoute.params.subscribe(parametros => {
-      this.clienteId = parametros['param1'];
-      console.log(this.clienteId);
+      this.tipoDeRespuesta = parametros['param2'];
+
+      if (this.tipoDeRespuesta == "cliente") {
+        this.clienteId = parametros['param1'];
+        this.reset();
+        this.buscarCliente();
+      }
+      if (this.tipoDeRespuesta == "siniestro") {
+        this.polizaABuscar = parametros['param1'];
+        this.buscarSeguroPorNumeroPoliza(this.polizaABuscar);
+      }
+
     });
+  }
 
+  buscarSeguroPorNumeroPoliza(numeroPoliza: any) {
+    this.seguroService.buscarPorPoliza(numeroPoliza).subscribe(
+      (respuesta: any) => this.asignarSeguro(respuesta)
+    );
+  }
+
+  asignarSeguro(seguro: any) {
+    this.seguro = seguro[0];
+    this.clienteId = this.seguro.dniCl;
     this.reset();
-
     this.buscarCliente();
   }
 
@@ -92,7 +116,7 @@ export class ClientesegurosComponent implements OnInit {
   }
 
   modificarSeguro(seguro: any) {
-    this.mostrarBotonNuevo=false;
+    this.mostrarBotonNuevo = false;
     this.seguroNuevo = seguro
     this.seguroNuevo.fechaI = seguro.fechaInicio;
     this.seguroNuevo.fechaV = seguro.fechaVencimiento;
@@ -102,7 +126,7 @@ export class ClientesegurosComponent implements OnInit {
   cancelarEditar() {
     this.mostrarFormulario = false;
     this.seguroNuevo = {};
-    this.mostrarBotonNuevo=true;
+    this.mostrarBotonNuevo = true;
   }
 
   eliminarSeguro(seguro: any) {
@@ -199,7 +223,7 @@ export class ClientesegurosComponent implements OnInit {
       formulario.reset();
       this.seguroNuevo = {};
       this.mostrarFormulario = false;
-      this.mostrarBotonNuevo=true;
+      this.mostrarBotonNuevo = true;
       this.reset();
     }
   }

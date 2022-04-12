@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -12,11 +15,13 @@ import lombok.Data;
 @Entity
 @Table(name = "PERITO")
 @Data
+@SequenceGenerator(name = "sqcPerito", sequenceName = "SQC_PERITO", allocationSize = 1)
 public class Perito implements Serializable {
 
 	private static final long serialVersionUID = -342527753449838324L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqcPerito")
 	@Column(name = "DNI_PERITO")
 	private Integer dniPerito;
 

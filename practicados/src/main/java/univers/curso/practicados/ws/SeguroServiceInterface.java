@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univers.curso.practicados.dto.SeguroDto;
-
 import univers.curso.practicados.entity.Seguro;
 
 @RestController
@@ -26,6 +25,18 @@ public interface SeguroServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Seguro> buscar();
+	
+	/*
+	 * Buscar por DNI
+	 */
+	
+	@GetMapping(path = "/buscar/poliza/{numeroPoliza}")
+	public List<Seguro> buscarPoliza(@PathVariable Integer numeroPoliza);
+	
+	
+	/*
+	 * 
+	 */
 
 	@GetMapping(path = "/buscar/porcliente/{dniCl}")
 	public List<Map<String, Object>> buscarSegurosCliente(@PathVariable("dniCl") Integer dniCl);

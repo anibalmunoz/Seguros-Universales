@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.SeguroDto;
-
 import univers.curso.practicados.entity.Seguro;
 import univers.curso.practicados.repository.SeguroRepository;
 import univers.curso.practicados.service.CatalogosService;
@@ -37,6 +36,11 @@ public class SeguroService implements SeguroServiceInterface {
 		return seguroRepository.findAll();
 	}
 
+	@Override
+	public List<Seguro> buscarPoliza(Integer numeroPoliza) {
+		return seguroRepository.findByNumeroPolizaEquals(numeroPoliza);
+	}
+	
 	@Override
 	public ResponseEntity<Seguro> guardar(SeguroDto seguroDto) {
 		Seguro seguro = convertirSeguroDtoASeguro(seguroDto);

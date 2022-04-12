@@ -16,6 +16,10 @@ public interface PeritoRepository extends JpaRepository<Perito, Serializable> {
 
 	public List<Perito> findByApellidoPerito2NotNull();
 
+	public List<Perito> findByDniPeritoEquals(Integer dniPerito);
+	
 	@Query("SELECT p.nombrePerito FROM Perito p")
 	public List<Object[]> prueba();
+	
+	
 }

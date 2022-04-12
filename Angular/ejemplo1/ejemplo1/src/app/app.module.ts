@@ -26,6 +26,7 @@ import { FormseguroComponent } from './formseguro/formseguro.component';
 import { ClientesegurosComponent } from './clienteseguros/clienteseguros.component';
 import { SiniestrosComponent } from './siniestros/siniestros.component';
 import { CompaniasComponent } from './companias/companias.component';
+import { FormsiniestroComponent } from './formsiniestro/formsiniestro.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CompaniasComponent } from './companias/companias.component';
     FormseguroComponent,
     ClientesegurosComponent,
     SiniestrosComponent,
-    CompaniasComponent
+    CompaniasComponent,
+    FormsiniestroComponent
   ],
   imports: [
     BrowserModule,

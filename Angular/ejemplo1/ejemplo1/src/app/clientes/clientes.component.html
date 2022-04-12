@@ -19,10 +19,19 @@
     </div>
 
     <form id="crearCliente" *ngIf="mostrarFormulario">
-        <font COLOR="white">
-
+        <font COLOR="black">
+            <h3>Editar Cliente</h3>
         </font>
         <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="clienteNuevo.dniCl" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">DNI</label>
+                </span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 ">
                 <div class="mb-4">

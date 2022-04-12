@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.PeritoDto;
-
 import univers.curso.practicados.entity.Perito;
 import univers.curso.practicados.repository.PeritoRepository;
 import univers.curso.practicados.ws.PeritoServiceInterface;
@@ -26,6 +25,11 @@ public class PeritoService implements PeritoServiceInterface {
 		return peritoRepository.findAll();
 	}
 
+	@Override
+	public List<Perito> buscarDni(Integer dniPerito) {
+		return peritoRepository.findByDniPeritoEquals(dniPerito);
+	}
+	
 	@Override
 	public ResponseEntity<Perito> savePerito(PeritoDto peritoDto) {
 		Perito perito = convertirPeritoDtoAPerito(peritoDto);

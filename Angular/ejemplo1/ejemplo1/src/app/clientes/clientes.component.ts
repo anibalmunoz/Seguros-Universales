@@ -265,7 +265,7 @@ export class ClientesComponent implements OnInit {
   }
 
   irClienteSeguros(cliente: any) {
-    location.href = "/clienteseguros/" + cliente.dniCl;
+    location.href = "/clienteseguros/" + cliente.dniCl + "/cliente";
   }
 
 

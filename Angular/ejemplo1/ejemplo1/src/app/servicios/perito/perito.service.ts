@@ -6,10 +6,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class SiniestroService {
+export class PeritoService {
 
   constructor(private http: HttpClient) { }
-
 
   private consumirGet(url: string): Observable<any> {
     return this.http.get<any>(environment.urlService + url).pipe(
@@ -38,29 +37,9 @@ export class SiniestroService {
     return throwError("Ha ocurrido un error");
   }
 
-  buscarSiniestros() {
-    return this.consumirGet("siniestro/buscar")
+
+
+  buscarPeritoPorDNI(dni:any) {
+    return this.consumirGet("perito/buscar/dni/"+dni);
   }
-
-
-  guardarSiniestro(siniestro: any) {
-    return this.consumirPost("siniestro/guardar", siniestro);
-  }
-
-  //CONSUMO DE PAGEABLE
-
-  siniestroPaginado(pagina: number, cantidad: number) {
-    return this.consumirGet("siniestro/paginado/" + pagina + "/" + cantidad)
-  }
-
-  //Paginado filtrado
-  siniestroPaginadoPorDNI(dniCliente: number, pagina: number, cantidad: number) {
-    return this.consumirGet("siniestro/paginado/cliente/" + dniCliente + "/" + pagina + "/" + cantidad)
-  }
-
-  //Eliminar siniestro
-  eliminarSiniestro(siniestro: any) {
-    return this.consumirDelete("siniestro/eliminar/", siniestro);
-  }
-
 }
