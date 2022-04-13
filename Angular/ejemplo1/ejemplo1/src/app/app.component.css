@@ -118,3 +118,22 @@
 section {
     box-shadow: 6px 20px 10px black;
 }
+
+body[data-leftbar-theme=dark] {
+    --ct-bg-leftbar: #313a46;
+    --ct-dark-menu-item: #8391a2;
+    --ct-dark-menu-item-hover: #bccee4;
+    --ct-dark-menu-item-active: #fff;
+}
+
+.data-leftbar-theme {
+    --ct-bg-leftbar: #313a46;
+    --ct-dark-menu-item: #8391a2;
+    --ct-dark-menu-item-hover: #bccee4;
+    --ct-dark-menu-item-active: #fff;
+}
+
+.oscuro{ 
+    background-color: #1f1f1f; 
+    color: #f1eded; 
+}

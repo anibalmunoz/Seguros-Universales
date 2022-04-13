@@ -4,18 +4,7 @@
 <p-toast position="top-center" key="td"></p-toast>
 
 <div class="container">
-    <div class="row" *ngIf="mostrarBotonNuevo">
-        <div class="col-md-7">
-            <button type="button" class="btn btn-outline-primary " (click)="formularioComponent()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
-                    class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
-                    <path
-                        d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                </svg>
-                Crear nuevo siniestro
-            </button>
-        </div>
-    </div>
+
 
     <form id="crearSiniestro" *ngIf=mostrarFormulario>
         <font COLOR="black">
@@ -48,7 +37,7 @@
                         [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -57,7 +46,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -66,7 +55,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="mb-4">
                     <span class="p-float-label">
                         <input type="text" pInputText class="form-control" required maxlength="40"
@@ -100,9 +89,20 @@
 <br>
 
 <div class="card">
-    <div class="col-md-7">
-        <h3 class="float-end">Lista de Siniestros</h3>
+    <div class="col-md-12" *ngIf="mostrarBotonNuevo">
+        <button type="button" class="btn btn-outline-primary float-end" (click)="formularioComponent()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+            </svg>
+            Crear nuevo siniestro
+        </button>
+        <div class="col-md-7">
+            <h3 class="float-end">Siniestros</h3>
+        </div>
     </div>
+
     <h5 class="float-start">Cantidad de resultados: {{cantidadSiniestros}}</h5>
     <p-table [value]="siniestros" [paginator]="false" [rows]="rows" [showCurrentPageReport]="false" [(first)]="first"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -119,7 +119,7 @@
                 <th>ID del Perito</th>
                 <th>Nombre de perito</th>
                 <th>Editar/Eliminar</th>
-                <th>Detalles cliente</th>
+                <th>Detalles siniestro</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-s>
@@ -140,8 +140,8 @@
                         (click)="flotanteEliminar(s)"></button>
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-id-card"
-                        class="p-button-rounded p-button-secondary" (click)="irClienteSeguros(s)">
+                    <button pButton pRipple type="button" icon="pi pi-folder-open"
+                        class="p-button-rounded p-button-secondary" (click)="irDetallesSiniestro(s)">
                     </button>
                 </td>
             </tr>

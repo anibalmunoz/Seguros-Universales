@@ -2,6 +2,7 @@ package univers.curso.practicados.ws;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,5 +51,9 @@ public interface PeritoServiceInterface {
 	
 	@GetMapping(path="/prueba")
 	public List<Object[]> prueba();
+	
+	//Paginado
+	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
+	public Page<Perito> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
 
 }

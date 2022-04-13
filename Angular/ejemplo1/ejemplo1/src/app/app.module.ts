@@ -27,6 +27,16 @@ import { ClientesegurosComponent } from './clienteseguros/clienteseguros.compone
 import { SiniestrosComponent } from './siniestros/siniestros.component';
 import { CompaniasComponent } from './companias/companias.component';
 import { FormsiniestroComponent } from './formsiniestro/formsiniestro.component';
+import { PeritosComponent } from './peritos/peritos.component';
+
+import {RippleModule} from 'primeng/ripple';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { FormPeritoComponent } from './form-perito/form-perito.component';
+import { DetallesSiniestroComponent } from './detalles-siniestro/detalles-siniestro.component';
+import { DetallesPeritoComponent } from './detalles-perito/detalles-perito.component';
+import { FormCompaniaComponent } from './form-compania/form-compania.component';
+
+
 
 @NgModule({
   declarations: [
@@ -39,7 +49,12 @@ import { FormsiniestroComponent } from './formsiniestro/formsiniestro.component'
     ClientesegurosComponent,
     SiniestrosComponent,
     CompaniasComponent,
-    FormsiniestroComponent
+    FormsiniestroComponent,
+    PeritosComponent,
+    FormPeritoComponent,
+    DetallesSiniestroComponent,
+    DetallesPeritoComponent,
+    FormCompaniaComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +72,9 @@ import { FormsiniestroComponent } from './formsiniestro/formsiniestro.component'
     ConfirmDialogModule,
     DynamicDialogModule,
     MessagesModule,
-    DialogModule
+    DialogModule,
+    RippleModule,
+    SpeedDialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,9 @@ import { ClienteService } from '../servicios/cliente/cliente.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ThisReceiver } from '@angular/compiler';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormseguroComponent } from '../formseguro/formseguro.component';
+
 
 
 
@@ -13,7 +15,7 @@ import { ThisReceiver } from '@angular/compiler';
   selector: 'app-clienteseguros',
   templateUrl: './clienteseguros.component.html',
   styleUrls: ['./clienteseguros.component.css'],
-  providers: [ConfirmationService, MessageService,],
+  providers: [ConfirmationService, MessageService, DialogService],
 })
 export class ClientesegurosComponent implements OnInit {
 
@@ -45,7 +47,7 @@ export class ClientesegurosComponent implements OnInit {
   seguro: any = [];
 
   constructor(private seguroService: SeguroService, private clienteService: ClienteService, private activatedRoute: ActivatedRoute,
-    private confirmationService: ConfirmationService, private messageService: MessageService,) { }
+    private confirmationService: ConfirmationService, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
 
@@ -64,6 +66,7 @@ export class ClientesegurosComponent implements OnInit {
 
     });
   }
+  
 
   buscarSeguroPorNumeroPoliza(numeroPoliza: any) {
     this.seguroService.buscarPorPoliza(numeroPoliza).subscribe(
@@ -235,6 +238,24 @@ export class ClientesegurosComponent implements OnInit {
   mostrarFormularios() {
     this.mostrarFormulario = !this.mostrarFormulario;
     this.mostrarBotonNuevo = false;
+  }
+
+
+  formularioComponent() {
+    this.ref = this.dialogService.open(FormseguroComponent, {
+      header: 'Seguro',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000
+    });
+
+    this.ref.onClose.subscribe((respuesta: any) => {
+      if (respuesta) {
+        this.mostrarGuardarToast();
+        this.reset();
+        //this.ngOnInit();
+      }
+    });
   }
 
 

@@ -1,1 +1,204 @@
-<p>companias works!</p>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<p-messages [value]="msgs"></p-messages>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="top-center" key="te"></p-toast>
+<p-toast position="top-center" key="td"></p-toast>
+
+
+<form id="crearCliente" *ngIf="mostrarFormulario">
+    <font COLOR="black">
+        <h3>Editar Companía</h3>
+    </font>
+    <br>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.nombreCompania" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label"> Nombre </label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.claseVia" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Clase vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.nombreVia" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Nombre vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.numeroVia" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Número vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" maxlength="40"
+                        [(ngModel)]="companiaNueva.codPostal" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Código postal</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.telefonoContratacion" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Teléfono de contratación</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.telefonoSiniestros" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Telefono de Siniestros</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="companiaNueva.notas" [ngModelOptions]="{standalone: true}">
+                    <label class="form-label">Notas</label>
+                </span>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
+
+                </svg> Guardar </button>
+            &nbsp; &nbsp;
+
+            <button type="button" class="btn btn-outline-danger float-end" (click)="cancelarEditar()">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                </svg> Cancelar </button>
+        </div>
+    </div>
+</form>
+
+<br>
+<br>
+
+<div class="card ">
+
+    <div class="col-md-12" *ngIf="mostrarBotonNuevo">
+        <button type="button" class="btn btn-outline-primary float-end" (click)="formularioComponent()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+            </svg> Registrar nueva Companía</button>
+        <div class="col-md-7">
+            <h2 class="float-end">Companias</h2>
+        </div>
+        <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"></button>
+        <span class="">
+            <!---i class="pi pi-search"--->
+            <input type="text" pInputText placeholder="Buscar DNI" [(ngModel)]="value3" />
+        </span>
+    </div>
+
+
+    <h5 class="float-start">Cantidad de resultados: {{cantidadClientes}}</h5>
+    <p-table [value]="companias" [paginator]="false" [rows]="rows" [showCurrentPageReport]="false" [(first)]="first"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5,10,15]" [scrollable]="true">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre</th>
+                <th>Clase Via</th>
+                <th>Nombre Vía</th>
+                <th>Número Vía</th>
+                <th>Codigo postal</th>
+                <th>Teléfono de contratación</th>
+                <th>Teléfono para siniestros</th>
+                <th>Notas</th>
+                <th>Editar/Eliminar</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-c>
+            <tr>
+                <td>{{c.nombreCompania}}</td>
+                <td>{{c.claseVia}}</td>
+                <td>{{c.nombreVia}} {{c.apellido2}}</td>
+                <td>{{c.numeroVia}}</td>
+                <td>{{c.codPostal}}</td>
+                <td>{{c.telefonoContratacion}}</td>
+                <td>{{c.telefonoSiniestros}}</td>
+                <td>{{c.notas}}</td>
+
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit"
+                        class="p-button-rounded p-button-warning" (click)="flotanteEditar(c)">
+                    </button>
+                    &nbsp;
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                        (click)="flotanteEliminar(c)">
+                    </button>
+                </td>
+                <!-- <td>
+                            <button pButton pRipple type="button" icon="pi pi-list" class="p-button-rounded p-button-primary"
+                                (click)="irClienteSeguros(c)">
+                            </button>
+                        </td>
+                        <!-- <td>
+                            <div style="height: 5px; position: relative;" class="row speeddial-circle-demo">
+                                <p-speedDial [model]="items" direction="right"></p-speedDial>
+                            </div>                    
+                        </td> -->
+            </tr>
+        </ng-template>
+
+    </p-table>
+    <div class="col-md-8 text-center">
+        <p-button type="button" icon="pi pi-angle-double-right" (click)="last()" [disabled]="finalPagina"
+            styleClass="p-button-text" class="float-end"></p-button>
+        <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]=finalPagina
+            styleClass="p-button-text" class="float-end"></p-button>
+        <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text" class="float-end">
+        </p-button>
+        <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]=primeraPagina
+            styleClass="p-button-text" class="float-end"></p-button>
+        <p-button type="button" icon="pi pi-angle-double-left" (click)="primero()" [disabled]=primeraPagina
+            styleClass="p-button-text" class="float-end"></p-button>
+        <font class="float-end" color="white">__</font>
+        <font [size]="5" class="float-end">Página {{ pagina +1}} de {{paginasTotales}} </font>
+        <font class="float-end" color="white">__</font>
+        <p-dropdown [options]="lang" placeholder="Filas" optionLabel="name" [showClear]="false" [(ngModel)]="paginas"
+            class="float-end">
+        </p-dropdown>
+        <font class="float-end" color="white">__</font>
+        <font [size]="5" class="float-end">Filas</font>
+    </div>
+</div>
+<br>

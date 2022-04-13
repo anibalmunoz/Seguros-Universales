@@ -1,0 +1,383 @@
+<div class="card">
+    <form id="crearSiniestro">
+        <font COLOR="black">
+            <h3>Información de Siniestro</h3>
+        </font>
+        <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="siniestroNuevo.idSiniestro" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">ID del siniestro</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"> <b>
+                            <font color="black">Fecha de Siniestro</font>
+                        </b> </label>
+                    <input type="date" pInputText class="form-control" required [(ngModel)]="siniestroNuevo.fechaS"
+                        [ngModelOptions]="{standalone: true}" disabled>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"><b>Causas</b></label>
+                    <input type="text" pInputText class="form-control" [(ngModel)]="siniestroNuevo.causas"
+                        [ngModelOptions]="{standalone: true}" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="siniestroNuevo.aceptado" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Aceptado</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="siniestroNuevo.indemnizacion" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Indemnización</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="siniestroNuevo.perito.dniPerito" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">DNI del perito que registra</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- <div class="col-md-12 float-start">
+        <button type="button" class="btn btn-outline-primary  col-md-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+            </svg> Mostrar información del cliente</button>
+
+        &nbsp;
+
+        <button type="button" class="btn btn-outline-secondary  col-md-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+            </svg> Mostrar información del Seguro</button>
+
+        &nbsp;
+
+        <button type="button" class="btn btn-outline-warning  col-md-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+            </svg> Mostrar información del Siniestro</button>
+    </div> -->
+
+
+
+    </form>
+
+
+
+
+    <br>
+
+    <form id="cliente">
+        <h4>Información del cliente</h4>
+        <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="cliente.dniCl" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">DNI</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.nombreCl" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.apellido1" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Primer Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" maxlength="40"
+                            [(ngModel)]="cliente.apellido2" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Segundo Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.claseVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Clase Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Número Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.codPostal" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Código Postal</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.ciudad" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Ciudad</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.telefono" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Teléfono</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" maxlength="75"
+                            [(ngModel)]="cliente.observaciones" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Observaciones</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </form>
+
+
+
+
+
+    <form id="crearPerito">
+        <br>
+        <h4>Información del perito</h4>
+        <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.dniPerito" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">DNI</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.nombrePerito" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.apellidoPerito1" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Primer Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" maxlength="40"
+                            [(ngModel)]="perito.apellidoPerito2" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Segundo Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.telefonoContacto" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Teléfono</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.telefonoOficina" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Teléfono de oficina</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.claseVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Clase Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Número Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.codPostal" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Código Postal</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="perito.ciudad" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Ciudad</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </form>
+
+
+
+
+    <form id="crearSeguro">
+        <br>
+        <h4>Información del seguro</h4>
+        <br>
+        <div class="col-md-2">
+            <div class="mb-5">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="seguro.numeroPoliza" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Número de poliza</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"> <b>
+                            <font color="black">Fecha de Inicio</font>
+                        </b> </label>
+                    <input type="date" pInputText class="form-control" required [(ngModel)]="seguro.fechaInicio"
+                        [ngModelOptions]="{standalone: true}" disabled>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"><b>Fecha de Vencimiento</b></label>
+                    <input type="date" pInputText class="form-control" [(ngModel)]="seguro.fechaVencimiento"
+                        [ngModelOptions]="{standalone: true}" disabled>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguro.ramo" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Ramo</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguro.condicionesParticulares" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">condiciones particulares</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguro.obervaciones" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Observaciones</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<br>

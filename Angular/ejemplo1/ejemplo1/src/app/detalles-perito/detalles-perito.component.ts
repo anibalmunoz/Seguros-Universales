@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { SiniestroService } from '../servicios/siniestro/siniestro.service';
+import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
+import { PeritoService } from '../servicios/perito/perito.service';
+import { SiniestroService } from '../servicios/siniestro/siniestro.service';
 import { FormsiniestroComponent } from '../formsiniestro/formsiniestro.component';
 
 @Component({
-  selector: 'app-siniestros',
-  templateUrl: './siniestros.component.html',
-  styleUrls: ['./siniestros.component.css'],
+  selector: 'app-detalles-perito',
+  templateUrl: './detalles-perito.component.html',
+  styleUrls: ['./detalles-perito.component.css'],
   providers: [ConfirmationService, MessageService, DialogService],
+
 })
-export class SiniestrosComponent implements OnInit {
+export class DetallesPeritoComponent implements OnInit {
 
   pagina: number = 0;
   filas: number = 5;
@@ -25,6 +28,7 @@ export class SiniestrosComponent implements OnInit {
   ultimaPagina: boolean = false;
   paginasTotales: number = 0;
   cantidadSiniestros: number = 0;
+  perito: any;
 
   first = 0;
   rows = 10;
@@ -41,12 +45,20 @@ export class SiniestrosComponent implements OnInit {
 
   ref?: DynamicDialogRef;
 
+  dniPerito:any;
 
 
-  constructor(private siniestroService: SiniestroService, private confirmationService: ConfirmationService, private messageService: MessageService,
-    public dialogService: DialogService) { }
+
+  constructor(private siniestroService: SiniestroService, private peritoService: PeritoService, private activatedRoute: ActivatedRoute,
+    private confirmationService: ConfirmationService, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(parametros => {
+
+      this.dniPerito=parametros['param1'];
+      this.buscarPeritoPorDNI(this.dniPerito);
+
+    });
     this.obtenerPaginado(0, this.filas);
   }
 
@@ -57,7 +69,6 @@ export class SiniestrosComponent implements OnInit {
       (res: any) => this.mostrarPaginado(res)
     );
   }
-
   mostrarPaginado(pageable: any) {
     this.paginado = pageable;
     this.siniestros = pageable.content;
@@ -71,6 +82,17 @@ export class SiniestrosComponent implements OnInit {
       this.primeraPagina = true;
     }
   }
+
+  buscarPeritoPorDNI(perito: any) {
+    this.peritoService.buscarPeritoPorDNI(perito).subscribe(
+      (respuesta: any) => this.asginarPerito(respuesta)
+    );
+  }
+
+  asginarPerito(perito: any) {
+    this.perito = perito[0];
+  }
+
 
   flotanteEditar(siniestro: any) {
     this.confirmationService.confirm({
@@ -100,7 +122,6 @@ export class SiniestrosComponent implements OnInit {
     });
   }
 
-
   modificarSiniestro(siniestro: any) {
     this.siniestroNuevo = siniestro
     this.siniestroNuevo.fechaS = siniestro.fechaSiniestro;
@@ -124,6 +145,24 @@ export class SiniestrosComponent implements OnInit {
 
   mostrarDeleteToast() {
     this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Siniestro eliminado correctamente' });
+  }
+
+
+  formularioComponent() {
+    this.ref = this.dialogService.open(FormsiniestroComponent, {
+      header: 'Siniestro',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000
+    });
+
+    this.ref.onClose.subscribe((respuesta: any) => {
+      if (respuesta) {
+        this.mostrarGuardarToast();
+        this.reset();
+        //this.ngOnInit();
+      }
+    });
   }
 
 
@@ -176,57 +215,12 @@ export class SiniestrosComponent implements OnInit {
     this.obtenerPaginado(0, this.filas);
   }
 
-  //FIN DE IMPLEMENTACIÓN DE NAVEGACION CUSTOM
+   //FIN DE IMPLEMENTACIÓN DE NAVEGACION CUSTOM
 
 
-  irDetallesSiniestro(siniestro: any) {
+   irDetallesSiniestro(siniestro: any) {
     location.href = "/detalles-siniestro/" + siniestro.numeroPoliza + "/" + siniestro.perito.dniPerito +"/" + siniestro.idSiniestro;
   }
 
-  //FORMULARIOS
-
-  formularioComponent() {
-    this.ref = this.dialogService.open(FormsiniestroComponent, {
-      header: 'Siniestro',
-      width: '70%',
-      contentStyle: { "max-height": "500px", "overflow": "auto" },
-      baseZIndex: 10000
-    });
-
-    this.ref.onClose.subscribe((respuesta: any) => {
-      if (respuesta) {
-        this.mostrarGuardarToast();
-        this.reset();
-        //this.ngOnInit();
-      }
-    });
-  }
-
-  enviarFormulario() {
-    let formulario: any = document.getElementById("crearSiniestro");
-    this.siniestroNuevo.fechaSiniestro = new Date(this.siniestroNuevo.fechaS + "T00:00:00");
-    if (formulario.reportValidity()) {
-      this.siniestroService.guardarSiniestro(this.siniestroNuevo).subscribe(
-        (res: any) => this.finalizarGuardar(res)
-      )
-      this.mostrarEditarToast();
-      formulario.reset();
-      this.siniestroNuevo = {};
-      this.mostrarFormulario = false;
-      this.reset();
-      this.mostrarBotonNuevo = true;
-    }
-  }
-
-  finalizarGuardar(respuesta: any) {
-    this.obtenerPaginado(this.pagina, this.filas);
-  }
-
-  cancelarEditar() {
-    this.mostrarFormulario = false;
-    this.siniestroNuevo = {};
-    this.mostrarBotonNuevo = true;
-  }
 
 }
-

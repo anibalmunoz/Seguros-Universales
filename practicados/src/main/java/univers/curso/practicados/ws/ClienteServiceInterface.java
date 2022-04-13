@@ -33,6 +33,9 @@ public interface ClienteServiceInterface {
 	@GetMapping(path = "/buscar/dni/{dniCl}")
 	public List<Cliente> buscarDni(@PathVariable Integer dniCl);
 	
+	@GetMapping(path = "/buscar/nombre/contiene/{nombreCl}")
+	public List<Cliente> buscarDniContiene(@PathVariable String nombreCl);
+	
 	/*
 	 * 
 	 */

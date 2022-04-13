@@ -24,13 +24,6 @@ Implementación de dark light mode
  */
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.system);
-
-  // Future<bool?> recuperarModo() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final bool? modo = prefs.getBool('modo');
-  //   return modo;
-  // }
-/**/
 }
 
 class _MyAppState extends State<MyApp> {
@@ -59,11 +52,11 @@ class _MyAppState extends State<MyApp> {
         {"correo": "munoz2hernandez@gmail.com", "password": "@Anibal12345"});
 
     await firebaseRemoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(minutes: 5),
+      fetchTimeout: const Duration(seconds: 5),
+      minimumFetchInterval: const Duration(seconds: 5),
     ));
 
-    firebaseRemoteConfig.fetchAndActivate();
+    await firebaseRemoteConfig.fetchAndActivate();
 
     print("EL CORREO QUE ESTABLECÍ EN FIREBASE ES: " +
         firebaseRemoteConfig.getString("correo"));
@@ -102,7 +95,8 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
                   theme: ThemeData(
-                    primarySwatch: Colors.blue,
+                    primarySwatch: Colors.yellow,
+
                     visualDensity: VisualDensity.adaptivePlatformDensity,
                   ),
                   darkTheme: ThemeData.dark(),

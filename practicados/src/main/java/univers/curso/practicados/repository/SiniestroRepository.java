@@ -17,4 +17,7 @@ public interface SiniestroRepository extends JpaRepository<Siniestro, Serializab
 	
 	public List<Siniestro> findByFechaSiniestroBefore(Date fechaSiniestro);
 	
+	public List<Siniestro> findByIdSiniestroEquals(Integer idSiniestro);
+
+	
 }

@@ -42,6 +42,9 @@ export class SiniestroService {
     return this.consumirGet("siniestro/buscar")
   }
 
+  buscarSiniestroPorID(id:any) {
+    return this.consumirGet("siniestro/buscar/dni/"+id);
+  }
 
   guardarSiniestro(siniestro: any) {
     return this.consumirPost("siniestro/guardar", siniestro);

@@ -39,7 +39,24 @@ export class PeritoService {
 
 
 
-  buscarPeritoPorDNI(dni:any) {
-    return this.consumirGet("perito/buscar/dni/"+dni);
+  buscarPeritoPorDNI(dni: any) {
+    return this.consumirGet("perito/buscar/dni/" + dni);
   }
+
+  buscarPeritoPaginado(pagina: number, cantidad: number) {
+    return this.consumirGet("perito/paginado/" + pagina + "/" + cantidad)
+  }
+
+  guardarPerito(perito: any) {
+    return this.consumirPost("perito/guardar", perito);
+  }
+
+
+  //Eliminar perito
+  eliminarPerito(perito: any) {
+    return this.consumirDelete("perito/eliminar/", perito);
+
+  }
+
+
 }

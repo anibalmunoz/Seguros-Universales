@@ -20,6 +20,7 @@ class Formulario2 extends StatelessWidget {
     final estiloBoton = ElevatedButton.styleFrom(
       primary: Colors.red,
       onPrimary: Colors.white,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
     );
 
     return Scaffold(

@@ -34,6 +34,7 @@ export class FormsiniestroComponent implements OnInit {
     private peritoService: PeritoService) { }
 
   ngOnInit(): void {
+    
   }
 
 
@@ -138,6 +139,7 @@ export class FormsiniestroComponent implements OnInit {
         this.showDialog2();
     }else{
       this.siniestroNuevo.perito.dniPerito = this.perito.dniPerito;
+      this.mostrarDatosPerito=true;
       this.mostrarGuardar=true;
     }
     

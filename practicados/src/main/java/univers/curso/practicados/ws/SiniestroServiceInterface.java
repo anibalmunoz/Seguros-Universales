@@ -23,6 +23,12 @@ public interface SiniestroServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Siniestro> buscar();
+	
+	
+	
+	@GetMapping(path = "/buscar/dni/{idSiniestro}")
+	public List<Siniestro> buscarId(@PathVariable Integer idSiniestro);
+	
 
 	@PostMapping(path = "/guardar")
 	public ResponseEntity<Siniestro> guardar(@RequestBody SiniestroDto siniestroDto);
@@ -47,5 +53,7 @@ public interface SiniestroServiceInterface {
 	
 	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
 	public Page<Siniestro> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
+	
+	
 
 }

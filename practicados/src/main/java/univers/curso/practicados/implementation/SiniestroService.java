@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import univers.curso.practicados.dto.SiniestroDto;
-
 import univers.curso.practicados.entity.Siniestro;
 import univers.curso.practicados.repository.SiniestroRepository;
 import univers.curso.practicados.ws.SiniestroServiceInterface;
@@ -30,6 +29,11 @@ public class SiniestroService implements SiniestroServiceInterface {
 	@Override
 	public List<Siniestro> buscar() {
 		return siniestroRepository.findAll();
+	}
+	
+	@Override
+	public List<Siniestro> buscarId(Integer idSiniestro) {
+		return siniestroRepository.findByIdSiniestroEquals(idSiniestro);
 	}
 
 	@Override

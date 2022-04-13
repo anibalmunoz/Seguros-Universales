@@ -1,8 +1,8 @@
-<p-dialog header="Title" [(visible)]="display">
+<p-dialog header="No existe" [(visible)]="display">
     No existe la poliza ingresada, por favor ingrese una poliza válida
 </p-dialog>
 
-<p-dialog header="Title" [(visible)]="display2">
+<p-dialog header="No existe" [(visible)]="display2">
     No existe perito con este DNI asignado, escriba un DNI válido.
 </p-dialog>
 
@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-
+<hr>
 
 <form id="cliente" *ngIf="mostrarDatosCliente">
     <h3>Información del cliente</h3>
@@ -135,6 +135,7 @@
             </div>
         </div>
     </div>
+    <hr>
 </form>
 
 
@@ -197,7 +198,9 @@
             </div>
         </div>
     </div>
+    <hr>
 </form>
+
 
 <form id="crearSiniestro" *ngIf="mostrarFormulario">
     <font COLOR="black">
@@ -221,7 +224,7 @@
                     [ngModelOptions]="{standalone: true}">
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"
@@ -230,7 +233,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"
@@ -239,7 +242,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="mb-4">
                 <span class="p-float-label">
                     <input type="text" pInputText class="form-control" required maxlength="40"
@@ -249,12 +252,105 @@
             </div>
         </div>
         <div class="mb-4">
-            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
+            <button pButton pRipple type="button" icon="pi pi-search"
+                class="p-button-rounded p-button-primary float-end"
                 (click)="buscarPerito(siniestroNuevo.perito.dniPerito)">
             </button>
         </div>
+    </div>
+    <hr>
+</form>
+
+
+<form id="crearPerito" *ngIf="mostrarDatosPerito">
+
+
+    <h3>Datos de Perito</h3>
+
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-4">
+                <label class="form-label"> <b>
+                        <font color="black">Nombre</font>
+                    </b> </label>
+                <input type="text" pInputText class="form-control" required [(ngModel)]="perito.nombrePerito"
+                    [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-4">
+                <label class="form-label"><b>Apellido</b></label>
+                <input type="text" pInputText class="form-control" [(ngModel)]="perito.apellidoPerito1"
+                    [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="number" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.telefonoContacto" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Teléfono</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="number" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.telefonoOficina" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Teléfono de oficina</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.claseVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Clase vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Nombre vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Numero vía</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.codPostal" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Codigo Postal</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-4">
+                <span class="p-float-label">
+                    <input type="text" pInputText class="form-control" required maxlength="40"
+                        [(ngModel)]="perito.ciudad" [ngModelOptions]="{standalone: true}" disabled>
+                    <label class="form-label">Ciudad</label>
+                </span>
+            </div>
+        </div>
         <div>
-            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()" *ngIf="mostrarGuardar">
+            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()"
+                *ngIf="mostrarGuardar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-check-square-fill" viewBox="0 0 16 16">
                     <path
@@ -263,6 +359,8 @@
             </button>
         </div>
     </div>
+
+
 </form>
 
 <br>

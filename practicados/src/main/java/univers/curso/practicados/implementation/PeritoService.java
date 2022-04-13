@@ -5,6 +5,11 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -71,6 +76,14 @@ public class PeritoService implements PeritoServiceInterface {
 	@Override
 	public List<Object[]> prueba() {
 		return peritoRepository.prueba();
+	}
+	
+	//Paginado
+	
+	@Override
+	public Page<Perito> buscarPaginado(int pagina, int cantidad) {
+		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "dniPerito"));
+		return peritoRepository.findAll(pageable);
 	}
 
 }

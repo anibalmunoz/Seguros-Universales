@@ -8,7 +8,9 @@ import { PrimeNGConfig } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormclienteComponent } from '../formcliente/formcliente.component';
-import { JsonpClientBackend } from '@angular/common/http';
+import { MenuItem } from 'primeng/api';
+
+
 
 @Component({
   selector: 'app-clientes',
@@ -18,6 +20,10 @@ import { JsonpClientBackend } from '@angular/common/http';
 
 })
 export class ClientesComponent implements OnInit {
+
+  items!: MenuItem[];
+  tooltipItems!: MenuItem[];
+  leftTooltipItems!: MenuItem[];
 
   lang = [
     { name: 5 },
@@ -45,12 +51,38 @@ export class ClientesComponent implements OnInit {
   ref?: DynamicDialogRef;
   position: string = "";
   mostrarBotonNuevo = true;
+  
+  value3: string = "";
 
   constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
 
   ngOnInit(): void {
+
+    this.items = [
+      {
+        icon: 'pi pi-pencil',
+        command: () => {
+          this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
+        }
+      },
+      {
+        icon: 'pi pi-trash',
+        command: () => {
+          this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+        }
+      },
+      {
+        icon: 'pi pi-list',
+      },
+
+    ];
+
+
+
+
+
     this.obtenerPaginado(0, this.filas);
     //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
     //this.primengConfig.ripple = true;
@@ -267,7 +299,6 @@ export class ClientesComponent implements OnInit {
   irClienteSeguros(cliente: any) {
     location.href = "/clienteseguros/" + cliente.dniCl + "/cliente";
   }
-
 
 
 }
