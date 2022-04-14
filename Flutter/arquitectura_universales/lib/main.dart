@@ -1,7 +1,9 @@
 import 'dart:async';
 
-import 'package:arquitectura_universales/pages/page_one/formulario_2.dart';
+import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/page_two/page_two.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
+import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -95,13 +97,12 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
                   theme: ThemeData(
-                    primarySwatch: Colors.yellow,
-
+                    primarySwatch: Colors.blue,
                     visualDensity: VisualDensity.adaptivePlatformDensity,
                   ),
                   darkTheme: ThemeData.dark(),
                   themeMode: currentMode,
-                  home: Formulario2(),
+                  home: BarraNavegacion(),
                 );
               });
         });

@@ -8,18 +8,7 @@ class BasicBloc extends Bloc<BasicEvent, BasicState> {
   BasicBloc() : super(AppStarted()) {
     on<LoginButtonPressed>((event, emit) {
       emit(PageChanged(title: "Bienvenido " + event.nombre));
+      emit(UsuarioLogueado());
     });
   }
-
-  // Future<bool> _checkModeStatus() async {
-  //   final modoColor = await MyApp.themeNotifier;
-  //   bool modoOscuro;
-
-  //   if (modoColor == ThemeMode.light) {
-  //     modoOscuro = false;
-  //   } else {
-  //     modoOscuro = true;
-  //   }
-  //   return modoColor;
-  // }
 }

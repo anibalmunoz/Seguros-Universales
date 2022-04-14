@@ -1,13 +1,13 @@
 import 'package:arquitectura_universales/bloc/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
-import 'package:arquitectura_universales/pages/page_two/page_two.dart';
+import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Formulario2 extends StatelessWidget {
-  Formulario2({Key? key}) : super(key: key);
+class FormularioLogin extends StatelessWidget {
+  FormularioLogin({Key? key}) : super(key: key);
   String nombre = "Anibal";
   final _keyForm = GlobalKey<FormState>();
 
@@ -53,10 +53,8 @@ class Formulario2 extends StatelessWidget {
                 break;
               case PageChanged:
                 final estado = state as PageChanged;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (cxt) => PageTwo(title: estado.title)));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (cxt) => BarraNavegacion()));
                 break;
             }
           },
@@ -166,14 +164,6 @@ class Formulario2 extends StatelessWidget {
                                                   .add(LoginButtonPressed(
                                                       nombre: nombre));
                                             }
-                                            //   //else {
-                                            //   //   ScaffoldMessenger.of(context)
-                                            //   //       .showSnackBar(
-                                            //   //     const SnackBar(
-                                            //   //         content: Text(
-                                            //   //             "Información incorrecta")),
-                                            //   //   );
-                                            //   // }
                                           },
                                           child: const Text('Login'),
                                         ),
@@ -195,8 +185,3 @@ class Formulario2 extends StatelessWidget {
     );
   }
 }
-
-// Future<void> enviarDato(bool modo) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   await prefs.setBool('modo', modo);
-// }

@@ -10,7 +10,4 @@ class PageChanged extends BasicState {
   PageChanged({required this.title});
 }
 
-class ModoOscuro extends BasicState {
-  bool modoOscuro = false;
-  ModoOscuro({required this.modoOscuro});
-}
+class UsuarioLogueado extends BasicState {}
