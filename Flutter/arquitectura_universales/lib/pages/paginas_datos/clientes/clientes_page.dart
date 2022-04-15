@@ -15,17 +15,6 @@ class ClientesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ValueListenableBuilder<ThemeMode>(
-    //     valueListenable: MyApp.themeNotifier,
-    //     builder: (_, ThemeMode currentMode, __) {
-    //       return MaterialApp(
-    //         debugShowCheckedModeBanner: false,
-    //         theme: ThemeData(
-    //           primarySwatch: Colors.blue,
-    //           visualDensity: VisualDensity.adaptivePlatformDensity,
-    //         ),
-    //         darkTheme: ThemeData.dark(),
-    //         themeMode: currentMode,
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -66,7 +55,6 @@ class ClientesPage extends StatelessWidget {
                   snapshot.requireData as ClientesLista;
               _clientes = clientesLista.clientes;
               print("SI HAY INFORMACIÓN");
-              //print("LA LISTA DE CLIENTES ES: ${_clientes[0]}");
             } else {
               print("NO HAY INFORMACIÓN");
             }
@@ -75,14 +63,14 @@ class ClientesPage extends StatelessWidget {
               itemCount: _clientes.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  // onLongPress: () {
-                  //   print("IR A DETALLES");
-                  // },
+                  onLongPress: () {
+                    eliminarCliente(context, _clientes[index]);
+                  },
                   title: Text("Nombre: " +
                       _clientes[index].nombre +
                       " " +
                       _clientes[index].apeliido1),
-                  subtitle: Text("DNI: " + _clientes[index].dni),
+                  subtitle: Text("DNI: " + _clientes[index].dni.toString()),
                   leading: const CircleAvatar(
                       backgroundColor: Colors.amber,
                       child: Icon(
@@ -92,11 +80,10 @@ class ClientesPage extends StatelessWidget {
                       ),
                   trailing: IconButton(
                       icon: const Icon(
-                        Icons.list_alt,
+                        Icons.arrow_forward_ios,
                         color: Colors.indigo,
                       ),
                       onPressed: () {
-                        print("Ir a detalles de Cliente");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -110,18 +97,39 @@ class ClientesPage extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => DetallesCliente(cliente: ),
-            //     ));
-          },
-          tooltip: "Agregar Cliente",
-          child: Icon(Icons.person_add_alt),
-        ),
       ),
     );
   }
+}
+
+eliminarCliente(context, cliente) {
+  showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text("Eliminar"),
+            content: Text(
+                "¿Estas seguro de eliminar el cliente " + cliente.nombre + "?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancelar",
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ))),
+              TextButton(
+                  onPressed: () {
+                    ApiManagerCliente.shared.request(
+                        baseUrl: "192.168.0.17:9595",
+                        pathUrl: "/cliente/eliminar/" + cliente.dni.toString(),
+                        type: HttpType.DELETE);
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Eliminar",
+                    style: TextStyle(color: Colors.red),
+                  )),
+            ],
+          ));
 }

@@ -13,6 +13,7 @@ class ApiManagerCliente {
     required String baseUrl,
     required String pathUrl,
     required HttpType type,
+    String? jsonParam,
     Map<String, dynamic>? bodyParams,
     Map<String, dynamic>? uriParams,
   }) async {
@@ -23,39 +24,43 @@ class ApiManagerCliente {
     switch (type) {
       case HttpType.GET:
         response = await http.get(uri);
+        List<Cliente> clientes = [];
+
+        if (response.statusCode == 200 && response.body != null) {
+          final body = json.decode(response.body);
+
+          for (var item in body) {
+            clientes.add(Cliente(
+              dni: item["dniCl"],
+              nombre: item["nombreCl"],
+              apeliido1: item["apellido1"],
+              apellido2: item["apellido2"],
+              claseVia: item["claseVia"],
+              nombreVia: item["nombreVia"],
+              numeroVia: item["numeroVia"],
+              codigoPostal: item["codPostal"],
+              ciudad: item["ciudad"],
+              telefono: item["telefono"].toString(),
+              observaciones: item["observaciones"],
+            ));
+          }
+
+          return ClientesLista.lista(clientes);
+        }
         break;
       case HttpType.POST:
-        response = await http.get(uri);
+        response = await http.post(
+          uri,
+          body: jsonParam,
+          headers: {'Content-type': 'application/json; charset=UTF-8'},
+        );
+        print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
         break;
       case HttpType.DELETE:
-        response = await http.get(uri);
+        response = await http.delete(uri);
     }
     // final request = await http.post(uri, body: bodyParams);
 
-    List<Cliente> clientes = [];
-
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
-
-      for (var item in body) {
-        clientes.add(Cliente(
-          dni: item["dniCl"].toString(),
-          nombre: item["nombreCl"],
-          apeliido1: item["apellido1"],
-          apellido2: item["apellido2"],
-          claseVia: item["claseVia"],
-          nombreVia: item["nombreVia"],
-          numeroVia: item["numeroVia"],
-          codigoPostal: item["codPostal"],
-          ciudad: item["ciudad"],
-          telefono: item["telefono"].toString(),
-          observaciones: item["observaciones"],
-        ));
-      }
-
-      //return Cliente.fromLista(body);
-      return ClientesLista.lista(clientes);
-    }
     return null;
   }
 }

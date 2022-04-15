@@ -1,5 +1,5 @@
 class Cliente {
-  late String dni;
+  late int dni;
   late String nombre;
   late String apeliido1;
   late String? apellido2;
@@ -10,8 +10,6 @@ class Cliente {
   late String? ciudad;
   late String? telefono;
   late String? observaciones;
-
-  late List clientes;
 
   Cliente(
       {key,
@@ -27,13 +25,10 @@ class Cliente {
       this.telefono,
       this.observaciones});
 
-  Cliente.fromObjeto(Map<String, dynamic> data) {
-    this.nombre = data['name'];
-  }
+  // Cliente.fromObjeto(Map<String, dynamic> data) {
+  //   this.nombre = data['name'];
+  // }
 
-  Cliente.fromLista(List<dynamic> data) {
-    clientes = data;
-  }
 }
 
 class ClientesLista {

@@ -15,6 +15,7 @@ public class CompaniaSeguroService implements CompaniaSeguroServiceInterface {
 	@Autowired
 	CompaniaSeguroRepository companiaSeguroRepository;
 
+	@Override
 	public List<CompaniaSeguro> buscar() {
 		return companiaSeguroRepository.findAll();
 	}
