@@ -2,6 +2,7 @@ package univers.curso.practicados.dto;
 
 import java.io.Serializable;
 
+
 import lombok.Data;
 
 @Data
@@ -20,5 +21,8 @@ public class ClienteDto implements Serializable {
 	private String ciudad;
 	private Integer telefono;
 	private String observaciones;
+	
+	private String correo;
+	private String contrasena;
 
 }

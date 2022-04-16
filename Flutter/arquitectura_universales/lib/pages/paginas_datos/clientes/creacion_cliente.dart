@@ -7,17 +7,16 @@ import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
 
-class DetallesCliente extends StatefulWidget {
-  Cliente cliente;
+class CreacionCliente extends StatefulWidget {
   String titulo;
 
-  DetallesCliente({key, required this.cliente, required this.titulo});
+  CreacionCliente({key, required this.titulo});
 
   @override
-  State<StatefulWidget> createState() => _RegistrarContacto();
+  State<StatefulWidget> createState() => _CreacionCliente();
 }
 
-class _RegistrarContacto extends State<DetallesCliente> {
+class _CreacionCliente extends State<CreacionCliente> {
   final _keyForm = GlobalKey<FormState>();
   final baseURL = const MyApp().baseURL;
   final pathURL = "/cliente/guardar";
@@ -28,15 +27,9 @@ class _RegistrarContacto extends State<DetallesCliente> {
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
-  final estiloBotonEliminar = ElevatedButton.styleFrom(
-    primary: Colors.red,
-    onPrimary: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-  );
-
   @override
   Widget build(BuildContext context) {
-    Cliente client = widget.cliente;
+    Cliente client = new Cliente();
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +40,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
           preferredSize: Size(12, 12),
           child: Text(""),
         ),
-        automaticallyImplyLeading: true,
         title: Text(
           widget.titulo,
           style: TextStyle(height: 4),
@@ -84,27 +76,26 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return 'Campo vacío';
-                                  }
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: client.dni.toString(),
-                                //readOnly: true,
-                                enabled: false,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.numbers),
-                                    labelText: "DNI",
-                                    border: OutlineInputBorder(),
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
+                              // TextFormField(
+                              //   validator: (valor) {
+                              //     if (valor!.isEmpty) {
+                              //       return 'Campo vacío';
+                              //     }
+                              //   },
+                              //   keyboardType: TextInputType.number,
+                              //   //readOnly: true,
+                              //   enabled: false,
+                              //   decoration: const InputDecoration(
+                              //       icon: Icon(Icons.numbers),
+                              //       labelText: "DNI",
+                              //       border: OutlineInputBorder(),
+                              //       isDense: false,
+                              //       contentPadding: EdgeInsets.all(10)),
+                              // ),
+                              // Container(
+                              //   margin: const EdgeInsets.only(
+                              //       top: 15.0, bottom: 15.0),
+                              // ),
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
@@ -114,7 +105,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.nombre,
                                 decoration: const InputDecoration(
                                     icon: Icon(Icons.text_fields_rounded),
                                     labelText: "Nombre",
@@ -135,7 +125,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.apeliido1,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.text_fields_rounded),
                                   labelText: "Primer Apellido",
@@ -158,7 +147,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.apellido2,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.text_fields_rounded),
                                   labelText: "Segundo Apellido",
@@ -180,7 +168,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.claseVia,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.read_more_outlined),
                                   labelText: "Clase Vía",
@@ -202,7 +189,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.nombreVia,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.read_more_outlined),
                                   labelText: "Nombre Vía",
@@ -224,7 +210,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
-                                initialValue: client.numeroVia,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.read_more_outlined),
                                   labelText: "Número Vía",
@@ -246,7 +231,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
-                                initialValue: client.codigoPostal,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.directions),
                                   labelText: "Código Postal",
@@ -268,7 +252,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.ciudad,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.location_city),
                                   labelText: "Ciudad",
@@ -290,7 +273,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
-                                initialValue: client.telefono,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.phone),
                                   labelText: "Teléfono",
@@ -312,7 +294,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.observaciones,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.folder),
                                   labelText: "Observaciones",
@@ -329,11 +310,11 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   style: estiloBotonGuardar,
                                   onPressed: () {
                                     if (_keyForm.currentState!.validate()) {
-                                      modificarCliente(context, client);
+                                      guardarCliente(context, client);
                                     }
                                   },
                                   child: const Text(
-                                      '               Modificar Cliente               '),
+                                      '               Guardar Cliente               '),
                                 ),
                               ),
                             ],
@@ -352,12 +333,12 @@ class _RegistrarContacto extends State<DetallesCliente> {
     );
   }
 
-  modificarCliente(context, cliente) {
+  guardarCliente(context, cliente) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Modificar"),
-              content: Text("¿Estas seguro de modificar el cliente " +
+              title: const Text("Guardar"),
+              content: Text("¿Estas seguro de guardar el nuevo cliente " +
                   cliente.nombre +
                   "?"),
               actions: [
@@ -371,7 +352,6 @@ class _RegistrarContacto extends State<DetallesCliente> {
                         ))),
                 TextButton(
                     onPressed: () {
-                      Cliente clienteEnviar = cliente;
                       Map<String, dynamic> bodyMap;
                       bodyMap = {
                         "dniCl": cliente.dni,

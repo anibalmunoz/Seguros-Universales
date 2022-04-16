@@ -1,5 +1,6 @@
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/clientes/creacion_cliente.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
@@ -9,7 +10,7 @@ class ClientesPage extends StatelessWidget {
   ClientesPage({Key? key}) : super(key: key);
   // final baseURL = "jsonplaceholder.typicode.com";
   // final pathURL = "/users/1";
-  final baseURL = "192.168.0.17:9595";
+  final baseURL = MyApp().baseURL;
   final pathURL = "/cliente/buscar";
   List _clientes = [];
 
@@ -19,8 +20,8 @@ class ClientesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.red
-              : Colors.blue,
+              ? Colors.blue
+              : Colors.red,
           bottom: const PreferredSize(
             preferredSize: Size(12, 12),
             child: Text(""),
@@ -42,7 +43,14 @@ class ClientesPage extends StatelessWidget {
               child: IconButton(
                   icon: const Icon(Icons.person_add_alt_sharp,
                       color: Colors.amber),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreacionCliente(titulo: "Crear nuevo cliente"),
+                        )).then((value) => null);
+                  }),
             ),
           ],
         ),
@@ -100,36 +108,38 @@ class ClientesPage extends StatelessWidget {
       ),
     );
   }
-}
 
-eliminarCliente(context, cliente) {
-  showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: const Text("Eliminar"),
-            content: Text(
-                "¿Estas seguro de eliminar el cliente " + cliente.nombre + "?"),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Cancelar",
-                      style: TextStyle(
-                        color: Colors.blue,
-                      ))),
-              TextButton(
-                  onPressed: () {
-                    ApiManagerCliente.shared.request(
-                        baseUrl: "192.168.0.17:9595",
-                        pathUrl: "/cliente/eliminar/" + cliente.dni.toString(),
-                        type: HttpType.DELETE);
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "Eliminar",
-                    style: TextStyle(color: Colors.red),
-                  )),
-            ],
-          ));
+  eliminarCliente(context, cliente) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Eliminar"),
+              content: Text("¿Estas seguro de eliminar el cliente " +
+                  cliente.nombre +
+                  "?"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Cancelar",
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ))),
+                TextButton(
+                    onPressed: () {
+                      ApiManagerCliente.shared.request(
+                          baseUrl: MyApp().baseURL,
+                          pathUrl:
+                              "/cliente/eliminar/" + cliente.dni.toString(),
+                          type: HttpType.DELETE);
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Eliminar",
+                      style: TextStyle(color: Colors.red),
+                    )),
+              ],
+            ));
+  }
 }

@@ -10,18 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.Data;
 
 @Entity
 @Table(name = "USUARIO")
 
 @SequenceGenerator(name = "sqcUsuario", sequenceName = "SQC_USUARIO", allocationSize = 1)
-@Data
 public class Usuario implements Serializable{
 
 	
-	private static final long serialVersionUID = 8721804543795104871L;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5686892217579656377L;
+	
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqcUsuario")
@@ -37,5 +39,42 @@ public class Usuario implements Serializable{
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
+	
+	
+
+	public Integer getIduduario() {
+		return iduduario;
+	}
+
+	public void setIduduario(Integer iduduario) {
+		this.iduduario = iduduario;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
 
 }

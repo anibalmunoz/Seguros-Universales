@@ -1,7 +1,7 @@
 class Cliente {
-  late int dni;
-  late String nombre;
-  late String apeliido1;
+  late int? dni;
+  late String? nombre;
+  late String? apeliido1;
   late String? apellido2;
   late String? claseVia;
   late String? nombreVia;
@@ -10,12 +10,14 @@ class Cliente {
   late String? ciudad;
   late String? telefono;
   late String? observaciones;
+  late String? correo;
+  late String? contrasena;
 
   Cliente(
       {key,
-      required this.dni,
-      required this.nombre,
-      required this.apeliido1,
+      this.dni,
+      this.nombre,
+      this.apeliido1,
       this.apellido2,
       this.claseVia,
       this.nombreVia,
@@ -23,12 +25,14 @@ class Cliente {
       this.codigoPostal,
       this.ciudad,
       this.telefono,
-      this.observaciones});
+      this.observaciones,
+      this.correo,
+      this.contrasena});
 
-  // Cliente.fromObjeto(Map<String, dynamic> data) {
-  //   this.nombre = data['name'];
-  // }
-
+  Cliente.fromObjeto(Map<String, dynamic> data) {
+    this.correo = data['correo'];
+    this.contrasena = data['contrasena'];
+  }
 }
 
 class ClientesLista {

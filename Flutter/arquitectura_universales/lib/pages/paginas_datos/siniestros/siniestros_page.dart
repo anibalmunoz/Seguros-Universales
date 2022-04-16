@@ -5,7 +5,7 @@ import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 
 class SiniestrosPage extends StatelessWidget {
-  final baseURL = "192.168.0.17:9595";
+  final baseURL = MyApp().baseURL;
   final pathURL = "/siniestro/buscar";
   List _siniestros = [];
 
@@ -15,8 +15,8 @@ class SiniestrosPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.red
-              : Colors.blue,
+              ? Colors.blue
+              : Colors.red,
           bottom: const PreferredSize(
             preferredSize: Size(13, 13),
             child: Text(""),
@@ -83,13 +83,10 @@ class SiniestrosPage extends StatelessWidget {
                       ),
                   trailing: IconButton(
                       icon: const Icon(
-                        Icons.list_alt,
+                        Icons.arrow_forward_ios,
                         color: Colors.indigo,
                       ),
-                      onPressed: () {
-                        print("Ir a detalles de Siniestro");
-                        eliminarSiniestro(context, _siniestros[index]);
-                      }),
+                      onPressed: () {}),
                 );
               },
             );

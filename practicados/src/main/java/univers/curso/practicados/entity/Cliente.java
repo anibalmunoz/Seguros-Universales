@@ -61,6 +61,12 @@ public class Cliente implements Serializable {
 
 	@Column(name = "OBSERVACIONES")
 	private String observaciones;
+	
+	@Column(name = "CORREO")
+	private String correo;
+
+	@Column(name = "CONTRASENA")
+	private String contrasena;
 
 	@OneToMany(mappedBy = "dniCl", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Seguro> segurosList;

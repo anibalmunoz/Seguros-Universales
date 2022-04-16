@@ -127,4 +127,11 @@ public interface ClienteServiceInterface {
 	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
 	public Page<Cliente> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
 	
+	/*
+	 * LOGIN
+	 */
+	
+	@PostMapping(path="/login")
+	public Cliente login(@RequestBody Cliente cliente);
+	
 }

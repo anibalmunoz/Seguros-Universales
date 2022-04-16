@@ -4,11 +4,14 @@ import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/page_two/page_two.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runZonedGuarded(() => runApp(const MyApp()),
@@ -16,6 +19,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  final baseURL = "192.168.0.32:9595";
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -36,6 +41,8 @@ class _MyAppState extends State<MyApp> {
     await _inicializarCrashlytics();
     await _inicializarCloudMessagin();
     await _inicializarRemoteConfig();
+    await _inicializarRealtimeDatabase();
+    await _inicializarCloudFirestore();
   }
 
   Future<void> _inicializarCrashlytics() async {
@@ -78,6 +85,36 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Future<void> _inicializarRealtimeDatabase() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("modo");
+    //await ref.set({"modo": "ThemeMode.system"});
+    ref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print("LA DATA OBTENIDA ES: ${data}");
+      if (data.toString() == "{modo: ThemeMode.light}") {
+        MyApp.themeNotifier.value = ThemeMode.light;
+      } else {
+        MyApp.themeNotifier.value = ThemeMode.dark;
+      }
+    });
+  }
+
+  Future<void> _inicializarCloudFirestore() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // CollectionReference ubicaciones = firestore.collection('ubicaciones');
+
+    // Future<void> addUbicacion() {
+    //   // Call the user's CollectionReference to add a new user
+    //   return ubicaciones
+    //       .add({'ubicacion': "prueba"})
+    //       .then((value) => print("PRUEBA FIRESTORE CORRECTA"))
+    //       .catchError((error) => print("PRUEBA FIRESTORE FALLIDA: $error"));
+    // }
+
+    // addUbicacion();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -102,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   darkTheme: ThemeData.dark(),
                   themeMode: currentMode,
-                  home: BarraNavegacion(),
+                  home: FormularioLogin(),
                 );
               });
         });

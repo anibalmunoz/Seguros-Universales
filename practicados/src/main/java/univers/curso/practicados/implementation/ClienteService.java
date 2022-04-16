@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-
 import univers.curso.practicados.dto.ClienteDto;
 import univers.curso.practicados.dto.GroupByDto;
 import univers.curso.practicados.entity.Cliente;
@@ -207,6 +206,24 @@ public class ClienteService implements ClienteServiceInterface {
 		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "dniCl"));
 		return clienteRepository.findAll(pageable);
 	}
+	
+	/*
+	 * LOGIN
+	 */
+	
+	@Override
+	public Cliente login(Cliente cliente){
+		
+		List<Cliente> clientes = clienteRepository.findByCorreoAndContrasena(cliente.getCorreo(), cliente.getContrasena());
+		
+		if(!clientes.isEmpty()) {
+			return clientes.get(0);
+		}
+		
+		return null;
+		
+	}
+	
 
 	
 }

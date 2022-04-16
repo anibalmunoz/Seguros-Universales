@@ -5,7 +5,7 @@ import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 
 class SegurosPage extends StatelessWidget {
-  final baseURL = "192.168.0.17:9595";
+  final baseURL = MyApp().baseURL;
   final pathURL = "/seguro/buscar";
   List _seguros = [];
 
@@ -15,8 +15,8 @@ class SegurosPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.red
-              : Colors.blue,
+              ? Colors.blue
+              : Colors.red,
           bottom: const PreferredSize(
             preferredSize: Size(13, 13),
             child: Text(""),
@@ -79,13 +79,10 @@ class SegurosPage extends StatelessWidget {
                       ),
                   trailing: IconButton(
                       icon: const Icon(
-                        Icons.list_alt,
+                        Icons.arrow_forward_ios,
                         color: Colors.indigo,
                       ),
-                      onPressed: () {
-                        print("Ir a detalles de Seguro");
-                        eliminarSeguro(context, _seguros[index]);
-                      }),
+                      onPressed: () {}),
                 );
               },
             );
