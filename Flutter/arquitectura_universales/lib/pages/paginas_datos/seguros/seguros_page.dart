@@ -15,7 +15,7 @@ class SegurosPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.blue
+              ? Colors.blue[900]
               : Colors.red,
           bottom: const PreferredSize(
             preferredSize: Size(13, 13),

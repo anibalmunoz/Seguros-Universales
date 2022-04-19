@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:arquitectura_universales/model/seguro-model.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class ApiManagerSeguro {
@@ -22,6 +24,7 @@ class ApiManagerSeguro {
     switch (type) {
       case HttpType.GET:
         response = await http.get(uri);
+        agregarUbicacion("GET");
         break;
       case HttpType.POST:
         response = await http.get(uri);
@@ -51,5 +54,36 @@ class ApiManagerSeguro {
       return SegurosLista.lista(seguros);
     }
     return null;
+  }
+
+  Position? _initialPosition;
+  Position? get initialPosition => _initialPosition;
+
+  Future<void> agregarUbicacion(tipoPeticion) async {
+    FirebaseFirestore firestores = FirebaseFirestore.instance;
+    CollectionReference ubicaciones = firestores.collection('ubicaciones');
+
+    Future<void> addUbicacion() async {
+      // Call the user's CollectionReference to add a new user
+
+      final isEnable = await Geolocator.isLocationServiceEnabled();
+
+      if (isEnable == true) {
+        _initialPosition = await Geolocator.getCurrentPosition();
+      }
+
+      return ubicaciones
+          .add({
+            'ubicacion': _initialPosition.toString(),
+            "detalles":
+                "Peticion ${tipoPeticion} de SEGUROS a la API _ FECHA: ${DateTime.now()}"
+          })
+          .then((value) => print(
+              "UBICACION ENVIADA ${tipoPeticion} API MANAGER SEGURO ${DateTime.now()} ES: ${_initialPosition}"))
+          .catchError((error) =>
+              print("ENVIO DE UBICACION A FIRESTORE FALLIDA: $error"));
+    }
+
+    addUbicacion();
   }
 }

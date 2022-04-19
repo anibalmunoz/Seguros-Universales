@@ -20,6 +20,16 @@ class _CreacionCliente extends State<CreacionCliente> {
   final _keyForm = GlobalKey<FormState>();
   final baseURL = const MyApp().baseURL;
   final pathURL = "/cliente/guardar";
+  var nombreController = TextEditingController();
+  var apellido1Controller = TextEditingController();
+  var apellido2Controller = TextEditingController();
+  var claseViaController = TextEditingController();
+  var nombreViaController = TextEditingController();
+  var numeroViaController = TextEditingController();
+  var codigoPostalController = TextEditingController();
+  var ciudadController = TextEditingController();
+  var telefonoController = TextEditingController();
+  var observacionesController = TextEditingController();
 
   final estiloBotonGuardar = ElevatedButton.styleFrom(
     primary: Colors.green,
@@ -34,7 +44,7 @@ class _CreacionCliente extends State<CreacionCliente> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-            ? Colors.blue
+            ? Colors.blue[900]
             : Colors.red,
         bottom: const PreferredSize(
           preferredSize: Size(12, 12),
@@ -49,6 +59,17 @@ class _CreacionCliente extends State<CreacionCliente> {
             margin: const EdgeInsets.only(top: 37.0),
           ),
         ],
+        leading: Container(
+          margin: EdgeInsets.only(top: 22.0),
+          child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
       ),
       body: ListView(
         children: [
@@ -76,27 +97,8 @@ class _CreacionCliente extends State<CreacionCliente> {
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              // TextFormField(
-                              //   validator: (valor) {
-                              //     if (valor!.isEmpty) {
-                              //       return 'Campo vacío';
-                              //     }
-                              //   },
-                              //   keyboardType: TextInputType.number,
-                              //   //readOnly: true,
-                              //   enabled: false,
-                              //   decoration: const InputDecoration(
-                              //       icon: Icon(Icons.numbers),
-                              //       labelText: "DNI",
-                              //       border: OutlineInputBorder(),
-                              //       isDense: false,
-                              //       contentPadding: EdgeInsets.all(10)),
-                              // ),
-                              // Container(
-                              //   margin: const EdgeInsets.only(
-                              //       top: 15.0, bottom: 15.0),
-                              // ),
                               TextFormField(
+                                controller: nombreController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return 'Campo vacío';
@@ -117,6 +119,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: apellido1Controller,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -139,6 +142,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: apellido2Controller,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -160,6 +164,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: claseViaController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -181,6 +186,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: nombreViaController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -202,6 +208,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: numeroViaController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -223,6 +230,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: codigoPostalController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -244,6 +252,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: ciudadController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -265,6 +274,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: telefonoController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -286,6 +296,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
+                                controller: observacionesController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
@@ -378,6 +389,16 @@ class _CreacionCliente extends State<CreacionCliente> {
                           bodyParams: bodyMap,
                           type: HttpType.POST);
 
+                      nombreController.clear();
+                      apellido1Controller.clear();
+                      apellido2Controller.clear();
+                      claseViaController.clear();
+                      nombreViaController.clear();
+                      numeroViaController.clear();
+                      codigoPostalController.clear();
+                      ciudadController.clear();
+                      telefonoController.clear();
+                      observacionesController.clear();
                       Navigator.pop(context);
                     },
                     child: const Text(

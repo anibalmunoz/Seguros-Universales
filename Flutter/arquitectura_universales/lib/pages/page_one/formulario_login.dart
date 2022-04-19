@@ -34,7 +34,9 @@ class FormularioLogin extends StatelessWidget {
     askGpsAccess();
 
     final estiloBoton = ElevatedButton.styleFrom(
-      primary: Colors.red,
+      primary: MyApp.themeNotifier.value == ThemeMode.light
+          ? Color.fromARGB(255, 41, 106, 202)
+          : Colors.red,
       onPrimary: Colors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
@@ -42,7 +44,9 @@ class FormularioLogin extends StatelessWidget {
     return Scaffold(
       //backgroundColor:  Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+            ? Colors.blue[900]
+            : Colors.red,
         title: const Text('Login'),
         actions: [
           IconButton(
@@ -97,9 +101,12 @@ class FormularioLogin extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.login_sharp,
-                                  color: Colors.red,
+                                  color: MyApp.themeNotifier.value ==
+                                          ThemeMode.light
+                                      ? Color.fromARGB(255, 41, 202, 154)
+                                      : Colors.red,
                                   size: 150.0,
                                 ),
                                 Container(
@@ -271,7 +278,7 @@ class FormularioLogin extends StatelessWidget {
       final isEnable = await Geolocator.isLocationServiceEnabled();
 
       if (isEnable == true) {
-        _initialPosition = await Geolocator.getLastKnownPosition();
+        _initialPosition = await Geolocator.getCurrentPosition();
       }
 
       return ubicaciones

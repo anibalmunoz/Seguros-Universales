@@ -20,7 +20,7 @@ class ClientesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.blue
+              ? Colors.blue[900]
               : Colors.red,
           bottom: const PreferredSize(
             preferredSize: Size(12, 12),
@@ -89,7 +89,7 @@ class ClientesPage extends StatelessWidget {
                   trailing: IconButton(
                       icon: const Icon(
                         Icons.arrow_forward_ios,
-                        color: Colors.indigo,
+                        color: Color.fromARGB(255, 41, 106, 202),
                       ),
                       onPressed: () {
                         Navigator.push(

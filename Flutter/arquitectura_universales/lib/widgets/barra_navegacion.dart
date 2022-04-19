@@ -1,3 +1,4 @@
+import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/seguros_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/siniestros_page.dart';
@@ -9,18 +10,36 @@ class BarraNavegacion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(items: const [
+        tabBar: CupertinoTabBar(items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded, color: Colors.blue),
-              activeIcon: Icon(Icons.person_outline, color: Colors.blue),
+              icon: Icon(Icons.person_rounded,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
+              activeIcon: Icon(Icons.person_outline,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
               label: ("Clientes")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.security_rounded, color: Colors.blue),
-              activeIcon: Icon(Icons.security_outlined, color: Colors.blue),
+              icon: Icon(Icons.security_rounded,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
+              activeIcon: Icon(Icons.shield_outlined,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
               label: ("Seguros")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.taxi_alert, color: Colors.blue),
-              activeIcon: Icon(Icons.taxi_alert_outlined, color: Colors.blue),
+              icon: Icon(Icons.taxi_alert,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
+              activeIcon: Icon(Icons.taxi_alert_outlined,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Color.fromARGB(255, 41, 106, 202)
+                      : Colors.red),
               label: ("Siniestros")),
         ]),
         tabBuilder: (BuildContext context, int index) {

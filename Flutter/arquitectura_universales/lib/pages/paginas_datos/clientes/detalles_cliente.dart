@@ -41,13 +41,25 @@ class _RegistrarContacto extends State<DetallesCliente> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-            ? Colors.blue
+            ? Colors.blue[900]
             : Colors.red,
         bottom: const PreferredSize(
           preferredSize: Size(12, 12),
           child: Text(""),
         ),
-        automaticallyImplyLeading: true,
+        //automaticallyImplyLeading: true,
+        leading: Container(
+          margin: EdgeInsets.only(top: 22.0),
+          child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+
         title: Text(
           widget.titulo,
           style: TextStyle(height: 4),

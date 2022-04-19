@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
-import 'package:arquitectura_universales/pages/page_two/page_two.dart';
-import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
-import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
