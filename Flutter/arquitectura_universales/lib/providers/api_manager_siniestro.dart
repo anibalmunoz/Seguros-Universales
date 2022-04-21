@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:arquitectura_universales/model/siniestro_model.dart';
+import 'package:arquitectura_universales/repository/siniestro_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,13 +12,18 @@ class ApiManagerSiniestro {
   static final ApiManagerSiniestro shared =
       ApiManagerSiniestro._privateConstructor();
 
+  var contador = 0;
+
   Future<SiniestrosLista?> request({
     required String baseUrl,
     required String pathUrl,
     required HttpType type,
+    String? jsonParam,
     Map<String, dynamic>? bodyParams,
     Map<String, dynamic>? uriParams,
+    Siniestro? siniestro,
   }) async {
+    List<Siniestro> siniestrosDb = [];
     final key = {};
     final uri = Uri.http(baseUrl, pathUrl);
 
@@ -25,34 +31,61 @@ class ApiManagerSiniestro {
     switch (type) {
       case HttpType.GET:
         response = await http.get(uri);
-        agregarUbicacion("GET");
-        break;
+        //agregarUbicacion("GET");
+        List<Siniestro> siniestros = [];
+
+        if (response.statusCode == 200 && contador == 0) {
+          final body = json.decode(response.body);
+
+          for (var item in body) {
+            siniestros.add(Siniestro(
+              idSiniestro: item["idSiniestro"].toString(),
+              fechaSiniestro: item["fechaSiniestro"],
+              causas: item["causas"],
+              aceptado: item["aceptado"],
+              indemnizacion: item["indemnizacion"],
+            ));
+          }
+          SiniestroRepository.shared.delete(tableName: "siniestros");
+
+          SiniestroRepository.shared
+              .save(data: siniestros, tableName: "siniestros");
+
+          contador = contador + 1;
+        }
+        List<dynamic> sinisterList =
+            await SiniestroRepository.shared.selectAll(tableName: 'siniestros');
+
+        for (var item in sinisterList) {
+          siniestrosDb.add(Siniestro(
+            idSiniestro: item['idsiniestro'].toString(),
+            fechaSiniestro: item['fechasiniestro'],
+            causas: item['causas'],
+            aceptado: item['aceptado'],
+            indemnizacion: item['indemnizacion'],
+          ));
+        }
+
+        return SiniestrosLista.fromDb(siniestrosDb);
+
       case HttpType.POST:
-        response = await http.get(uri);
+        //response = await http.get(uri);
+        SiniestroRepository.shared
+            .insertSiniestro(tableName: "siniestros", siniestro: siniestro!);
+
+        break;
+      case HttpType.PUT:
+        SiniestroRepository.shared
+            .updateSiniestro(tableName: "siniestros", siniestro: siniestro!);
+
         break;
       case HttpType.DELETE:
-        response = await http.get(uri);
+        //response = await http.delete(uri);
+
+        SiniestroRepository.shared.deleteSiniestro(
+            tableName: "siniestros", id: int.parse(siniestro!.idSiniestro!));
     }
-    // final request = await http.post(uri, body: bodyParams);
 
-    List<Siniestro> siniestros = [];
-
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
-
-      for (var item in body) {
-        siniestros.add(Siniestro(
-          idSiniestro: item["idSiniestro"].toString(),
-          fechaSiniestro: item["fechaSiniestro"],
-          causas: item["causas"],
-          aceptado: item["aceptado"],
-          indemnizacion: item["indemnizacion"],
-          numeroPoliza: item["numeroPoliza"].toString(),
-        ));
-      }
-
-      return SiniestrosLista.lista(siniestros);
-    }
     return null;
   }
 

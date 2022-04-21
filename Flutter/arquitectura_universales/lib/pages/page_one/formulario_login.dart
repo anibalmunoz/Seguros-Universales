@@ -36,7 +36,7 @@ class FormularioLogin extends StatelessWidget {
     final estiloBoton = ElevatedButton.styleFrom(
       primary: MyApp.themeNotifier.value == ThemeMode.light
           ? Color.fromARGB(255, 41, 106, 202)
-          : Colors.red,
+          : Colors.teal,
       onPrimary: Colors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
@@ -46,7 +46,7 @@ class FormularioLogin extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.blue[900]
-            : Colors.red,
+            : Colors.grey[900],
         title: const Text('Login'),
         actions: [
           IconButton(
@@ -78,7 +78,7 @@ class FormularioLogin extends StatelessWidget {
                 break;
               case PageChanged:
                 final estado = state as PageChanged;
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (cxt) => BarraNavegacion()));
                 break;
             }
@@ -106,7 +106,7 @@ class FormularioLogin extends StatelessWidget {
                                   color: MyApp.themeNotifier.value ==
                                           ThemeMode.light
                                       ? Color.fromARGB(255, 41, 202, 154)
-                                      : Colors.red,
+                                      : Colors.teal[100],
                                   size: 150.0,
                                 ),
                                 Container(
@@ -181,8 +181,6 @@ class FormularioLogin extends StatelessWidget {
                                         child: ElevatedButton(
                                           style: estiloBoton,
                                           onPressed: () {
-                                            // clienteLogin(context, client);
-
                                             if (_keyForm.currentState!
                                                 .validate()) {
                                               login(context);

@@ -2,33 +2,69 @@ import 'dart:convert';
 
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
+import 'package:arquitectura_universales/model/seguro-model.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
+import 'package:intl/intl.dart';
 
-class CreacionCliente extends StatefulWidget {
+class CreacionSeguro extends StatefulWidget {
   String titulo;
 
-  CreacionCliente({key, required this.titulo});
+  CreacionSeguro({key, required this.titulo});
 
   @override
-  State<StatefulWidget> createState() => _CreacionCliente();
+  State<StatefulWidget> createState() => _CreacionSeguro();
 }
 
-class _CreacionCliente extends State<CreacionCliente> {
+class _CreacionSeguro extends State<CreacionSeguro> {
+  var _fechaInicioSeleccionada = DateTime.now();
+  var _fechaVencimientoSeleccionada = DateTime.now();
+
+  void callDatePicker(fecha) async {
+    var selectedDate = await getDatePickerWidget();
+
+    if (selectedDate != null && fecha == "fechainicio") {
+      setState(() {
+        _fechaInicioSeleccionada = selectedDate;
+      });
+      fechaInicioController.text =
+          DateFormat('dd-MM-yyyy').format(_fechaInicioSeleccionada);
+    }
+    if (selectedDate != null && fecha == "fechavencimiento") {
+      setState(() {
+        _fechaVencimientoSeleccionada = selectedDate;
+      });
+      fechaVencimientoController.text =
+          DateFormat('dd-MM-yyyy').format(_fechaVencimientoSeleccionada);
+    }
+  }
+
+  Future<DateTime?> getDatePickerWidget() {
+    return showDatePicker(
+        context: context,
+        initialDate: _fechaInicioSeleccionada,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2023),
+        builder: (context, child) {
+          return Theme(
+              data: MyApp.themeNotifier.value == ThemeMode.dark
+                  ? ThemeData.dark()
+                  : ThemeData.light(),
+              child: child!);
+        });
+  }
+
   final _keyForm = GlobalKey<FormState>();
   final baseURL = const MyApp().baseURL;
-  final pathURL = "/cliente/guardar";
-  var nombreController = TextEditingController();
-  var apellido1Controller = TextEditingController();
-  var apellido2Controller = TextEditingController();
-  var claseViaController = TextEditingController();
-  var nombreViaController = TextEditingController();
-  var numeroViaController = TextEditingController();
-  var codigoPostalController = TextEditingController();
-  var ciudadController = TextEditingController();
-  var telefonoController = TextEditingController();
+  final pathURL = "/seguro/guardar";
+
+  var ramoController = TextEditingController();
+  var fechaInicioController = TextEditingController();
+  var fechaVencimientoController = TextEditingController();
+  var condicionesParticularesController = TextEditingController();
   var observacionesController = TextEditingController();
 
   final estiloBotonGuardar = ElevatedButton.styleFrom(
@@ -39,7 +75,7 @@ class _CreacionCliente extends State<CreacionCliente> {
 
   @override
   Widget build(BuildContext context) {
-    Cliente client = new Cliente();
+    Seguro seg = new Seguro();
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +120,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Icon(
-                          Icons.assignment_ind_outlined,
+                          Icons.security,
                           color: Colors.amber,
                           size: 150.0,
                         ),
@@ -98,18 +134,18 @@ class _CreacionCliente extends State<CreacionCliente> {
                                 height: 20.0,
                               ),
                               TextFormField(
-                                controller: nombreController,
+                                controller: ramoController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return 'Campo vacío';
                                   }
-                                  client.nombrecl = valor;
+                                  seg.ramo = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                     icon: Icon(Icons.text_fields_rounded),
-                                    labelText: "Nombre",
+                                    labelText: "Ramo",
                                     border: OutlineInputBorder(),
                                     isDense: false,
                                     contentPadding: EdgeInsets.all(10)),
@@ -119,18 +155,21 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
-                                controller: apellido1Controller,
+                                keyboardType: null,
+                                onTap: () {
+                                  callDatePicker("fechainicio");
+                                },
+                                controller: fechaInicioController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.apellido1 = valor;
+                                  seg.fechaInicio = valor;
                                   return null;
                                 },
-                                keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Primer Apellido",
+                                  icon: Icon(Icons.date_range),
+                                  labelText: "Fecha Inicio",
                                   //helperText: "Aa@45678",
                                   border: OutlineInputBorder(),
                                   isDense: false,
@@ -142,18 +181,21 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
-                                controller: apellido2Controller,
+                                onTap: () {
+                                  callDatePicker("fechavencimiento");
+                                },
+                                keyboardType: null,
+                                controller: fechaVencimientoController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.apellido2 = valor;
+                                  seg.fechaVencimiento = valor;
                                   return null;
                                 },
-                                keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Segundo Apellido",
+                                  icon: Icon(Icons.date_range),
+                                  labelText: "Fecha de Vencimiento",
                                   border: OutlineInputBorder(),
                                   isDense: false,
                                   contentPadding: EdgeInsets.all(10),
@@ -164,12 +206,12 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
-                                controller: claseViaController,
+                                controller: condicionesParticularesController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.clasevia = valor;
+                                  seg.condicionesParticulares = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
@@ -186,122 +228,12 @@ class _CreacionCliente extends State<CreacionCliente> {
                                     top: 15.0, bottom: 15.0),
                               ),
                               TextFormField(
-                                controller: nombreViaController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.nombrevia = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Nombre Vía",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: numeroViaController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.numerovia = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Número Vía",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: codigoPostalController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.codpostal = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.directions),
-                                  labelText: "Código Postal",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: ciudadController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.ciudad = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.location_city),
-                                  labelText: "Ciudad",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: telefonoController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.telefono = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.phone),
-                                  labelText: "Teléfono",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
                                 controller: observacionesController,
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.observaciones = valor;
+                                  seg.observaciones = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
@@ -321,11 +253,11 @@ class _CreacionCliente extends State<CreacionCliente> {
                                   style: estiloBotonGuardar,
                                   onPressed: () {
                                     if (_keyForm.currentState!.validate()) {
-                                      guardarCliente(context, client);
+                                      guardarSeguro(context, seg);
                                     }
                                   },
                                   child: const Text(
-                                      '               Guardar Cliente               '),
+                                      '               Guardar Seguro               '),
                                 ),
                               ),
                             ],
@@ -344,14 +276,12 @@ class _CreacionCliente extends State<CreacionCliente> {
     );
   }
 
-  guardarCliente(context, cliente) {
+  guardarSeguro(context, seguro) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Guardar"),
-              content: Text("¿Estas seguro de guardar el nuevo cliente " +
-                  cliente.nombrecl +
-                  "?"),
+              content: const Text("¿Estas seguro de guardar la nueva poliza? "),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -365,41 +295,31 @@ class _CreacionCliente extends State<CreacionCliente> {
                     onPressed: () {
                       Map<String, dynamic> bodyMap;
                       bodyMap = {
-                        //"dniCl": cliente.dnicl,
-                        "nombreCl": cliente.nombrecl,
-                        "apellido1": cliente.apellido1,
-                        "apellido2": cliente.apellido2,
-                        "claseVia": cliente.clasevia,
-                        "nombreVia": cliente.nombrevia,
-                        "numeroVia": cliente.numerovia,
-                        "codPostal": cliente.codpostal,
-                        "ciudad": cliente.ciudad,
-                        "telefono": (cliente.telefono),
-                        "observaciones": cliente.observaciones
+                        "ramo": seguro.ramo,
+                        "fechaInicio": seguro.fechaInicio,
+                        "fechaVencimiento": seguro.fechaVencimiento,
+                        "condicionesParticulares":
+                            seguro.condicionesParticulares,
+                        "obervaciones": seguro.observaciones,
                       };
 
                       var jsonMap = json.encode(bodyMap);
 
                       print("EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
 
-                      ApiManagerCliente.shared.request(
+                      ApiManagerSeguro.shared.request(
                         baseUrl: baseURL,
                         pathUrl: pathURL,
                         jsonParam: jsonMap,
                         bodyParams: bodyMap,
                         type: HttpType.POST,
-                        cliente: cliente,
+                        seguro: seguro,
                       );
 
-                      nombreController.clear();
-                      apellido1Controller.clear();
-                      apellido2Controller.clear();
-                      claseViaController.clear();
-                      nombreViaController.clear();
-                      numeroViaController.clear();
-                      codigoPostalController.clear();
-                      ciudadController.clear();
-                      telefonoController.clear();
+                      ramoController.clear();
+                      fechaInicioController.clear();
+                      fechaVencimientoController.clear();
+                      condicionesParticularesController.clear();
                       observacionesController.clear();
                       Navigator.pop(context);
                     },

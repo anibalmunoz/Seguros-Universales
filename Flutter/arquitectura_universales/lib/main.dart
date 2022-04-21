@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
+import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -98,18 +100,6 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _inicializarCloudFirestore() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    // CollectionReference ubicaciones = firestore.collection('ubicaciones');
-
-    // Future<void> addUbicacion() {
-    //   // Call the user's CollectionReference to add a new user
-    //   return ubicaciones
-    //       .add({'ubicacion': "prueba"})
-    //       .then((value) => print("PRUEBA FIRESTORE CORRECTA"))
-    //       .catchError((error) => print("PRUEBA FIRESTORE FALLIDA: $error"));
-    // }
-
-    // addUbicacion();
   }
 
   @override

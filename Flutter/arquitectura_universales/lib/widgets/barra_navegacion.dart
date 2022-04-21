@@ -10,38 +10,44 @@ class BarraNavegacion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              activeIcon: Icon(Icons.person_outline,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              label: ("Clientes")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.security_rounded,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              activeIcon: Icon(Icons.shield_outlined,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              label: ("Seguros")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.taxi_alert,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              activeIcon: Icon(Icons.taxi_alert_outlined,
-                  color: MyApp.themeNotifier.value == ThemeMode.light
-                      ? Color.fromARGB(255, 41, 106, 202)
-                      : Colors.red),
-              label: ("Siniestros")),
-        ]),
+        tabBar: CupertinoTabBar(
+            backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+                ? Colors.blue[900]
+                : Colors.grey[900],
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person_rounded,
+                      color: MyApp.themeNotifier.value == ThemeMode.light
+                          ? Colors.white
+                          : Colors.white),
+                  activeIcon: Icon(Icons.person_outline,
+                      color: MyApp.themeNotifier.value == ThemeMode.light
+                          ? Colors.white
+                          : Colors.white),
+                  label: ("Clientes")),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.security_rounded,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                activeIcon: Icon(Icons.shield_outlined,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                label: "Seguros",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.taxi_alert,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                activeIcon: Icon(Icons.taxi_alert_outlined,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                label: ("Siniestros"),
+              ),
+            ]),
         tabBuilder: (BuildContext context, int index) {
           switch (index) {
             case 0:

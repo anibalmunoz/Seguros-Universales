@@ -3,6 +3,7 @@ import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/creacion_cliente.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class ClientesPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
               ? Colors.blue[900]
-              : Colors.red,
+              : Colors.grey[900],
           bottom: const PreferredSize(
             preferredSize: Size(12, 12),
             child: Text(""),
@@ -33,10 +34,6 @@ class ClientesPage extends StatelessWidget {
           actions: [
             Container(
               margin: const EdgeInsets.only(top: 37.0),
-              child: const Text(
-                "Registrar nuevo",
-                style: TextStyle(color: Colors.amber, fontFamily: "Lato"),
-              ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 25.0),
@@ -50,6 +47,18 @@ class ClientesPage extends StatelessWidget {
                           builder: (context) =>
                               CreacionCliente(titulo: "Crear nuevo cliente"),
                         )).then((value) => null);
+                  }),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 37.0),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 25.0),
+              child: IconButton(
+                  icon:
+                      const Icon(Icons.dangerous_outlined, color: Colors.amber),
+                  onPressed: () {
+                    ClienteRepository.shared.modificarTablaCliente();
                   }),
             ),
           ],
@@ -75,10 +84,10 @@ class ClientesPage extends StatelessWidget {
                     eliminarCliente(context, _clientes[index]);
                   },
                   title: Text("Nombre: " +
-                      _clientes[index].nombre +
+                      _clientes[index].nombrecl +
                       " " +
-                      _clientes[index].apeliido1),
-                  subtitle: Text("DNI: " + _clientes[index].dni.toString()),
+                      _clientes[index].apellido1),
+                  subtitle: Text("DNI: " + _clientes[index].dnicl.toString()),
                   leading: const CircleAvatar(
                       backgroundColor: Colors.amber,
                       child: Icon(
@@ -115,7 +124,7 @@ class ClientesPage extends StatelessWidget {
         builder: (context) => AlertDialog(
               title: const Text("Eliminar"),
               content: Text("¿Estas seguro de eliminar el cliente " +
-                  cliente.nombre +
+                  cliente.nombrecl +
                   "?"),
               actions: [
                 TextButton(
@@ -131,8 +140,9 @@ class ClientesPage extends StatelessWidget {
                       ApiManagerCliente.shared.request(
                           baseUrl: MyApp().baseURL,
                           pathUrl:
-                              "/cliente/eliminar/" + cliente.dni.toString(),
-                          type: HttpType.DELETE);
+                              "/cliente/eliminar/" + cliente.dnicl.toString(),
+                          type: HttpType.DELETE,
+                          cliente: cliente);
                       Navigator.pop(context);
                     },
                     child: const Text(

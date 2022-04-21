@@ -1,5 +1,7 @@
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/siniestros/creacion_siniestro.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/siniestros/detalles_siniestro.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class SiniestrosPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
               ? Colors.blue[900]
-              : Colors.red,
+              : Colors.grey[900],
           bottom: const PreferredSize(
             preferredSize: Size(13, 13),
             child: Text(""),
@@ -28,17 +30,20 @@ class SiniestrosPage extends StatelessWidget {
           actions: [
             Container(
               margin: const EdgeInsets.only(top: 33.0),
-              child: const Text(
-                "Registrar nuevo",
-                style: TextStyle(color: Colors.amber, fontFamily: "Lato"),
-              ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
               child: IconButton(
                   icon: const Icon(Icons.add_circle_outline_rounded,
                       color: Colors.amber),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreacionSiniestro(
+                              titulo: "Crear nuevo siniestro"),
+                        )).then((value) => null);
+                  }),
             ),
           ],
         ),
@@ -61,9 +66,9 @@ class SiniestrosPage extends StatelessWidget {
               itemCount: _siniestros.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  // onLongPress: () {
-                  //   print("IR A DETALLES");
-                  // },
+                  onLongPress: () {
+                    eliminarSiniestro(context, _siniestros[index]);
+                  },
 
                   title: Text("ID # " +
                       _siniestros[index].idSiniestro +
@@ -77,7 +82,7 @@ class SiniestrosPage extends StatelessWidget {
                   leading: const CircleAvatar(
                       backgroundColor: Colors.amberAccent,
                       child: Icon(
-                        Icons.security,
+                        Icons.taxi_alert,
                       )
                       //Text(_clientes[index].nombre.substring(0, 1)),
                       ),
@@ -86,7 +91,15 @@ class SiniestrosPage extends StatelessWidget {
                         Icons.arrow_forward_ios,
                         color: Colors.indigo,
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetallesSiniestro(
+                                  siniestro: _siniestros[index],
+                                  titulo: "Detalles"),
+                            ));
+                      }),
                 );
               },
             );
@@ -100,12 +113,12 @@ class SiniestrosPage extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text("Eliminar"),
-              content: Text("¿Estas seguro de eliminar el siniestro # " +
+              title: const Text("Eliminar"),
+              content: Text("¿Estas seguro de eliminar el siniestro  " +
                   siniestro.idSiniestro +
                   "?"),
               actions: [
-                FlatButton(
+                TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -113,11 +126,14 @@ class SiniestrosPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                FlatButton(
+                TextButton(
                     onPressed: () {
-                      print(siniestro.idSiniestro);
-
-                      //METODO PARA RECARGAR LA PÁGINA LUEGO DE BORRAR UN ELEMENTO this.setState(() {});
+                      ApiManagerSiniestro.shared.request(
+                          baseUrl: MyApp().baseURL,
+                          pathUrl: "/seguro/eliminar/" +
+                              siniestro.idSiniestro.toString(),
+                          type: HttpType.DELETE,
+                          siniestro: siniestro);
                       Navigator.pop(context);
                     },
                     child: const Text(

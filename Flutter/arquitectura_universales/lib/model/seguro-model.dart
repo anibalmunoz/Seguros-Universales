@@ -16,12 +16,36 @@ class Seguro {
       this.condicionesParticulares,
       this.observaciones,
       this.dniCliente});
+
+  Map<String, dynamic> toDataBase() => {
+        'numeropoliza': numeroPoliza,
+        'ramo': ramo,
+        'fechainicio': fechaInicio,
+        'fechavencimiento': fechaVencimiento,
+        'condicionesparticulares': condicionesParticulares,
+        'observaciones': observaciones,
+      };
+
+  Map<String, dynamic> toMap() {
+    return {
+      'numeropoliza': numeroPoliza,
+      'ramo': ramo,
+      'fechainicio': fechaInicio,
+      'fechavencimiento': fechaVencimiento,
+      'condicionesparticulares': condicionesParticulares,
+      'observaciones': observaciones,
+    };
+  }
 }
 
 class SegurosLista {
   late List seguros;
 
-  SegurosLista.lista(List list) {
-    this.seguros = list;
+  SegurosLista.lista(List<Seguro> list) {
+    seguros = list;
+  }
+
+  SegurosLista.fromDb(List<Seguro> list) {
+    seguros = list;
   }
 }

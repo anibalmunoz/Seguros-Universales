@@ -1,5 +1,7 @@
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/seguros/creacion_seguro.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/seguros/detalles_seguro.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class SegurosPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
               ? Colors.blue[900]
-              : Colors.red,
+              : Colors.grey[900],
           bottom: const PreferredSize(
             preferredSize: Size(13, 13),
             child: Text(""),
@@ -28,17 +30,20 @@ class SegurosPage extends StatelessWidget {
           actions: [
             Container(
               margin: const EdgeInsets.only(top: 33.0),
-              child: const Text(
-                "Registrar nuevo",
-                style: TextStyle(color: Colors.amber, fontFamily: "Lato"),
-              ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
               child: IconButton(
                   icon:
                       const Icon(Icons.health_and_safety, color: Colors.amber),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreacionSeguro(titulo: "Crear nuevo seguro"),
+                        )).then((value) => null);
+                  }),
             ),
           ],
         ),
@@ -61,10 +66,13 @@ class SegurosPage extends StatelessWidget {
               itemCount: _seguros.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  // onLongPress: () {
-                  //   print("IR A DETALLES");
-                  // },
-                  title: Text("Poliza # " + _seguros[index].numeroPoliza),
+                  onLongPress: () {
+                    eliminarSeguro(context, _seguros[index]);
+                  },
+                  title: Text("Poliza # " +
+                      _seguros[index].numeroPoliza +
+                      ", Ramo: " +
+                      _seguros[index].ramo),
 
                   subtitle: Text("Fecha de Vencimiento: " +
                       _seguros[index].fechaVencimiento.toString()),
@@ -82,7 +90,14 @@ class SegurosPage extends StatelessWidget {
                         Icons.arrow_forward_ios,
                         color: Colors.indigo,
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetallesSeguro(
+                                  seguro: _seguros[index], titulo: "Detalles"),
+                            ));
+                      }),
                 );
               },
             );
@@ -96,12 +111,12 @@ class SegurosPage extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text("Eliminar"),
-              content: Text("¿Estas seguro de eliminar la poliza # " +
+              title: const Text("Eliminar"),
+              content: Text("¿Estas seguro de eliminar el seguro " +
                   seguro.numeroPoliza +
                   "?"),
               actions: [
-                FlatButton(
+                TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -109,11 +124,14 @@ class SegurosPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                FlatButton(
+                TextButton(
                     onPressed: () {
-                      print(seguro.numeroPoliza);
-
-                      //METODO PARA RECARGAR LA PÁGINA LUEGO DE BORRAR UN ELEMENTO this.setState(() {});
+                      ApiManagerSeguro.shared.request(
+                          baseUrl: MyApp().baseURL,
+                          pathUrl: "/seguro/eliminar/" +
+                              seguro.numeroPoliza.toString(),
+                          type: HttpType.DELETE,
+                          seguro: seguro);
                       Navigator.pop(context);
                     },
                     child: const Text(

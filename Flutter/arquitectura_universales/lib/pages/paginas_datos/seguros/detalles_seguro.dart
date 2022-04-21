@@ -1,26 +1,26 @@
 import 'dart:convert';
 
 import 'package:arquitectura_universales/main.dart';
-import 'package:arquitectura_universales/model/cliente_model.dart';
-import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/model/seguro-model.dart';
+import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
 
-class DetallesCliente extends StatefulWidget {
-  Cliente cliente;
+class DetallesSeguro extends StatefulWidget {
+  Seguro seguro;
   String titulo;
 
-  DetallesCliente({key, required this.cliente, required this.titulo});
+  DetallesSeguro({key, required this.seguro, required this.titulo});
 
   @override
-  State<StatefulWidget> createState() => _RegistrarContacto();
+  State<StatefulWidget> createState() => _RegistrarSeguro();
 }
 
-class _RegistrarContacto extends State<DetallesCliente> {
+class _RegistrarSeguro extends State<DetallesSeguro> {
   final _keyForm = GlobalKey<FormState>();
   final baseURL = const MyApp().baseURL;
-  final pathURL = "/cliente/guardar";
+  final pathURL = "/seguro/guardar";
 
   final estiloBotonGuardar = ElevatedButton.styleFrom(
     primary: Colors.green,
@@ -28,15 +28,9 @@ class _RegistrarContacto extends State<DetallesCliente> {
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
-  final estiloBotonEliminar = ElevatedButton.styleFrom(
-    primary: Colors.red,
-    onPrimary: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-  );
-
   @override
   Widget build(BuildContext context) {
-    Cliente client = widget.cliente;
+    Seguro seg = widget.seguro;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,12 +97,12 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   }
                                 },
                                 keyboardType: TextInputType.number,
-                                initialValue: client.dnicl.toString(),
+                                initialValue: seg.numeroPoliza.toString(),
                                 //readOnly: true,
                                 enabled: false,
                                 decoration: const InputDecoration(
                                     icon: Icon(Icons.numbers),
-                                    labelText: "DNI",
+                                    labelText: "Número Poliza",
                                     border: OutlineInputBorder(),
                                     isDense: false,
                                     contentPadding: EdgeInsets.all(10)),
@@ -122,14 +116,14 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   if (valor!.isEmpty) {
                                     return 'Campo vacío';
                                   }
-                                  client.nombrecl = valor;
+                                  seg.ramo = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.nombrecl,
+                                initialValue: seg.ramo,
                                 decoration: const InputDecoration(
                                     icon: Icon(Icons.text_fields_rounded),
-                                    labelText: "Nombre",
+                                    labelText: "Ramo",
                                     border: OutlineInputBorder(),
                                     isDense: false,
                                     contentPadding: EdgeInsets.all(10)),
@@ -143,14 +137,14 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.apellido1 = valor;
+                                  seg.fechaInicio = valor;
                                   return null;
                                 },
-                                keyboardType: TextInputType.text,
-                                initialValue: client.apellido1,
+                                keyboardType: TextInputType.datetime,
+                                initialValue: seg.fechaInicio,
                                 decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Primer Apellido",
+                                  icon: Icon(Icons.date_range),
+                                  labelText: "Fecha Inicio",
                                   //helperText: "Aa@45678",
                                   border: OutlineInputBorder(),
                                   isDense: false,
@@ -166,14 +160,14 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.apellido2 = valor;
+                                  seg.fechaVencimiento = valor;
                                   return null;
                                 },
-                                keyboardType: TextInputType.text,
-                                initialValue: client.apellido2,
+                                keyboardType: TextInputType.datetime,
+                                initialValue: seg.fechaVencimiento,
                                 decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Segundo Apellido",
+                                  icon: Icon(Icons.date_range),
+                                  labelText: "Fecha Vencimiento",
                                   border: OutlineInputBorder(),
                                   isDense: false,
                                   contentPadding: EdgeInsets.all(10),
@@ -188,14 +182,14 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.clasevia = valor;
+                                  seg.condicionesParticulares = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.clasevia,
+                                initialValue: seg.condicionesParticulares,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Clase Vía",
+                                  labelText: "Condiciones Particulares",
                                   border: OutlineInputBorder(),
                                   isDense: false,
                                   contentPadding: EdgeInsets.all(10),
@@ -210,121 +204,11 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   if (valor!.isEmpty) {
                                     return "Campo vacío";
                                   }
-                                  client.nombrevia = valor;
+                                  seg.observaciones = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
-                                initialValue: client.nombrevia,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Nombre Vía",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.numerovia = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: client.numerovia,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Número Vía",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.codpostal = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: client.codpostal,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.directions),
-                                  labelText: "Código Postal",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.ciudad = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                initialValue: client.ciudad,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.location_city),
-                                  labelText: "Ciudad",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.telefono = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: client.telefono,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.phone),
-                                  labelText: "Teléfono",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  client.observaciones = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                initialValue: client.observaciones,
+                                initialValue: seg.observaciones,
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.folder),
                                   labelText: "Observaciones",
@@ -341,11 +225,11 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                   style: estiloBotonGuardar,
                                   onPressed: () {
                                     if (_keyForm.currentState!.validate()) {
-                                      modificarCliente(context, client);
+                                      modificarSeguro(context, seg);
                                     }
                                   },
                                   child: const Text(
-                                      '               Modificar Cliente               '),
+                                      '               Modificar Seguro               '),
                                 ),
                               ),
                             ],
@@ -364,13 +248,13 @@ class _RegistrarContacto extends State<DetallesCliente> {
     );
   }
 
-  modificarCliente(context, cliente) {
+  modificarSeguro(context, seguro) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Modificar"),
-              content: Text("¿Estas seguro de modificar el cliente " +
-                  cliente.nombrecl +
+              content: Text("¿Estas seguro de modificar el seguro " +
+                  seguro.numeroPoliza +
                   "?"),
               actions: [
                 TextButton(
@@ -383,33 +267,29 @@ class _RegistrarContacto extends State<DetallesCliente> {
                         ))),
                 TextButton(
                     onPressed: () {
-                      Cliente clienteEnviar = cliente;
+                      Seguro seguroEnviar = seguro;
                       Map<String, dynamic> bodyMap;
                       bodyMap = {
-                        "dniCl": cliente.dnicl,
-                        "nombreCl": cliente.nombrecl,
-                        "apellido1": cliente.apellido1,
-                        "apellido2": cliente.apellido2,
-                        "claseVia": cliente.clasevia,
-                        "nombreVia": cliente.nombrevia,
-                        "numeroVia": cliente.numerovia,
-                        "codPostal": cliente.codpostal,
-                        "ciudad": cliente.ciudad,
-                        "telefono": (cliente.telefono),
-                        "observaciones": cliente.observaciones
+                        "numeroPoliza": seguro.numeroPoliza,
+                        "ramo": seguro.ramo,
+                        "fechaInicio": seguro.fechaInicio,
+                        "fechaVencimiento": seguro.fechaVencimiento,
+                        "condicionesParticulares":
+                            seguro.condicionesParticulares,
+                        "obervaciones": seguro.observaciones,
                       };
 
                       var jsonMap = json.encode(bodyMap);
 
-                      print("EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
+                      print("EL SEGURO QUE ESTOY MANDANDO ES:  ${jsonMap}");
 
-                      ApiManagerCliente.shared.request(
+                      ApiManagerSeguro.shared.request(
                           baseUrl: baseURL,
                           pathUrl: pathURL,
                           jsonParam: jsonMap,
                           bodyParams: bodyMap,
                           type: HttpType.PUT,
-                          cliente: cliente);
+                          seguro: seguro);
 
                       Navigator.pop(context);
                     },
