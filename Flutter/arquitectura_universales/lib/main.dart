@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   darkTheme: ThemeData.dark(),
                   themeMode: currentMode,
-                  home: BarraNavegacion(),
+                  home: FormularioLogin(),
                 );
               });
         });

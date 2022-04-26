@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetallesSiniestro extends StatefulWidget {
   Siniestro siniestro;
@@ -20,6 +22,8 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
   final _keyForm = GlobalKey<FormState>();
   final baseURL = const MyApp().baseURL;
   final pathURL = "/siniestro/guardar";
+
+  bool guardando = false;
 
   final estiloBotonGuardar = ElevatedButton.styleFrom(
     primary: Colors.green,
@@ -63,165 +67,175 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          Center(
-            child: SafeArea(
-                child: SingleChildScrollView(
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Form(
-                    key: _keyForm,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.assignment_ind_outlined,
-                          color: Colors.amber,
-                          size: 150.0,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20.0),
+      body: guardando == true
+          ? Center(
+              child: Container(
+              width: 30.0,
+              height: 30.0,
+              child: const CircularProgressIndicator(),
+            ))
+          : ListView(
+              children: [
+                Center(
+                  child: SafeArea(
+                      child: SingleChildScrollView(
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: Form(
+                          key: _keyForm,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 20.0,
+                              const Icon(
+                                Icons.assignment_ind_outlined,
+                                color: Colors.amber,
+                                size: 150.0,
                               ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return 'Campo vacío';
-                                  }
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: sinister.idSiniestro.toString(),
-                                //readOnly: true,
-                                enabled: false,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.numbers),
-                                    labelText: "ID siniestro",
-                                    border: OutlineInputBorder(),
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return 'Campo vacío';
-                                  }
-                                  sinister.fechaSiniestro = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.datetime,
-                                initialValue: sinister.fechaSiniestro,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.date_range),
-                                    labelText: "Fecha del Siniestro",
-                                    border: OutlineInputBorder(),
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sinister.causas = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                initialValue: sinister.causas,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.short_text_sharp),
-                                  labelText: "Causas",
-                                  //helperText: "Aa@45678",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sinister.aceptado = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.datetime,
-                                initialValue: sinister.aceptado,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.short_text_sharp),
-                                  labelText: "Aceptado",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sinister.indemnizacion = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                initialValue: sinister.indemnizacion,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.money_sharp),
-                                  labelText: "Indemnización",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
                               Container(
                                 width: double.infinity,
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                  style: estiloBotonGuardar,
-                                  onPressed: () {
-                                    if (_keyForm.currentState!.validate()) {
-                                      modificarSiniestro(context, sinister);
-                                    }
-                                  },
-                                  child: const Text(
-                                      '               Modificar Siniestro               '),
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    TextFormField(
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return 'Campo vacío';
+                                        }
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      initialValue:
+                                          sinister.idSiniestro.toString(),
+                                      //readOnly: true,
+                                      enabled: false,
+                                      decoration: const InputDecoration(
+                                          icon: Icon(Icons.numbers),
+                                          labelText: "ID siniestro",
+                                          border: OutlineInputBorder(),
+                                          isDense: false,
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return 'Campo vacío';
+                                        }
+                                        sinister.fechaSiniestro = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.datetime,
+                                      initialValue: sinister.fechaSiniestro,
+                                      decoration: const InputDecoration(
+                                          icon: Icon(Icons.date_range),
+                                          labelText: "Fecha del Siniestro",
+                                          border: OutlineInputBorder(),
+                                          isDense: false,
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sinister.causas = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      initialValue: sinister.causas,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.short_text_sharp),
+                                        labelText: "Causas",
+                                        //helperText: "Aa@45678",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sinister.aceptado = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.datetime,
+                                      initialValue: sinister.aceptado,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.short_text_sharp),
+                                        labelText: "Aceptado",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sinister.indemnizacion = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      initialValue: sinister.indemnizacion,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.money_sharp),
+                                        labelText: "Indemnización",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      child: ElevatedButton(
+                                        style: estiloBotonGuardar,
+                                        onPressed: () {
+                                          if (_keyForm.currentState!
+                                              .validate()) {
+                                            modificarSiniestro(
+                                                context, sinister);
+                                          }
+                                        },
+                                        child: const Text(
+                                            '               Modificar Siniestro               '),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                        )),
                   )),
-            )),
-          ),
-          // Row(
-          //   children: [],
-          // )
-        ],
-      ),
+                ),
+                // Row(
+                //   children: [],
+                // )
+              ],
+            ),
     );
   }
 
@@ -242,36 +256,69 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                TextButton(
-                    onPressed: () {
-                      Map<String, dynamic> bodyMap;
-                      bodyMap = {
-                        "idSiniestro": siniestro.idSiniestro,
-                        "fechaSiniestro": siniestro.fechaSiniestro,
-                        "causas": siniestro.causas,
-                        "aceptado": siniestro.aceptado,
-                        "indemnizacion": siniestro.indemnizacion,
-                      };
-
-                      var jsonMap = json.encode(bodyMap);
-
-                      print("EL SINIESTRO QUE ESTOY MANDANDO ES:  ${jsonMap}");
-
-                      ApiManagerSiniestro.shared.request(
-                          baseUrl: baseURL,
-                          pathUrl: pathURL,
-                          jsonParam: jsonMap,
-                          bodyParams: bodyMap,
-                          type: HttpType.PUT,
-                          siniestro: siniestro);
-
-                      Navigator.pop(context);
+                BlocProvider(
+                  create: (context) => SiniestroBloc(),
+                  child: BlocListener<SiniestroBloc, SiniestroState>(
+                    listener: (context, state) {
+                      switch (state.runtimeType) {
+                        case GuardandoSiniestroState:
+                          mostrarCarga();
+                          break;
+                        case SiniestroGuardadoState:
+                          mostrarCarga();
+                          break;
+                      }
                     },
-                    child: const Text(
-                      "Confirmar",
-                      style: TextStyle(color: Colors.green),
-                    )),
+                    child: BlocBuilder<SiniestroBloc, SiniestroState>(
+                      builder: (context, state) {
+                        return TextButton(
+                            onPressed: () {
+                              Map<String, dynamic> bodyMap;
+                              bodyMap = {
+                                "idSiniestro": siniestro.idSiniestro,
+                                "fechaSiniestro": siniestro.fechaSiniestro,
+                                "causas": siniestro.causas,
+                                "aceptado": siniestro.aceptado,
+                                "indemnizacion": siniestro.indemnizacion,
+                              };
+
+                              var jsonMap = json.encode(bodyMap);
+
+                              print(
+                                  "EL SINIESTRO QUE ESTOY MANDANDO ES:  ${jsonMap}");
+
+                              ApiManagerSiniestro.shared.request(
+                                  baseUrl: baseURL,
+                                  pathUrl: pathURL,
+                                  jsonParam: jsonMap,
+                                  bodyParams: bodyMap,
+                                  type: HttpType.PUT,
+                                  siniestro: siniestro);
+                              BlocProvider.of<SiniestroBloc>(context)
+                                  .add(ModificarSiniestroEvent());
+
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Confirmar",
+                              style: TextStyle(color: Colors.green),
+                            ));
+                      },
+                    ),
+                  ),
+                ),
               ],
             ));
+  }
+
+  mostrarCarga() async {
+    setState(() {
+      guardando = true;
+    });
+    await Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        guardando = false;
+      });
+    });
   }
 }

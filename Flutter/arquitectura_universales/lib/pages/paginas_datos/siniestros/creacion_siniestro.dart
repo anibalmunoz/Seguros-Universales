@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class CreacionSiniestro extends StatefulWidget {
@@ -55,6 +57,8 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
   var condicionesParticularesController = TextEditingController();
   var observacionesController = TextEditingController();
 
+  bool guardando = false;
+
   final estiloBotonGuardar = ElevatedButton.styleFrom(
     primary: Colors.green,
     onPrimary: Colors.white,
@@ -95,146 +99,155 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
               }),
         ),
       ),
-      body: ListView(
-        children: [
-          Center(
-            child: SafeArea(
-                child: SingleChildScrollView(
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Form(
-                    key: _keyForm,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.report_problem_outlined,
-                          color: Colors.amber,
-                          size: 150.0,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20.0),
+      body: guardando == true
+          ? Center(
+              child: Container(
+              width: 30.0,
+              height: 30.0,
+              child: const CircularProgressIndicator(),
+            ))
+          : ListView(
+              children: [
+                Center(
+                  child: SafeArea(
+                      child: SingleChildScrollView(
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: Form(
+                          key: _keyForm,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 20.0,
+                              const Icon(
+                                Icons.report_problem_outlined,
+                                color: Colors.amber,
+                                size: 150.0,
                               ),
-                              TextFormField(
-                                controller: fechaSiniestroController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return 'Campo vacío';
-                                  }
-                                  //valor = _currentSelectedDate.toString();
-                                  sin.fechaSiniestro = valor;
-                                  return null;
-                                },
-                                //initialValue: _currentSelectedDate.toString(),
-
-                                //keyboardType: TextInputType.datetime,
-                                onTap: callDatePicker,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.date_range),
-                                    labelText: "Fecha del siniestro",
-                                    border: OutlineInputBorder(),
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: fechaInicioController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sin.causas = valor;
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.short_text_rounded),
-                                  labelText: "Causas",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: fechaVencimientoController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sin.aceptado = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.short_text_sharp),
-                                  labelText: "Aceptado",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: condicionesParticularesController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  sin.indemnizacion = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.money),
-                                  labelText: "Indemnización",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
                               Container(
                                 width: double.infinity,
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                  style: estiloBotonGuardar,
-                                  onPressed: () {
-                                    if (_keyForm.currentState!.validate()) {
-                                      guardarSiniestro(context, sin);
-                                    }
-                                  },
-                                  child: const Text(
-                                      '               Guardar Seguro               '),
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    TextFormField(
+                                      controller: fechaSiniestroController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return 'Campo vacío';
+                                        }
+                                        //valor = _currentSelectedDate.toString();
+                                        sin.fechaSiniestro = valor;
+                                        return null;
+                                      },
+                                      //initialValue: _currentSelectedDate.toString(),
+
+                                      //keyboardType: TextInputType.datetime,
+                                      onTap: callDatePicker,
+                                      decoration: const InputDecoration(
+                                          icon: Icon(Icons.date_range),
+                                          labelText: "Fecha del siniestro",
+                                          border: OutlineInputBorder(),
+                                          isDense: false,
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      controller: fechaInicioController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sin.causas = valor;
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.short_text_rounded),
+                                        labelText: "Causas",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      controller: fechaVencimientoController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sin.aceptado = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.short_text_sharp),
+                                        labelText: "Aceptado",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      controller:
+                                          condicionesParticularesController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        sin.indemnizacion = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.money),
+                                        labelText: "Indemnización",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      child: ElevatedButton(
+                                        style: estiloBotonGuardar,
+                                        onPressed: () {
+                                          if (_keyForm.currentState!
+                                              .validate()) {
+                                            guardarSiniestro(context, sin);
+                                          }
+                                        },
+                                        child: const Text(
+                                            '               Guardar Seguro               '),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                        )),
                   )),
-            )),
-          ),
-          // Row(
-          //   children: [],
-          // )
-        ],
-      ),
+                ),
+                // Row(
+                //   children: [],
+                // )
+              ],
+            ),
     );
   }
 
@@ -254,41 +267,77 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                TextButton(
-                    onPressed: () {
-                      Map<String, dynamic> bodyMap;
-                      bodyMap = {
-                        "fechaSiniestro": siniestro.fechaSiniestro,
-                        "causas": siniestro.causas,
-                        "aceptado": siniestro.aceptado,
-                        "indemnizacion": siniestro.indemnizacion,
-                      };
+                BlocProvider(
+                  create: (context) => SiniestroBloc(),
+                  child: BlocListener<SiniestroBloc, SiniestroState>(
+                    listener: (context, state) {
+                      switch (state.runtimeType) {
+                        case GuardandoSiniestroState:
+                          mostrarCarga(context);
+                          break;
+                        case SiniestroGuardadoState:
+                          mostrarCarga(context);
 
-                      var jsonMap = json.encode(bodyMap);
-
-                      print("EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
-
-                      ApiManagerSiniestro.shared.request(
-                        baseUrl: baseURL,
-                        pathUrl: pathURL,
-                        jsonParam: jsonMap,
-                        bodyParams: bodyMap,
-                        type: HttpType.POST,
-                        siniestro: siniestro,
-                      );
-
-                      fechaSiniestroController.clear();
-                      fechaInicioController.clear();
-                      fechaVencimientoController.clear();
-                      condicionesParticularesController.clear();
-                      observacionesController.clear();
-                      Navigator.pop(context);
+                          break;
+                      }
                     },
-                    child: const Text(
-                      "Confirmar",
-                      style: TextStyle(color: Colors.green),
-                    )),
+                    child: BlocBuilder<SiniestroBloc, SiniestroState>(
+                      builder: (context, state) {
+                        return TextButton(
+                            onPressed: () {
+                              Map<String, dynamic> bodyMap;
+                              bodyMap = {
+                                "fechaSiniestro": siniestro.fechaSiniestro,
+                                "causas": siniestro.causas,
+                                "aceptado": siniestro.aceptado,
+                                "indemnizacion": siniestro.indemnizacion,
+                              };
+
+                              var jsonMap = json.encode(bodyMap);
+
+                              print(
+                                  "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
+
+                              ApiManagerSiniestro.shared.request(
+                                baseUrl: baseURL,
+                                pathUrl: pathURL,
+                                jsonParam: jsonMap,
+                                bodyParams: bodyMap,
+                                type: HttpType.POST,
+                                siniestro: siniestro,
+                              );
+
+                              fechaSiniestroController.clear();
+                              fechaInicioController.clear();
+                              fechaVencimientoController.clear();
+                              condicionesParticularesController.clear();
+                              observacionesController.clear();
+
+                              BlocProvider.of<SiniestroBloc>(context)
+                                  .add(ModificarSiniestroEvent());
+
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Confirmar",
+                              style: TextStyle(color: Colors.green),
+                            ));
+                      },
+                    ),
+                  ),
+                ),
               ],
             ));
+  }
+
+  mostrarCarga(context) async {
+    setState(() {
+      guardando = true;
+    });
+    await Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        guardando = false;
+      });
+    });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
@@ -189,6 +190,14 @@ class SegurosPage extends StatelessWidget {
 
                         case SeguroEliminadoState:
                           Navigator.pop(context);
+                          Flushbar(
+                            title: "Eliminado",
+                            message: "Seguro eliminado correctamente",
+                            duration: const Duration(seconds: 2),
+                            margin: const EdgeInsets.only(
+                                top: 8, bottom: 55.0, left: 8, right: 8),
+                            borderRadius: BorderRadius.circular(8),
+                          ).show(context);
                           break;
                       }
                     },

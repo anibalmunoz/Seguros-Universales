@@ -77,6 +77,8 @@ export class SegurosComponent implements OnInit {
   }
 
   finalizarGuardar(respuesta: any) {
+ 
+
     this.obtenerPaginado(this.pagina, this.filas);
   }
 
@@ -94,7 +96,10 @@ export class SegurosComponent implements OnInit {
   }
 
   mostrarPaginado(pageable: any) {
+
     this.paginado = pageable;
+    
+
     this.seguros = pageable.content;
     this.paginasTotales = pageable.totalPages;
     this.cantidadSeguros = pageable.totalElements;

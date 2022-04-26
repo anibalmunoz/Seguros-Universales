@@ -3,7 +3,7 @@ import { SeguroService } from '../servicios/seguro/seguro.service';
 import { ClienteService } from '../servicios/cliente/cliente.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-
+import { CompaniaSegurosService } from '../servicios/compania-seguros/compania-seguros.service';
 
 @Component({
   selector: 'app-formseguro',
@@ -18,9 +18,10 @@ export class FormseguroComponent implements OnInit {
   mostrarFormulario: boolean = false;
   mostrarDatosCliente: boolean = false;
   sinCliente = true;
+  companiaSeguro: any = {};
 
   constructor(private seguroService: SeguroService, public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-    private clienteService: ClienteService,) { }
+    private clienteService: ClienteService, private companiaSeguroService: CompaniaSegurosService) { }
 
 
 
@@ -55,7 +56,7 @@ export class FormseguroComponent implements OnInit {
 
     if (formulario.reportValidity()) {
       this.seguroService.guardarSeguro(this.seguroNuevo).subscribe(
-        (res: any) => this.finalizarGuardar(res)
+        (res: any) => this.guardarCompaniaSeguro(res)
       );
       formulario.reset();
       this.seguroNuevo = {};
@@ -86,7 +87,21 @@ export class FormseguroComponent implements OnInit {
 
 
 
-  finalizarGuardar(respuesta: any) {
+  // finalizarGuardar(respuesta: any) {
+  //   console.log(respuesta.numeroPoliza);
+  //   this.guardarCompaniaSeguro(respuesta);
+  // }
+
+  guardarCompaniaSeguro(seguro: any) {
+    this.companiaSeguro.numeroPoliza = seguro.numeroPoliza;
+    this.companiaSeguro.nombreCompania = "TESTED";
+    this.companiaSeguroService.guardarCompaniaSeguro(this.companiaSeguro).subscribe(
+      (res: any) => this.finalizarGuardarCompSeg(res)
+    );
+  }
+
+  finalizarGuardarCompSeg(respuesta: any) {
+
   }
 
 

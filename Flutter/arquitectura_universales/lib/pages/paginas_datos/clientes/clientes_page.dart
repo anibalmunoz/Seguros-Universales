@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
@@ -21,6 +22,14 @@ class ClientesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void snack() {
+      Flushbar(
+        title: "Eliminado",
+        message: "Cliente eliminado correctamente",
+        duration: Duration(seconds: 3),
+      )..show(context);
+    }
+
     return BlocProvider(
       create: (context) => ClienteBloc(),
       child: SafeArea(
@@ -91,7 +100,8 @@ class ClientesPage extends StatelessWidget {
                     icon: const Icon(Icons.dangerous_outlined,
                         color: Colors.amber),
                     onPressed: () {
-                      ClienteRepository.shared.modificarTablaCliente();
+                      //ClienteRepository.shared.modificarTablaCliente();
+                      snack();
                     }),
               ),
             ],
@@ -200,6 +210,14 @@ class ClientesPage extends StatelessWidget {
 
                         case ClienteEliminadoState:
                           Navigator.pop(context);
+                          Flushbar(
+                            title: "Eliminado",
+                            message: "Cliente eliminado correctamente",
+                            duration: const Duration(seconds: 2),
+                            margin: const EdgeInsets.only(
+                                top: 8, bottom: 55.0, left: 8, right: 8),
+                            borderRadius: BorderRadius.circular(8),
+                          ).show(context);
                           break;
                       }
                     },
