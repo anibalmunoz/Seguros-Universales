@@ -37,6 +37,9 @@ export class CompaniaService {
     return throwError("Ha ocurrido un error");
   }
 
+  buscarCompanias() {
+    return this.consumirGet("compania/buscar");
+  }
 
   companiaPaginado(pagina: number, cantidad: number) {
     return this.consumirGet("compania/paginado/" + pagina + "/" + cantidad)

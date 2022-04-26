@@ -4,6 +4,7 @@ import { ClienteService } from '../servicios/cliente/cliente.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { CompaniaSegurosService } from '../servicios/compania-seguros/compania-seguros.service';
+import { CompaniaService } from '../servicios/compania/compania.service';
 
 @Component({
   selector: 'app-formseguro',
@@ -20,12 +21,25 @@ export class FormseguroComponent implements OnInit {
   sinCliente = true;
   companiaSeguro: any = {};
 
+  lang = [
+    { name: 5 },
+    { name: 10 },
+    { name: 15 },
+  ];
+
+  companias: any = [];
+
+
+  compania: any = { nombreCompania: "PRUEBA" };
+  paginas: any = { name: 5 };
+
   constructor(private seguroService: SeguroService, public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-    private clienteService: ClienteService, private companiaSeguroService: CompaniaSegurosService) { }
+    private clienteService: ClienteService, private companiaSeguroService: CompaniaSegurosService, private companiaService: CompaniaService) { }
 
 
 
   ngOnInit(): void {
+    this.buscarCompania();
   }
 
 
@@ -62,6 +76,7 @@ export class FormseguroComponent implements OnInit {
       this.seguroNuevo = {};
       this.ref.close(this.respuesta);
     }
+
   }
 
 
@@ -94,7 +109,8 @@ export class FormseguroComponent implements OnInit {
 
   guardarCompaniaSeguro(seguro: any) {
     this.companiaSeguro.numeroPoliza = seguro.numeroPoliza;
-    this.companiaSeguro.nombreCompania = "TESTED";
+    console.log(this.compania.nombreCompania);
+    this.companiaSeguro.nombreCompania = this.compania.nombreCompania;
     this.companiaSeguroService.guardarCompaniaSeguro(this.companiaSeguro).subscribe(
       (res: any) => this.finalizarGuardarCompSeg(res)
     );
@@ -104,5 +120,20 @@ export class FormseguroComponent implements OnInit {
 
   }
 
+
+  //DROPDOWN
+
+
+
+
+  buscarCompania() {
+    this.companiaService.buscarCompanias().subscribe(
+      (res: any) => this.asignarCompanias(res)
+    );
+  }
+
+  asignarCompanias(companias: any) {
+    this.companias = companias;
+  }
 
 }
