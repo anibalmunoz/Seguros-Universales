@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:arquitectura_universales/bloc/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';

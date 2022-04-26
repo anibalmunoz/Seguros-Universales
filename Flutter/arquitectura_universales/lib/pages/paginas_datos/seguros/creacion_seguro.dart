@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
@@ -8,6 +9,7 @@ import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class CreacionSeguro extends StatefulWidget {
@@ -67,6 +69,8 @@ class _CreacionSeguro extends State<CreacionSeguro> {
   var condicionesParticularesController = TextEditingController();
   var observacionesController = TextEditingController();
 
+  bool guardando = false;
+
   final estiloBotonGuardar = ElevatedButton.styleFrom(
     primary: Colors.green,
     onPrimary: Colors.white,
@@ -107,172 +111,181 @@ class _CreacionSeguro extends State<CreacionSeguro> {
               }),
         ),
       ),
-      body: ListView(
-        children: [
-          Center(
-            child: SafeArea(
-                child: SingleChildScrollView(
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Form(
-                    key: _keyForm,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.security,
-                          color: Colors.amber,
-                          size: 150.0,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20.0),
+      body: guardando == true
+          ? Center(
+              child: Container(
+              width: 30.0,
+              height: 30.0,
+              child: const CircularProgressIndicator(),
+            ))
+          : ListView(
+              children: [
+                Center(
+                  child: SafeArea(
+                      child: SingleChildScrollView(
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: Form(
+                          key: _keyForm,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 20.0,
+                              const Icon(
+                                Icons.security,
+                                color: Colors.amber,
+                                size: 150.0,
                               ),
-                              TextFormField(
-                                controller: ramoController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return 'Campo vacío';
-                                  }
-                                  seg.ramo = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.text_fields_rounded),
-                                    labelText: "Ramo",
-                                    border: OutlineInputBorder(),
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                keyboardType: null,
-                                onTap: () {
-                                  callDatePicker("fechainicio");
-                                },
-                                controller: fechaInicioController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  seg.fechaInicio = valor;
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.date_range),
-                                  labelText: "Fecha Inicio",
-                                  //helperText: "Aa@45678",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                onTap: () {
-                                  callDatePicker("fechavencimiento");
-                                },
-                                keyboardType: null,
-                                controller: fechaVencimientoController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  seg.fechaVencimiento = valor;
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.date_range),
-                                  labelText: "Fecha de Vencimiento",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: condicionesParticularesController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  seg.condicionesParticulares = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Clase Vía",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 15.0, bottom: 15.0),
-                              ),
-                              TextFormField(
-                                controller: observacionesController,
-                                validator: (valor) {
-                                  if (valor!.isEmpty) {
-                                    return "Campo vacío";
-                                  }
-                                  seg.observaciones = valor;
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.folder),
-                                  labelText: "Observaciones",
-                                  border: OutlineInputBorder(),
-                                  isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
                               Container(
                                 width: double.infinity,
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                  style: estiloBotonGuardar,
-                                  onPressed: () {
-                                    if (_keyForm.currentState!.validate()) {
-                                      guardarSeguro(context, seg);
-                                    }
-                                  },
-                                  child: const Text(
-                                      '               Guardar Seguro               '),
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    TextFormField(
+                                      controller: ramoController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return 'Campo vacío';
+                                        }
+                                        seg.ramo = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                          icon: Icon(Icons.text_fields_rounded),
+                                          labelText: "Ramo",
+                                          border: OutlineInputBorder(),
+                                          isDense: false,
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      keyboardType: null,
+                                      onTap: () {
+                                        callDatePicker("fechainicio");
+                                      },
+                                      controller: fechaInicioController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        seg.fechaInicio = valor;
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.date_range),
+                                        labelText: "Fecha Inicio",
+                                        //helperText: "Aa@45678",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      onTap: () {
+                                        callDatePicker("fechavencimiento");
+                                      },
+                                      keyboardType: null,
+                                      controller: fechaVencimientoController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        seg.fechaVencimiento = valor;
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.date_range),
+                                        labelText: "Fecha de Vencimiento",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      controller:
+                                          condicionesParticularesController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        seg.condicionesParticulares = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.read_more_outlined),
+                                        labelText: "Clase Vía",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15.0, bottom: 15.0),
+                                    ),
+                                    TextFormField(
+                                      controller: observacionesController,
+                                      validator: (valor) {
+                                        if (valor!.isEmpty) {
+                                          return "Campo vacío";
+                                        }
+                                        seg.observaciones = valor;
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                        icon: Icon(Icons.folder),
+                                        labelText: "Observaciones",
+                                        border: OutlineInputBorder(),
+                                        isDense: false,
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      child: ElevatedButton(
+                                        style: estiloBotonGuardar,
+                                        onPressed: () {
+                                          if (_keyForm.currentState!
+                                              .validate()) {
+                                            guardarSeguro(context, seg);
+                                          }
+                                        },
+                                        child: const Text(
+                                            '               Guardar Seguro               '),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                        )),
                   )),
-            )),
-          ),
-          // Row(
-          //   children: [],
-          // )
-        ],
-      ),
+                ),
+                // Row(
+                //   children: [],
+                // )
+              ],
+            ),
     );
   }
 
@@ -291,43 +304,79 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                TextButton(
-                    onPressed: () {
-                      Map<String, dynamic> bodyMap;
-                      bodyMap = {
-                        "ramo": seguro.ramo,
-                        "fechaInicio": seguro.fechaInicio,
-                        "fechaVencimiento": seguro.fechaVencimiento,
-                        "condicionesParticulares":
-                            seguro.condicionesParticulares,
-                        "obervaciones": seguro.observaciones,
-                      };
+                BlocProvider(
+                  create: (context) => SeguroBloc(),
+                  child: BlocListener<SeguroBloc, SeguroState>(
+                    listener: (context, state) {
+                      switch (state.runtimeType) {
+                        case GuardandoSeguroState:
+                          mostrarCarga(context);
+                          break;
+                        case SeguroGuardadoState:
+                          mostrarCarga(context);
 
-                      var jsonMap = json.encode(bodyMap);
-
-                      print("EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
-
-                      ApiManagerSeguro.shared.request(
-                        baseUrl: baseURL,
-                        pathUrl: pathURL,
-                        jsonParam: jsonMap,
-                        bodyParams: bodyMap,
-                        type: HttpType.POST,
-                        seguro: seguro,
-                      );
-
-                      ramoController.clear();
-                      fechaInicioController.clear();
-                      fechaVencimientoController.clear();
-                      condicionesParticularesController.clear();
-                      observacionesController.clear();
-                      Navigator.pop(context);
+                          break;
+                      }
                     },
-                    child: const Text(
-                      "Confirmar",
-                      style: TextStyle(color: Colors.green),
-                    )),
+                    child: BlocBuilder<SeguroBloc, SeguroState>(
+                      builder: (context, state) {
+                        return TextButton(
+                            onPressed: () {
+                              Map<String, dynamic> bodyMap;
+                              bodyMap = {
+                                "ramo": seguro.ramo,
+                                "fechaInicio": seguro.fechaInicio,
+                                "fechaVencimiento": seguro.fechaVencimiento,
+                                "condicionesParticulares":
+                                    seguro.condicionesParticulares,
+                                "obervaciones": seguro.observaciones,
+                              };
+
+                              var jsonMap = json.encode(bodyMap);
+
+                              print(
+                                  "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
+
+                              ApiManagerSeguro.shared.request(
+                                baseUrl: baseURL,
+                                pathUrl: pathURL,
+                                jsonParam: jsonMap,
+                                bodyParams: bodyMap,
+                                type: HttpType.POST,
+                                seguro: seguro,
+                              );
+
+                              ramoController.clear();
+                              fechaInicioController.clear();
+                              fechaVencimientoController.clear();
+                              condicionesParticularesController.clear();
+                              observacionesController.clear();
+
+                              BlocProvider.of<SeguroBloc>(context)
+                                  .add(ModificarSeguroEvent());
+
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Confirmar",
+                              style: TextStyle(color: Colors.green),
+                            ));
+                      },
+                    ),
+                  ),
+                ),
               ],
             ));
+  }
+
+  mostrarCarga(context) async {
+    setState(() {
+      guardando = true;
+    });
+    await Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        guardando = false;
+      });
+    });
   }
 }

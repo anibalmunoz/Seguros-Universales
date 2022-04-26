@@ -1,4 +1,3 @@
-import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/repository/db_manager.dart';
 import 'package:sqflite/sqflite.dart';
 

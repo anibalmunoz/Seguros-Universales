@@ -1,4 +1,4 @@
-import 'package:arquitectura_universales/bloc/gps_bloc/gps_bloc.dart';
+import 'package:arquitectura_universales/blocs/gps_bloc/gps_bloc.dart';
 import 'package:arquitectura_universales/pages/acceso_gps/gps_access.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:flutter/material.dart';

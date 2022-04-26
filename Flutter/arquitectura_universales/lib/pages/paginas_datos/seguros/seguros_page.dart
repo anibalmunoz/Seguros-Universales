@@ -1,3 +1,4 @@
+import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/creacion_seguro.dart';
@@ -5,6 +6,7 @@ import 'package:arquitectura_universales/pages/paginas_datos/seguros/detalles_se
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SegurosPage extends StatelessWidget {
   final baseURL = MyApp().baseURL;
@@ -33,17 +35,43 @@ class SegurosPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
-              child: IconButton(
-                  icon:
-                      const Icon(Icons.health_and_safety, color: Colors.amber),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CreacionSeguro(titulo: "Crear nuevo seguro"),
-                        )).then((value) => null);
-                  }),
+              child: BlocProvider(
+                create: (context) => SeguroBloc(),
+                child: BlocListener<SeguroBloc, SeguroState>(
+                  listener: (context, state) {
+                    switch (state.runtimeType) {
+                      case IrACreacionState:
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (cxt) => CreacionSeguro(
+                                    titulo: "Crear nuevo Seguro")));
+                        break;
+                    }
+                  },
+                  child: BlocBuilder<SeguroBloc, SeguroState>(
+                    builder: (context, state) {
+                      return IconButton(
+                          icon: const Icon(Icons.health_and_safety,
+                              color: Colors.amber),
+                          onPressed: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => CreacionSeguro(
+                            //           titulo: "Crear nuevo seguro"),
+                            //     )).then((value) => null);
+
+                            BlocProvider.of<SeguroBloc>(context)
+                                .add(CreacionSeguroEvent());
+
+                            BlocProvider.of<SeguroBloc>(context)
+                                .add(ReturnListaPressedEvent());
+                          });
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -85,19 +113,46 @@ class SegurosPage extends StatelessWidget {
                       )
                       //Text(_clientes[index].nombre.substring(0, 1)),
                       ),
-                  trailing: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.indigo,
+                  trailing: BlocProvider(
+                    create: (context) => SeguroBloc(),
+                    child: BlocListener<SeguroBloc, SeguroState>(
+                      listener: (context, state) {
+                        switch (state.runtimeType) {
+                          case IrADetallesPageState:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (cxt) => DetallesSeguro(
+                                        seguro: _seguros[index],
+                                        titulo: "Detalles")));
+                            break;
+                        }
+                      },
+                      child: BlocBuilder<SeguroBloc, SeguroState>(
+                        builder: (context, state) {
+                          return IconButton(
+                              icon: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.indigo,
+                              ),
+                              onPressed: () {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => DetallesSeguro(
+                                //           seguro: _seguros[index], titulo: "Detalles"),
+                                //     ));
+
+                                BlocProvider.of<SeguroBloc>(context)
+                                    .add(DetallesButtonPressedEvent());
+
+                                BlocProvider.of<SeguroBloc>(context)
+                                    .add(ReturnListaPressedEvent());
+                              });
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetallesSeguro(
-                                  seguro: _seguros[index], titulo: "Detalles"),
-                            ));
-                      }),
+                    ),
+                  ),
                 );
               },
             );
@@ -124,20 +179,42 @@ class SegurosPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.blue,
                         ))),
-                TextButton(
-                    onPressed: () {
-                      ApiManagerSeguro.shared.request(
-                          baseUrl: MyApp().baseURL,
-                          pathUrl: "/seguro/eliminar/" +
-                              seguro.numeroPoliza.toString(),
-                          type: HttpType.DELETE,
-                          seguro: seguro);
-                      Navigator.pop(context);
+                BlocProvider(
+                  create: (context) => SeguroBloc(),
+                  child: BlocListener<SeguroBloc, SeguroState>(
+                    listener: (context, state) {
+                      switch (state.runtimeType) {
+                        case EliminandoSeguroState:
+                          break;
+
+                        case SeguroEliminadoState:
+                          Navigator.pop(context);
+                          break;
+                      }
                     },
-                    child: const Text(
-                      "Eliminar",
-                      style: TextStyle(color: Colors.red),
-                    )),
+                    child: BlocBuilder<SeguroBloc, SeguroState>(
+                      builder: (context, state) {
+                        return TextButton(
+                            onPressed: () {
+                              final response = ApiManagerSeguro.shared.request(
+                                  baseUrl: MyApp().baseURL,
+                                  pathUrl: "/seguro/eliminar/" +
+                                      seguro.numeroPoliza.toString(),
+                                  type: HttpType.DELETE,
+                                  seguro: seguro);
+                              if (response != null) {
+                                BlocProvider.of<SeguroBloc>(context)
+                                    .add(SeguroEliminadoEvent());
+                              }
+                            },
+                            child: const Text(
+                              "Eliminar",
+                              style: TextStyle(color: Colors.red),
+                            ));
+                      },
+                    ),
+                  ),
+                ),
               ],
             ));
   }
