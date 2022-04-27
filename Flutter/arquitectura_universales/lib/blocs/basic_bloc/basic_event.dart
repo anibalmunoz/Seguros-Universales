@@ -17,3 +17,22 @@ class CambiarModoPressed extends BasicEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DeslogueadoEvent extends BasicEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class LogueadoEvent extends BasicEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class Error403 extends BasicEvent {
+  //Error403({});
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}

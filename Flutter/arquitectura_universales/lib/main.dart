@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura_universales/pages/loading/loading_screen.dart';
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,9 +11,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runZonedGuarded(() => runApp(const MyApp()),
+  runZonedGuarded(
+      () => runApp(MultiBlocProvider(
+            providers: [BlocProvider(create: (context) => BasicBloc())],
+            child: const MyApp(),
+          )),
       (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
@@ -124,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   darkTheme: ThemeData.dark(),
                   themeMode: currentMode,
-                  home: FormularioLogin(),
+                  home: LoadingScreen(),
                 );
               });
         });

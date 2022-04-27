@@ -31,6 +31,9 @@ class FormularioLogin extends StatelessWidget {
     // String correo = FirebaseRemoteConfig.instance.getString("correo");
     // String password = FirebaseRemoteConfig.instance.getString("password");
 
+    BasicBloc basicBloc;
+    basicBloc = BlocProvider.of<BasicBloc>(context);
+
     askGpsAccess();
 
     final estiloBoton = ElevatedButton.styleFrom(
@@ -180,11 +183,16 @@ class FormularioLogin extends StatelessWidget {
                                         alignment: Alignment.center,
                                         child: ElevatedButton(
                                           style: estiloBoton,
-                                          onPressed: () {
+                                          onPressed: () async {
                                             if (_keyForm.currentState!
                                                 .validate()) {
-                                              login(context);
-                                              agregarUbicacion();
+                                              bool logueado =
+                                                  await login(context);
+                                              //agregarUbicacion();
+                                              if (logueado) {
+                                                agregarUbicacion();
+                                                basicBloc.add(LogueadoEvent());
+                                              }
                                             }
                                           },
                                           child: const Text('Login'),
@@ -233,7 +241,7 @@ class FormularioLogin extends StatelessWidget {
     });
   }
 
-  Future<void> login(context) async {
+  Future<bool> login(context) async {
     Map<String, dynamic> bodyMap;
     bodyMap = {
       "correo": correoController.text,
@@ -251,15 +259,24 @@ class FormularioLogin extends StatelessWidget {
     print(
         "LA RESPUESTA DESDE LA PAGINA DE CLIENTE ES: ${response?.statusCode}");
 
+    print("EL CUERPO DE LA RESPUESTA ES: ${response?.body}");
+
     if (response?.body != "") {
-      BlocProvider.of<BasicBloc>(context)
-          .add(LoginButtonPressed(nombre: nombre));
+      // BlocProvider.of<BasicBloc>(context)
+      //     .add(LoginButtonPressed(nombre: nombre));
+      // BasicBloc basicBloc;
+      // basicBloc = BlocProvider.of<BasicBloc>(context);
+
+      // basicBloc.add(LogueadoEvent());
+
+      return true;
     } else {
       showDialog(
           context: context,
           builder: (context) => const AlertDialog(
               title: const Text("Error"),
               content: Text("Credenciales Inválidas, intenta nuevamente")));
+      return false;
     }
   }
 

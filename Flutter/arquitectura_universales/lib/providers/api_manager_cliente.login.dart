@@ -36,7 +36,7 @@ class ApiManagerClienteLogin {
           //Cliente.fromObjeto(body);
           return response;
         }
-        return null;
+        return response;
 
       case HttpType.DELETE:
     }

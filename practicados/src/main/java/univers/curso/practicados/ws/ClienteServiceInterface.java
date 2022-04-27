@@ -132,6 +132,6 @@ public interface ClienteServiceInterface {
 	 */
 	
 	@PostMapping(path="/login")
-	public Cliente login(@RequestBody Cliente cliente);
+	public ResponseEntity<Cliente>  login(@RequestBody ClienteDto clienteDto);
 	
 }

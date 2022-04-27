@@ -1,13 +1,17 @@
+import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/seguros_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/siniestros_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BarraNavegacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BasicBloc basicBloc;
+    basicBloc = BlocProvider.of<BasicBloc>(context);
     return Scaffold(
       bottomNavigationBar: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
@@ -47,6 +51,17 @@ class BarraNavegacion extends StatelessWidget {
                         : Colors.white),
                 label: ("Siniestros"),
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.logout,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                activeIcon: Icon(Icons.logout_sharp,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                label: ("Logout"),
+              ),
             ]),
         tabBuilder: (BuildContext context, int index) {
           switch (index) {
@@ -62,6 +77,9 @@ class BarraNavegacion extends StatelessWidget {
               return CupertinoTabView(builder: (BuildContext context) {
                 return SiniestrosPage();
               });
+            case 3:
+              basicBloc.add(DeslogueadoEvent());
+              return Center();
             default:
               return CupertinoTabView(
                 builder: (BuildContext context) => ClientesPage(),

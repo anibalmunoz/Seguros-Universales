@@ -46,14 +46,14 @@ public class ClienteService implements ClienteServiceInterface {
 	public List<Cliente> buscar() {
 		return clienteRepository.findAll();
 	}
-	
+
 	@Override
 	public List<Cliente> buscarDni(Integer dniCl) {
 		return clienteRepository.findByDniClEquals(dniCl);
 	}
-	
+
 	@Override
-	public List<Cliente> buscarDniContiene(String nombreCl){
+	public List<Cliente> buscarDniContiene(String nombreCl) {
 		return clienteRepository.findByNombreClContaining(nombreCl);
 	}
 
@@ -197,7 +197,6 @@ public class ClienteService implements ClienteServiceInterface {
 		return clienteRepository.groupBy();
 	}
 
-	
 	/*
 	 * Paginador de clientes
 	 */
@@ -206,24 +205,27 @@ public class ClienteService implements ClienteServiceInterface {
 		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "dniCl"));
 		return clienteRepository.findAll(pageable);
 	}
-	
+
 	/*
 	 * LOGIN
 	 */
-	
-	@Override
-	public Cliente login(Cliente cliente){
-		
-		List<Cliente> clientes = clienteRepository.findByCorreoAndContrasena(cliente.getCorreo(), cliente.getContrasena());
-		
-		if(!clientes.isEmpty()) {
-			return clientes.get(0);
-		}
-		
-		return null;
-		
-	}
-	
 
-	
+	@Override
+	public ResponseEntity<Cliente> login(ClienteDto clienteDto) {
+		Cliente cliente = convertirClienteDtoACliente(clienteDto);
+		try {
+			List<Cliente> clientes = clienteRepository.findByCorreoAndContrasena(cliente.getCorreo(),
+					cliente.getContrasena());
+
+			if (!clientes.isEmpty()) {
+				Cliente client = clientes.get(0);
+				return new ResponseEntity<>(client, null, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(null, null, HttpStatus.FORBIDDEN);
+			}
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

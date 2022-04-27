@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:another_flushbar/flushbar.dart';
+import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
+import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/creacion_cliente.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';
 import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +27,9 @@ class ClientesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BasicBloc basicBloc;
+    basicBloc = BlocProvider.of<BasicBloc>(context);
+
     void snack() {
       Flushbar(
         title: "Eliminado",
@@ -99,9 +107,25 @@ class ClientesPage extends StatelessWidget {
                 child: IconButton(
                     icon: const Icon(Icons.dangerous_outlined,
                         color: Colors.amber),
-                    onPressed: () {
+                    onPressed: () async {
                       //ClienteRepository.shared.modificarTablaCliente();
-                      snack();
+                      //snack();
+                      Map<String, dynamic> bodyMap;
+                      bodyMap = {
+                        "correo": "asdf",
+                        "contrasena": "asfd",
+                      };
+                      var jsonMap = json.encode(bodyMap);
+                      final response = await ApiManagerClienteLogin.shared
+                          .request(
+                              baseUrl: baseURL,
+                              pathUrl: "cliente/login",
+                              jsonParam: jsonMap,
+                              type: HttpType.POST);
+
+                      if (response?.statusCode == 403) {
+                        basicBloc.add(Error403());
+                      }
                     }),
               ),
             ],
