@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
@@ -24,6 +25,7 @@ class _RegistrarContacto extends State<DetallesCliente> {
   final baseURL = const MyApp().baseURL;
   final pathURL = "/cliente/guardar";
   bool guardando = false;
+  bool guardado = false;
 
   // final clienteBloc = BlocBuilder<ClienteBloc, ClienteState>(
   //                         builder: (context, state);
@@ -94,310 +96,321 @@ class _RegistrarContacto extends State<DetallesCliente> {
           ),
         ],
       ),
-      body: guardando == true
-          ? Center(
-              child: Container(
-              width: 30.0,
-              height: 30.0,
-              child: const CircularProgressIndicator(),
-            ))
-          : ListView(
-              children: [
-                Center(
-                  child: SafeArea(
-                      child: SingleChildScrollView(
-                    child: SizedBox(
-                        width: double.infinity,
-                        child: Form(
-                          key: _keyForm,
+      // body: guardando == true
+      //     ? Center(
+      //         child: Container(
+      //         width: 30.0,
+      //         height: 30.0,
+      //         child: const CircularProgressIndicator(),
+      //       ))
+      //     :
+      body: ListView(
+        children: [
+          Center(
+            child: SafeArea(
+                child: SingleChildScrollView(
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Form(
+                    key: _keyForm,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.assignment_ind_outlined,
+                          color: Colors.amber,
+                          size: 150.0,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20.0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.assignment_ind_outlined,
-                                color: Colors.amber,
-                                size: 150.0,
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return 'Campo vacío';
+                                  }
+                                },
+                                keyboardType: TextInputType.number,
+                                initialValue: client.dnicl.toString(),
+                                //readOnly: true,
+                                enabled: false,
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.numbers),
+                                    labelText: "DNI",
+                                    border: OutlineInputBorder(),
+                                    isDense: false,
+                                    contentPadding: EdgeInsets.all(10)),
                               ),
                               Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return 'Campo vacío';
-                                        }
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      initialValue: client.dnicl.toString(),
-                                      //readOnly: true,
-                                      enabled: false,
-                                      decoration: const InputDecoration(
-                                          icon: Icon(Icons.numbers),
-                                          labelText: "DNI",
-                                          border: OutlineInputBorder(),
-                                          isDense: false,
-                                          contentPadding: EdgeInsets.all(10)),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return 'Campo vacío';
-                                        }
-                                        client.nombrecl = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.nombrecl,
-                                      decoration: const InputDecoration(
-                                          icon: Icon(Icons.text_fields_rounded),
-                                          labelText: "Nombre",
-                                          border: OutlineInputBorder(),
-                                          isDense: false,
-                                          contentPadding: EdgeInsets.all(10)),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.apellido1 = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.apellido1,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.text_fields_rounded),
-                                        labelText: "Primer Apellido",
-                                        //helperText: "Aa@45678",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.apellido2 = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.apellido2,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.text_fields_rounded),
-                                        labelText: "Segundo Apellido",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.clasevia = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.clasevia,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.read_more_outlined),
-                                        labelText: "Clase Vía",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.nombrevia = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.nombrevia,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.read_more_outlined),
-                                        labelText: "Nombre Vía",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.numerovia = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      initialValue: client.numerovia,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.read_more_outlined),
-                                        labelText: "Número Vía",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.codpostal = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      initialValue: client.codpostal,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.directions),
-                                        labelText: "Código Postal",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.ciudad = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.ciudad,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.location_city),
-                                        labelText: "Ciudad",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.telefono = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      initialValue: client.telefono,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.phone),
-                                        labelText: "Teléfono",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 15.0, bottom: 15.0),
-                                    ),
-                                    TextFormField(
-                                      validator: (valor) {
-                                        if (valor!.isEmpty) {
-                                          return "Campo vacío";
-                                        }
-                                        client.observaciones = valor;
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      initialValue: client.observaciones,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.folder),
-                                        labelText: "Observaciones",
-                                        border: OutlineInputBorder(),
-                                        isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Container(
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                      child: ElevatedButton(
-                                        style: estiloBotonGuardar,
-                                        onPressed: () {
-                                          if (_keyForm.currentState!
-                                              .validate()) {
-                                            modificarCliente(context, client);
-                                          }
-                                        },
-                                        child: const Text(
-                                            '               Modificar Cliente               '),
-                                      ),
-                                    ),
-                                  ],
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return 'Campo vacío';
+                                  }
+                                  client.nombrecl = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.nombrecl,
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.text_fields_rounded),
+                                    labelText: "Nombre",
+                                    border: OutlineInputBorder(),
+                                    isDense: false,
+                                    contentPadding: EdgeInsets.all(10)),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.apellido1 = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.apellido1,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.text_fields_rounded),
+                                  labelText: "Primer Apellido",
+                                  //helperText: "Aa@45678",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
                                 ),
-                              )
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.apellido2 = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.apellido2,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.text_fields_rounded),
+                                  labelText: "Segundo Apellido",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.clasevia = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.clasevia,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.read_more_outlined),
+                                  labelText: "Clase Vía",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.nombrevia = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.nombrevia,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.read_more_outlined),
+                                  labelText: "Nombre Vía",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.numerovia = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                initialValue: client.numerovia,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.read_more_outlined),
+                                  labelText: "Número Vía",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.codpostal = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                initialValue: client.codpostal,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.directions),
+                                  labelText: "Código Postal",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.ciudad = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.ciudad,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.location_city),
+                                  labelText: "Ciudad",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.telefono = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                initialValue: client.telefono,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.phone),
+                                  labelText: "Teléfono",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                              ),
+                              TextFormField(
+                                validator: (valor) {
+                                  if (valor!.isEmpty) {
+                                    return "Campo vacío";
+                                  }
+                                  client.observaciones = valor;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                                initialValue: client.observaciones,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.folder),
+                                  labelText: "Observaciones",
+                                  border: OutlineInputBorder(),
+                                  isDense: false,
+                                  contentPadding: EdgeInsets.all(10),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Container(
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: ElevatedButton(
+                                  style: estiloBotonGuardar,
+                                  onPressed: () async {
+                                    if (_keyForm.currentState!.validate()) {
+                                      await modificarCliente(context, client)
+                                          .then((value) {
+                                        if (value) {
+                                          mostrarCarga(context);
+                                          Navigator.pop(context);
+                                        }
+                                      });
+
+                                      // if (guardado) {
+                                      //   Navigator.pop(context);
+                                      // }
+                                    }
+                                  },
+                                  child: const Text(
+                                      '               Modificar Cliente               '),
+                                ),
+                              ),
                             ],
                           ),
-                        )),
+                        )
+                      ],
+                    ),
                   )),
-                ),
-                // Row(
-                //   children: [],
-                // )
-              ],
-            ),
+            )),
+          ),
+          // Row(
+          //   children: [],
+          // )
+        ],
+      ),
     );
   }
 
-  modificarCliente(context, cliente) {
-    showDialog(
+  Future<bool> modificarCliente(context, cliente) async {
+    return await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Modificar"),
@@ -407,7 +420,10 @@ class _RegistrarContacto extends State<DetallesCliente> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
+                      // Navigator.of(context)
+                      //   ..pop()
+                      //   ..pop();
                     },
                     child: const Text("Cancelar",
                         style: TextStyle(
@@ -419,11 +435,10 @@ class _RegistrarContacto extends State<DetallesCliente> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoCliente:
-                          mostrarCarga(context);
+//                          mostrarCarga(context);
                           break;
                         case ClienteGuardado:
-                          mostrarCarga(context);
-
+                          //                        mostrarCarga(context);
                           break;
                       }
                     },
@@ -459,8 +474,11 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               BlocProvider.of<ClienteBloc>(context)
                                   .add(ModificarCliente(cliente: cliente));
 
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                               //await mostrarCarga(context);
+                              // int count = 0;
+                              // Navigator.of(context)
+                              //     .popUntil((_) => count++ >= 2);
                             },
                             child: const Text(
                               "Confirmar",
@@ -475,13 +493,25 @@ class _RegistrarContacto extends State<DetallesCliente> {
   }
 
   mostrarCarga(context) async {
-    setState(() {
-      guardando = true;
-    });
-    await Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        guardando = false;
-      });
-    });
+    // setState(() {
+    //   guardando = true;
+    // });
+    // await Future.delayed(const Duration(seconds: 2), () {
+    //   setState(() {
+    //     guardando = false;
+    //   });
+    // });
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return const Dialog(
+            child: LinearProgressIndicator(),
+          );
+        });
   }
 }

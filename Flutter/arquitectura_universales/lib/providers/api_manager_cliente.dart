@@ -14,6 +14,8 @@ class ApiManagerCliente {
 
   var contador = 0;
 
+  static bool conectedToNetwork = false;
+
   Future<ClientesLista?> request({
     required String baseUrl,
     required String pathUrl,
@@ -30,44 +32,48 @@ class ApiManagerCliente {
     late http.Response response;
     switch (type) {
       case HttpType.GET:
-        response = await http.get(uri);
-        List<Cliente> clientes = [];
+        if (conectedToNetwork) {
+          response = await http.get(uri);
+          List<Cliente> clientes = [];
 
-        if (response.statusCode == 200 &&
-            response.body != null &&
-            contador == 0) {
-          final body = json.decode(response.body);
+          if (response.statusCode == 200 &&
+              response.body != null &&
+              contador == 0) {
+            final body = json.decode(response.body);
 
-          for (var item in body) {
-            clientes.add(Cliente(
-              dnicl: item["dniCl"],
-              nombrecl: item["nombreCl"],
-              apellido1: item["apellido1"],
-              apellido2: item["apellido2"],
-              clasevia: item["claseVia"],
-              nombrevia: item["nombreVia"],
-              numerovia: item["numeroVia"],
-              codpostal: item["codPostal"],
-              ciudad: item["ciudad"],
-              telefono: item["telefono"].toString(),
-              observaciones: item["observaciones"],
-            ));
-          }
+            for (var item in body) {
+              clientes.add(Cliente(
+                dnicl: item["dniCl"],
+                nombrecl: item["nombreCl"],
+                apellido1: item["apellido1"],
+                apellido2: item["apellido2"],
+                clasevia: item["claseVia"],
+                nombrevia: item["nombreVia"],
+                numerovia: item["numeroVia"],
+                codpostal: item["codPostal"],
+                ciudad: item["ciudad"],
+                telefono: item["telefono"].toString(),
+                observaciones: item["observaciones"],
+                correo: item["correo"],
+                contrasena: item["contrasena"],
+              ));
+            }
 
 //MODIFICACIONES PARA BASE DE DATOS LOCAL
 
-          //return ClientesLista.lista(clientes);
+            //return ClientesLista.lista(clientes);
 
-          ClienteRepository.shared.delete(tableName: "clienteprueba");
+            ClienteRepository.shared.delete(tableName: "clienteprueba");
 
-          ClienteRepository.shared
-              .save(data: clientes, tableName: "clienteprueba");
+            ClienteRepository.shared
+                .save(data: clientes, tableName: "clienteprueba");
 
-          contador = contador + 1;
+            contador = contador + 1;
 //          return ClientesLista.fromDb(clientesDb);
 
 //FIN MODIFICACIONES PARA BASES DE DATOS LOCAL
 
+          }
         }
         List<dynamic> clientList = await ClienteRepository.shared
             .selectAll(tableName: 'clienteprueba');

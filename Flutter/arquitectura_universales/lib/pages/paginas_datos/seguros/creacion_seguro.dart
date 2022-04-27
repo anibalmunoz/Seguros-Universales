@@ -266,7 +266,13 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                         onPressed: () {
                                           if (_keyForm.currentState!
                                               .validate()) {
-                                            guardarSeguro(context, seg);
+                                            guardarSeguro(context, seg)
+                                                .then((value) {
+                                              if (value) {
+                                                mostrarCarga(context);
+                                                Navigator.pop(context);
+                                              }
+                                            });
                                           }
                                         },
                                         child: const Text(
@@ -289,8 +295,8 @@ class _CreacionSeguro extends State<CreacionSeguro> {
     );
   }
 
-  guardarSeguro(context, seguro) {
-    showDialog(
+  Future<bool> guardarSeguro(context, seguro) async {
+    return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Guardar"),
@@ -298,7 +304,7 @@ class _CreacionSeguro extends State<CreacionSeguro> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
                     },
                     child: const Text("Cancelar",
                         style: TextStyle(
@@ -310,10 +316,10 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoSeguroState:
-                          mostrarCarga(context);
+                          //mostrarCarga(context);
                           break;
                         case SeguroGuardadoState:
-                          mostrarCarga(context);
+                          //mostrarCarga(context);
 
                           break;
                       }
@@ -355,7 +361,7 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                               BlocProvider.of<SeguroBloc>(context)
                                   .add(ModificarSeguroEvent());
 
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             },
                             child: const Text(
                               "Confirmar",
@@ -370,13 +376,16 @@ class _CreacionSeguro extends State<CreacionSeguro> {
   }
 
   mostrarCarga(context) async {
-    setState(() {
-      guardando = true;
-    });
-    await Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        guardando = false;
-      });
-    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return const Dialog(
+            child: LinearProgressIndicator(),
+          );
+        });
   }
 }

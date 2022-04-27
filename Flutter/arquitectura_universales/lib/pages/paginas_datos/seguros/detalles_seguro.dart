@@ -233,10 +233,20 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                         style: estiloBotonGuardar,
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (_keyForm.currentState!
                                               .validate()) {
-                                            modificarSeguro(context, seg);
+                                            await modificarSeguro(context, seg)
+                                                .then((value) {
+                                              if (value) {
+                                                mostrarCarga(context);
+                                                Navigator.pop(context);
+                                              }
+                                            });
+
+                                            // if (guardado) {
+                                            //   Navigator.pop(context);
+                                            // }
                                           }
                                         },
                                         child: const Text(
@@ -259,8 +269,8 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
     );
   }
 
-  modificarSeguro(context, seguro) {
-    showDialog(
+  Future<bool> modificarSeguro(context, seguro) async {
+    return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Modificar"),
@@ -270,7 +280,7 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
                     },
                     child: const Text("Cancelar",
                         style: TextStyle(
@@ -282,10 +292,10 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoSeguroState:
-                          mostrarCarga();
+                          //mostrarCarga();
                           break;
                         case SeguroGuardadoState:
-                          mostrarCarga();
+                          //mostrarCarga();
                           break;
                       }
                     },
@@ -318,7 +328,7 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                               BlocProvider.of<SeguroBloc>(context)
                                   .add(ModificarSeguroEvent());
 
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             },
                             child: const Text(
                               "Confirmar",
@@ -332,14 +342,17 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
             ));
   }
 
-  mostrarCarga() async {
-    setState(() {
-      guardando = true;
-    });
-    await Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        guardando = false;
-      });
-    });
+  mostrarCarga(context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return const Dialog(
+            child: LinearProgressIndicator(),
+          );
+        });
   }
 }

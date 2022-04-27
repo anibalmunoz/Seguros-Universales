@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/pages/loading/loading_screen.dart';
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
-import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
+import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
+import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 void main() {
   runZonedGuarded(
@@ -35,6 +37,8 @@ Implementación de dark light mode
  */
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.system);
+
+  static bool conectedToNetwork = false;
 }
 
 class _MyAppState extends State<MyApp> {
@@ -111,7 +115,9 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //if (MyApp.conectedToNetwork) {
     _firebase = inicializarFirebase();
+    //}
   }
 
   @override
@@ -123,16 +129,53 @@ class _MyAppState extends State<MyApp> {
               valueListenable: MyApp.themeNotifier,
               builder: (_, ThemeMode currentMode, __) {
                 return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  darkTheme: ThemeData.dark(),
-                  themeMode: currentMode,
-                  home: LoadingScreen(),
-                );
+                    debugShowCheckedModeBanner: false,
+                    title: 'Flutter Demo',
+                    theme: ThemeData(
+                      primarySwatch: Colors.blue,
+                      visualDensity: VisualDensity.adaptivePlatformDensity,
+                    ),
+                    darkTheme: ThemeData.dark(),
+                    themeMode: currentMode,
+                    home: OfflineBuilder(
+                      connectivityBuilder: (
+                        BuildContext context,
+                        ConnectivityResult connectivity,
+                        Widget child,
+                      ) {
+                        final bool connected =
+                            connectivity != ConnectivityResult.none;
+
+                        MyApp.conectedToNetwork = connected;
+                        FormularioLogin.conectedToNetwork = connected;
+                        ClientesPage.conectedToNetwork = connected;
+                        ApiManagerCliente.conectedToNetwork = connected;
+
+                        return Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Positioned(
+                              height: 24.0,
+                              left: 0.0,
+                              right: 0.0,
+                              child: Container(
+                                color: connected
+                                    ? Color(0xFF00EE44)
+                                    : Color(0xFFEE4400),
+                                child: Center(
+                                  child: Text(
+                                      "${connected ? 'ONLINE' : 'OFFLINE'}"),
+                                ),
+                              ),
+                            ),
+                            Scaffold(
+                              body: child,
+                            ),
+                          ],
+                        );
+                      },
+                      child: LoadingScreen(),
+                    ));
               });
         });
   }

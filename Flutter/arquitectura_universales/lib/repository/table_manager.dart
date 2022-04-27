@@ -16,7 +16,10 @@ class TableManager {
         "codpostal TEXT,"
         "ciudad TEXT,"
         "telefono INTEGER,"
-        "observaciones TEXT)";
+        "observaciones TEXT,"
+        "correo TEXT,"
+        "contrasena TEXT"
+        ")";
 
     const String seguros = "CREATE TABLE seguros("
         "numeropoliza INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -24,7 +27,8 @@ class TableManager {
         "fechainicio TEXT,"
         "fechavencimiento TEXT,"
         "condicionesparticulares TEXT,"
-        "observaciones TEXT)";
+        "observaciones TEXT"
+        ")";
 
     const String siniestros = "CREATE TABLE siniestros("
         "idsiniestro INTEGER PRIMARY KEY AUTOINCREMENT,"

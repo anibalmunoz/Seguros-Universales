@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:arquitectura_universales/model/cliente_model.dart';
+import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,13 +18,28 @@ class ApiManagerClienteLogin {
     String? jsonParam,
     Map<String, dynamic>? bodyParams,
     Map<String, dynamic>? uriParams,
+    String? correo,
+    String? contrasena,
   }) async {
     final uri = Uri.http(baseUrl, pathUrl);
 
     late http.Response response;
+
     switch (type) {
       case HttpType.GET:
-        break;
+        List<Cliente> loginList = await ClienteRepository.shared
+            .buscarClienteLoguin(
+                tableName: "clienteprueba",
+                correo: correo!,
+                contrasena: contrasena!);
+
+        if (loginList.length == 1) {
+          response = http.Response("", 200);
+          return response;
+        } else {
+          response = http.Response("", 403);
+          return response;
+        }
 
       case HttpType.POST:
         response = await http.post(

@@ -14,6 +14,8 @@ class ApiManagerSiniestro {
 
   var contador = 0;
 
+  static bool conectedToNetwork = false;
+
   Future<SiniestrosLista?> request({
     required String baseUrl,
     required String pathUrl,
@@ -30,29 +32,32 @@ class ApiManagerSiniestro {
     late http.Response response;
     switch (type) {
       case HttpType.GET:
-        response = await http.get(uri);
-        //agregarUbicacion("GET");
-        List<Siniestro> siniestros = [];
+        if (conectedToNetwork) {
+          response = await http.get(uri);
+          //agregarUbicacion("GET");
+          List<Siniestro> siniestros = [];
 
-        if (response.statusCode == 200 && contador == 0) {
-          final body = json.decode(response.body);
+          if (response.statusCode == 200 && contador == 0) {
+            final body = json.decode(response.body);
 
-          for (var item in body) {
-            siniestros.add(Siniestro(
-              idSiniestro: item["idSiniestro"].toString(),
-              fechaSiniestro: item["fechaSiniestro"],
-              causas: item["causas"],
-              aceptado: item["aceptado"],
-              indemnizacion: item["indemnizacion"],
-            ));
+            for (var item in body) {
+              siniestros.add(Siniestro(
+                idSiniestro: item["idSiniestro"].toString(),
+                fechaSiniestro: item["fechaSiniestro"],
+                causas: item["causas"],
+                aceptado: item["aceptado"],
+                indemnizacion: item["indemnizacion"],
+              ));
+            }
+            SiniestroRepository.shared.delete(tableName: "siniestros");
+
+            SiniestroRepository.shared
+                .save(data: siniestros, tableName: "siniestros");
+
+            contador = contador + 1;
           }
-          SiniestroRepository.shared.delete(tableName: "siniestros");
-
-          SiniestroRepository.shared
-              .save(data: siniestros, tableName: "siniestros");
-
-          contador = contador + 1;
         }
+
         List<dynamic> sinisterList =
             await SiniestroRepository.shared.selectAll(tableName: 'siniestros');
 

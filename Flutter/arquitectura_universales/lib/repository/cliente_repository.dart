@@ -37,4 +37,24 @@ class ClienteRepository extends MasterRepository {
       whereArgs: [id],
     );
   }
+
+  Future<List<Cliente>> buscarClienteLoguin(
+      {required String tableName,
+      required String correo,
+      required String contrasena}) async {
+    Database dbManager = await DbManager().db;
+
+    final List<Map<String, dynamic>> lista = await dbManager.query(tableName,
+        where: " correo = ? and contrasena = ?",
+        whereArgs: [correo, contrasena]);
+
+    print("LA LISTA DESDE EL REPOSITORIO ES: ${lista}");
+
+    return List.generate(lista.length, (i) {
+      return Cliente(
+        correo: lista[i]['correo'],
+        contrasena: lista[i]['contrasena'],
+      );
+    });
+  }
 }

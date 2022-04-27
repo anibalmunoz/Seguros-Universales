@@ -228,7 +228,13 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                         onPressed: () {
                                           if (_keyForm.currentState!
                                               .validate()) {
-                                            guardarSiniestro(context, sin);
+                                            guardarSiniestro(context, sin)
+                                                .then((value) {
+                                              if (value) {
+                                                mostrarCarga(context);
+                                                Navigator.pop(context);
+                                              }
+                                            });
                                           }
                                         },
                                         child: const Text(
@@ -251,8 +257,8 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
     );
   }
 
-  guardarSiniestro(context, siniestro) {
-    showDialog(
+  Future<bool> guardarSiniestro(context, siniestro) async {
+    return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Guardar"),
@@ -261,7 +267,7 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
                     },
                     child: const Text("Cancelar",
                         style: TextStyle(
@@ -273,10 +279,10 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoSiniestroState:
-                          mostrarCarga(context);
+                          //mostrarCarga(context);
                           break;
                         case SiniestroGuardadoState:
-                          mostrarCarga(context);
+                          //mostrarCarga(context);
 
                           break;
                       }
@@ -316,7 +322,7 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                               BlocProvider.of<SiniestroBloc>(context)
                                   .add(ModificarSiniestroEvent());
 
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             },
                             child: const Text(
                               "Confirmar",
@@ -331,13 +337,16 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
   }
 
   mostrarCarga(context) async {
-    setState(() {
-      guardando = true;
-    });
-    await Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        guardando = false;
-      });
-    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return const Dialog(
+            child: LinearProgressIndicator(),
+          );
+        });
   }
 }

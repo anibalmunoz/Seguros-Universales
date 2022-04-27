@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
@@ -8,9 +9,11 @@ import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,6 +27,7 @@ class FormularioLogin extends StatelessWidget {
 
   var correoController = TextEditingController();
   var contrasenaController = TextEditingController();
+  static bool conectedToNetwork = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class FormularioLogin extends StatelessWidget {
                 }
                 print(
                     "EL VALOR DEL THEME NOTIFIER ES ${MyApp.themeNotifier.value}");
-              })
+              }),
         ],
       ),
 
@@ -187,7 +191,7 @@ class FormularioLogin extends StatelessWidget {
                                             if (_keyForm.currentState!
                                                 .validate()) {
                                               bool logueado =
-                                                  await login(context);
+                                                  await login(context, 2);
                                               //agregarUbicacion();
                                               if (logueado) {
                                                 agregarUbicacion();
@@ -241,42 +245,73 @@ class FormularioLogin extends StatelessWidget {
     });
   }
 
-  Future<bool> login(context) async {
-    Map<String, dynamic> bodyMap;
-    bodyMap = {
-      "correo": correoController.text,
-      "contrasena": contrasenaController.text
-    };
-    var jsonMap = json.encode(bodyMap);
-    print(
-        "EL CLIENTE QUE ESTOY MANDANDO EN ESTE LOGIN DE AHORA ES:  ${jsonMap}");
-    final response = await ApiManagerClienteLogin.shared.request(
-        baseUrl: baseURL,
-        pathUrl: pathURL,
-        jsonParam: jsonMap,
-        type: HttpType.POST);
+  Future<bool> login(context, id) async {
+    print("ESTA CONECTADO? : ${conectedToNetwork}");
 
-    print(
-        "LA RESPUESTA DESDE LA PAGINA DE CLIENTE ES: ${response?.statusCode}");
+    if (conectedToNetwork) {
+      Map<String, dynamic> bodyMap;
+      bodyMap = {
+        "correo": correoController.text,
+        "contrasena": contrasenaController.text
+      };
+      var jsonMap = json.encode(bodyMap);
+      print(
+          "EL CLIENTE QUE ESTOY MANDANDO EN ESTE LOGIN DE AHORA ES:  ${jsonMap}");
+      final response = await ApiManagerClienteLogin.shared.request(
+          baseUrl: baseURL,
+          pathUrl: pathURL,
+          jsonParam: jsonMap,
+          type: HttpType.POST);
 
-    print("EL CUERPO DE LA RESPUESTA ES: ${response?.body}");
+      print(
+          "LA RESPUESTA DESDE LA PAGINA DE CLIENTE ES: ${response?.statusCode}");
 
-    if (response?.body != "") {
-      // BlocProvider.of<BasicBloc>(context)
-      //     .add(LoginButtonPressed(nombre: nombre));
-      // BasicBloc basicBloc;
-      // basicBloc = BlocProvider.of<BasicBloc>(context);
+      print("EL CUERPO DE LA RESPUESTA ES: ${response?.body}");
 
-      // basicBloc.add(LogueadoEvent());
+      if (response?.body != "") {
+        // BlocProvider.of<BasicBloc>(context)
+        //     .add(LoginButtonPressed(nombre: nombre));
+        // BasicBloc basicBloc;
+        // basicBloc = BlocProvider.of<BasicBloc>(context);
 
-      return true;
+        // basicBloc.add(LogueadoEvent());
+
+        return true;
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+                title: const Text("Error"),
+                content: Text("Credenciales Inválidas, intenta nuevamente")));
+        return false;
+      }
     } else {
-      showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-              title: const Text("Error"),
-              content: Text("Credenciales Inválidas, intenta nuevamente")));
-      return false;
+      final response = await ApiManagerClienteLogin.shared.request(
+          baseUrl: baseURL,
+          pathUrl: pathURL,
+          correo: correoController.text,
+          contrasena: contrasenaController.text,
+          type: HttpType.GET);
+
+      if (response?.statusCode == 200) {
+        return true;
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+                title: const Text("Error"),
+                content: Text("Credenciales Inválidas, intenta nuevamente")));
+
+        Flushbar(
+          title: "Sin conexión a internet",
+          message: "No tienes conexión a internet",
+          duration: const Duration(seconds: 2),
+          margin:
+              const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+          borderRadius: BorderRadius.circular(8),
+        ).show(context);
+        return false;
+      }
     }
   }
 

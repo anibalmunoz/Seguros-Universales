@@ -5,12 +5,10 @@ import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
-import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/creacion_cliente.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';
-import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,19 +22,12 @@ class ClientesPage extends StatelessWidget {
   List _clientes = [];
   late ClienteBloc clienteBloc;
   final _scaffKey = GlobalKey<ScaffoldState>();
+  static bool conectedToNetwork = false;
 
   @override
   Widget build(BuildContext context) {
     BasicBloc basicBloc;
     basicBloc = BlocProvider.of<BasicBloc>(context);
-
-    void snack() {
-      Flushbar(
-        title: "Eliminado",
-        message: "Cliente eliminado correctamente",
-        duration: Duration(seconds: 3),
-      )..show(context);
-    }
 
     return BlocProvider(
       create: (context) => ClienteBloc(),

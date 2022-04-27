@@ -55,6 +55,8 @@ class Cliente {
         'ciudad': ciudad,
         'telefono': telefono,
         'observaciones': observaciones,
+        'correo': correo,
+        'contrasena': contrasena,
       };
 
   //METODO PARA UPDATE

@@ -350,7 +350,13 @@ class _CreacionCliente extends State<CreacionCliente> {
                                         onPressed: () {
                                           if (_keyForm.currentState!
                                               .validate()) {
-                                            guardarCliente(context, client);
+                                            guardarCliente(context, client)
+                                                .then((value) {
+                                              if (value) {
+                                                mostrarCarga(context);
+                                                Navigator.pop(context);
+                                              }
+                                            });
                                           }
                                         },
                                         child: const Text(
@@ -373,8 +379,9 @@ class _CreacionCliente extends State<CreacionCliente> {
     );
   }
 
-  guardarCliente(context, cliente) {
-    showDialog(
+  Future<bool> guardarCliente(context, cliente) async {
+    return await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Guardar"),
@@ -384,7 +391,7 @@ class _CreacionCliente extends State<CreacionCliente> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
                     },
                     child: const Text("Cancelar",
                         style: TextStyle(
@@ -396,10 +403,10 @@ class _CreacionCliente extends State<CreacionCliente> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoCliente:
-                          mostrarCarga(context);
+                          //  mostrarCarga(context);
                           break;
                         case ClienteGuardado:
-                          mostrarCarga(context);
+//                          mostrarCarga(context);
 
                           break;
                       }
@@ -451,7 +458,7 @@ class _CreacionCliente extends State<CreacionCliente> {
                               BlocProvider.of<ClienteBloc>(context)
                                   .add(ModificarCliente(cliente: cliente));
 
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             },
                             child: const Text(
                               "Confirmar",
@@ -466,13 +473,16 @@ class _CreacionCliente extends State<CreacionCliente> {
   }
 
   mostrarCarga(context) async {
-    setState(() {
-      guardando = true;
-    });
-    await Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        guardando = false;
-      });
-    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return const Dialog(
+            child: LinearProgressIndicator(),
+          );
+        });
   }
 }

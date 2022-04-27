@@ -13,6 +13,8 @@ class ApiManagerSeguro {
 
   var contador = 0;
 
+  static bool conectedToNetwork = false;
+
   Future<SegurosLista?> request({
     required String baseUrl,
     required String pathUrl,
@@ -29,31 +31,32 @@ class ApiManagerSeguro {
     late http.Response response;
     switch (type) {
       case HttpType.GET:
-        response = await http.get(uri);
-        //   agregarUbicacion("GET");
-        List<Seguro> seguros = [];
+        if (conectedToNetwork) {
+          response = await http.get(uri);
+          //   agregarUbicacion("GET");
+          List<Seguro> seguros = [];
 
-        if (response.statusCode == 200 && contador == 0) {
-          final body = json.decode(response.body);
+          if (response.statusCode == 200 && contador == 0) {
+            final body = json.decode(response.body);
 
-          for (var item in body) {
-            seguros.add(Seguro(
-              numeroPoliza: item["numeroPoliza"].toString(),
-              ramo: item["ramo"],
-              fechaInicio: item["fechaInicio"],
-              fechaVencimiento: item["fechaVencimiento"],
-              condicionesParticulares: item["condicionesParticulares"],
-              observaciones: item["obervaciones"],
-              dniCliente: item["dniCl"].toString(),
-            ));
+            for (var item in body) {
+              seguros.add(Seguro(
+                numeroPoliza: item["numeroPoliza"].toString(),
+                ramo: item["ramo"],
+                fechaInicio: item["fechaInicio"],
+                fechaVencimiento: item["fechaVencimiento"],
+                condicionesParticulares: item["condicionesParticulares"],
+                observaciones: item["obervaciones"],
+                dniCliente: item["dniCl"].toString(),
+              ));
+            }
+            SeguroRepository.shared.delete(tableName: "seguros");
+
+            SeguroRepository.shared.save(data: seguros, tableName: "seguros");
+
+            contador = contador + 1;
           }
-          SeguroRepository.shared.delete(tableName: "seguros");
-
-          SeguroRepository.shared.save(data: seguros, tableName: "seguros");
-
-          contador = contador + 1;
         }
-
         List<dynamic> segList =
             await SeguroRepository.shared.selectAll(tableName: 'seguros');
 
