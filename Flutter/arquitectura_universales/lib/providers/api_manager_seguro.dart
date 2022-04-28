@@ -36,7 +36,7 @@ class ApiManagerSeguro {
           //   agregarUbicacion("GET");
           List<Seguro> seguros = [];
 
-          if (response.statusCode == 200 && contador == 0) {
+          if (response.statusCode == 200) {
             final body = json.decode(response.body);
 
             for (var item in body) {
@@ -74,23 +74,44 @@ class ApiManagerSeguro {
         return SegurosLista.fromDb(segurosDb);
 
       case HttpType.POST:
-        //response = await http.get(uri);
-        SeguroRepository.shared
-            .insertSeguro(tableName: "seguros", seguro: seguro!);
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          agregarUbicacion("POST");
+        } else {
+          SeguroRepository.shared
+              .insertSeguro(tableName: "seguros", seguro: seguro!);
+        }
 
         break;
       case HttpType.PUT:
-        SeguroRepository.shared
-            .updateSeguro(tableName: "seguros", seguro: seguro!);
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
 
+          agregarUbicacion("PUT");
+        } else {
+          SeguroRepository.shared
+              .updateSeguro(tableName: "seguros", seguro: seguro!);
+        }
         break;
       case HttpType.DELETE:
-        //response = await http.delete(uri);
+        if (conectedToNetwork) {
+          response = await http.delete(uri);
 
-        SeguroRepository.shared.eliminarSeguro(
-            tableName: "seguros", id: int.parse(seguro!.numeroPoliza!));
+          agregarUbicacion("DELETE");
+        } else {
+          SeguroRepository.shared.eliminarSeguro(
+              tableName: "seguros", id: int.parse(seguro!.numeroPoliza!));
+        }
     }
-    // final request = await http.post(uri, body: bodyParams);
 
     return null;
   }

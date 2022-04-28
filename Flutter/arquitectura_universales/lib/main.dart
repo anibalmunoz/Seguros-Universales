@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/pages/loading/loading_screen.dart';
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
+import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -117,6 +120,18 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     //if (MyApp.conectedToNetwork) {
     _firebase = inicializarFirebase();
+    if (MyApp.conectedToNetwork) {
+      if (!MyApp.conectedToNetwork) {
+        Flushbar(
+          title: "Sin conexión a internet",
+          message: "No tienes conexión a internet",
+          duration: const Duration(seconds: 2),
+          margin:
+              const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+          borderRadius: BorderRadius.circular(8),
+        ).show(context);
+      }
+    }
     //}
   }
 
@@ -150,6 +165,8 @@ class _MyAppState extends State<MyApp> {
                         FormularioLogin.conectedToNetwork = connected;
                         ClientesPage.conectedToNetwork = connected;
                         ApiManagerCliente.conectedToNetwork = connected;
+                        ApiManagerSeguro.conectedToNetwork = connected;
+                        ApiManagerSiniestro.conectedToNetwork = connected;
 
                         return Stack(
                           fit: StackFit.expand,

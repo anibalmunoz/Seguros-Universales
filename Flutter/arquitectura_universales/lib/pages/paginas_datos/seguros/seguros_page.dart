@@ -205,15 +205,20 @@ class SegurosPage extends StatelessWidget {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () {
-                              final response = ApiManagerSeguro.shared.request(
-                                  baseUrl: MyApp().baseURL,
-                                  pathUrl: "/seguro/eliminar/" +
-                                      seguro.numeroPoliza.toString(),
-                                  type: HttpType.DELETE,
-                                  seguro: seguro);
-                              if (response != null) {
-                                BlocProvider.of<SeguroBloc>(context)
-                                    .add(SeguroEliminadoEvent());
+                              if (MyApp.conectedToNetwork) {
+                                final response = ApiManagerSeguro.shared
+                                    .request(
+                                        baseUrl: MyApp().baseURL,
+                                        pathUrl: "/seguro/eliminar/" +
+                                            seguro.numeroPoliza.toString(),
+                                        type: HttpType.DELETE,
+                                        seguro: seguro);
+                                if (response != null) {
+                                  BlocProvider.of<SeguroBloc>(context)
+                                      .add(SeguroEliminadoEvent());
+                                }
+                              } else {
+                                mostrarFlushbar(context);
                               }
                             },
                             child: const Text(
@@ -226,5 +231,17 @@ class SegurosPage extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet.",
+        message: "No puedes eliminar el elemento.",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

@@ -37,7 +37,7 @@ class ApiManagerSiniestro {
           //agregarUbicacion("GET");
           List<Siniestro> siniestros = [];
 
-          if (response.statusCode == 200 && contador == 0) {
+          if (response.statusCode == 200) {
             final body = json.decode(response.body);
 
             for (var item in body) {
@@ -74,21 +74,44 @@ class ApiManagerSiniestro {
         return SiniestrosLista.fromDb(siniestrosDb);
 
       case HttpType.POST:
-        //response = await http.get(uri);
-        SiniestroRepository.shared
-            .insertSiniestro(tableName: "siniestros", siniestro: siniestro!);
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
 
+          agregarUbicacion("POST");
+        } else {
+          SiniestroRepository.shared
+              .insertSiniestro(tableName: "siniestros", siniestro: siniestro!);
+        }
         break;
       case HttpType.PUT:
-        SiniestroRepository.shared
-            .updateSiniestro(tableName: "siniestros", siniestro: siniestro!);
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
 
+          agregarUbicacion("PUT");
+        } else {
+          SiniestroRepository.shared
+              .updateSiniestro(tableName: "siniestros", siniestro: siniestro!);
+        }
         break;
       case HttpType.DELETE:
-        //response = await http.delete(uri);
+        if (conectedToNetwork) {
+          response = await http.delete(uri);
 
-        SiniestroRepository.shared.deleteSiniestro(
-            tableName: "siniestros", id: int.parse(siniestro!.idSiniestro!));
+          agregarUbicacion("DELETE");
+        } else {
+          SiniestroRepository.shared.deleteSiniestro(
+              tableName: "siniestros", id: int.parse(siniestro!.idSiniestro!));
+        }
     }
 
     return null;

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
@@ -36,9 +37,9 @@ class ApiManagerCliente {
           response = await http.get(uri);
           List<Cliente> clientes = [];
 
-          if (response.statusCode == 200 &&
-              response.body != null &&
-              contador == 0) {
+          if (response.statusCode == 200 && response.body != null
+              //&&              contador == 0
+              ) {
             final body = json.decode(response.body);
 
             for (var item in body) {
@@ -100,46 +101,50 @@ class ApiManagerCliente {
       //agregarUbicacion("GET");
 
       case HttpType.POST:
-        // response = await http.post(
-        //   uri,
-        //   body: jsonParam,
-        //   headers: {'Content-type': 'application/json; charset=UTF-8'},
-        // );
-        // print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
 
-        //agregarUbicacion("POST");
-
+          agregarUbicacion("POST");
+        } else {
 //GUARDADO UNICAMENTE EN BASE DE DATOS
 
-        ClienteRepository.shared
-            .insertCliente(tableName: "clienteprueba", cliente: cliente!);
-
+          ClienteRepository.shared
+              .insertCliente(tableName: "clienteprueba", cliente: cliente!);
+        }
 //FIN DE GUARDADO UNICAMENTE EN BASE DE DATOS
         break;
       case HttpType.PUT:
-        // response = await http.post(
-        //   uri,
-        //   body: jsonParam,
-        //   headers: {'Content-type': 'application/json; charset=UTF-8'},
-        // );
-        // print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
+        if (conectedToNetwork) {
+          response = await http.post(
+            uri,
+            body: jsonParam,
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+          );
+          print("EL CODIGO DE RESPUESTA ES:  ${response.statusCode}");
 
-        //agregarUbicacion("POST");
-
+          agregarUbicacion("PUT");
+        } else {
 //GUARDADO UNICAMENTE EN BASE DE DATOS
 
-        ClienteRepository.shared
-            .updateCliente(tableName: "clienteprueba", cliente: cliente!);
-
+          ClienteRepository.shared
+              .updateCliente(tableName: "clienteprueba", cliente: cliente!);
+        }
 //FIN DE GUARDAD UNICAMENTE EN BASE DE DATOS
         break;
       case HttpType.DELETE:
-        //response = await http.delete(uri);
+        if (conectedToNetwork) {
+          response = await http.delete(uri);
 
-        //agregarUbicacion("DELETE");
-
-        ClienteRepository.shared
-            .eliminarCliente(tableName: "clienteprueba", id: cliente!.dnicl!);
+          agregarUbicacion("DELETE");
+        } else {
+          ClienteRepository.shared
+              .eliminarCliente(tableName: "clienteprueba", id: cliente!.dnicl!);
+        }
     }
     // final request = await http.post(uri, body: bodyParams);
 

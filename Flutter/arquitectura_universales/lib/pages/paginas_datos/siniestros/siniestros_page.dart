@@ -206,16 +206,20 @@ class SiniestrosPage extends StatelessWidget {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () {
-                              final response = ApiManagerSiniestro.shared
-                                  .request(
-                                      baseUrl: MyApp().baseURL,
-                                      pathUrl: "/siniestro/eliminar/" +
-                                          siniestro.idSiniestro.toString(),
-                                      type: HttpType.DELETE,
-                                      siniestro: siniestro);
-                              if (response != null) {
-                                BlocProvider.of<SiniestroBloc>(context)
-                                    .add(SiniestroEliminadoEvent());
+                              if (MyApp.conectedToNetwork) {
+                                final response = ApiManagerSiniestro.shared
+                                    .request(
+                                        baseUrl: MyApp().baseURL,
+                                        pathUrl: "/siniestro/eliminar/" +
+                                            siniestro.idSiniestro.toString(),
+                                        type: HttpType.DELETE,
+                                        siniestro: siniestro);
+                                if (response != null) {
+                                  BlocProvider.of<SiniestroBloc>(context)
+                                      .add(SiniestroEliminadoEvent());
+                                }
+                              } else {
+                                mostrarFlushbar(context);
                               }
                             },
                             child: const Text(
@@ -228,5 +232,17 @@ class SiniestrosPage extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet.",
+        message: "No puedes eliminar el elemento.",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

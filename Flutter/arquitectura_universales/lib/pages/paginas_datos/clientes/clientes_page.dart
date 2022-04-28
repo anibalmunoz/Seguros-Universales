@@ -117,6 +117,8 @@ class ClientesPage extends StatelessWidget {
                       if (response?.statusCode == 403) {
                         basicBloc.add(Error403());
                       }
+                      print(
+                          "EL CODIGO DE ERROR DEVUELTO ES: ${response?.statusCode}");
                     }),
               ),
             ],
@@ -175,7 +177,8 @@ class ClientesPage extends StatelessWidget {
                                   Icons.arrow_forward_ios,
                                   color: Color.fromARGB(255, 41, 106, 202),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
+                                  await mostrarFlushbar(context);
                                   BlocProvider.of<ClienteBloc>(context)
                                       .add(DetallesButtonPressed());
 
@@ -244,16 +247,20 @@ class ClientesPage extends StatelessWidget {
                             style: TextStyle(color: Colors.red),
                           ),
                           onPressed: () {
-                            final response = ApiManagerCliente.shared.request(
-                                baseUrl: const MyApp().baseURL,
-                                pathUrl: "/cliente/eliminar/" +
-                                    cliente.dnicl.toString(),
-                                type: HttpType.DELETE,
-                                cliente: cliente);
+                            if (MyApp.conectedToNetwork) {
+                              final response = ApiManagerCliente.shared.request(
+                                  baseUrl: const MyApp().baseURL,
+                                  pathUrl: "/cliente/eliminar/" +
+                                      cliente.dnicl.toString(),
+                                  type: HttpType.DELETE,
+                                  cliente: cliente);
 
-                            if (response != null) {
-                              BlocProvider.of<ClienteBloc>(context)
-                                  .add(ClienteEliminadoEvent());
+                              if (response != null) {
+                                BlocProvider.of<ClienteBloc>(context)
+                                    .add(ClienteEliminadoEvent());
+                              }
+                            } else {
+                              mostrarFlushbar(context);
                             }
                           },
                         );
@@ -263,5 +270,17 @@ class ClientesPage extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet.",
+        message: "No puedes eliminar el elemento.",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

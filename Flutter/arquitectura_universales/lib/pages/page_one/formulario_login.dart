@@ -9,11 +9,9 @@ import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -281,7 +279,7 @@ class FormularioLogin extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) => const AlertDialog(
-                title: const Text("Error"),
+                title: Text("Error"),
                 content: Text("Credenciales Inválidas, intenta nuevamente")));
         return false;
       }
@@ -299,7 +297,7 @@ class FormularioLogin extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) => const AlertDialog(
-                title: const Text("Error"),
+                title: Text("Error"),
                 content: Text("Credenciales Inválidas, intenta nuevamente")));
 
         Flushbar(
@@ -310,6 +308,7 @@ class FormularioLogin extends StatelessWidget {
               const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
           borderRadius: BorderRadius.circular(8),
         ).show(context);
+
         return false;
       }
     }

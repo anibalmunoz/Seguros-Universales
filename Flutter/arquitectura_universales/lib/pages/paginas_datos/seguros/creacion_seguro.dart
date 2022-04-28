@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
@@ -33,14 +34,14 @@ class _CreacionSeguro extends State<CreacionSeguro> {
         _fechaInicioSeleccionada = selectedDate;
       });
       fechaInicioController.text =
-          DateFormat('dd-MM-yyyy').format(_fechaInicioSeleccionada);
+          DateFormat('yyyy-MM-dd').format(_fechaInicioSeleccionada);
     }
     if (selectedDate != null && fecha == "fechavencimiento") {
       setState(() {
         _fechaVencimientoSeleccionada = selectedDate;
       });
       fechaVencimientoController.text =
-          DateFormat('dd-MM-yyyy').format(_fechaVencimientoSeleccionada);
+          DateFormat('yyyy-MM-dd').format(_fechaVencimientoSeleccionada);
     }
   }
 
@@ -328,40 +329,44 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () {
-                              Map<String, dynamic> bodyMap;
-                              bodyMap = {
-                                "ramo": seguro.ramo,
-                                "fechaInicio": seguro.fechaInicio,
-                                "fechaVencimiento": seguro.fechaVencimiento,
-                                "condicionesParticulares":
-                                    seguro.condicionesParticulares,
-                                "obervaciones": seguro.observaciones,
-                              };
+                              if (MyApp.conectedToNetwork) {
+                                Map<String, dynamic> bodyMap;
+                                bodyMap = {
+                                  "ramo": seguro.ramo,
+                                  "fechaInicio": seguro.fechaInicio,
+                                  "fechaVencimiento": seguro.fechaVencimiento,
+                                  "condicionesParticulares":
+                                      seguro.condicionesParticulares,
+                                  "obervaciones": seguro.observaciones,
+                                };
 
-                              var jsonMap = json.encode(bodyMap);
+                                var jsonMap = json.encode(bodyMap);
 
-                              print(
-                                  "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
+                                print(
+                                    "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
 
-                              ApiManagerSeguro.shared.request(
-                                baseUrl: baseURL,
-                                pathUrl: pathURL,
-                                jsonParam: jsonMap,
-                                bodyParams: bodyMap,
-                                type: HttpType.POST,
-                                seguro: seguro,
-                              );
+                                ApiManagerSeguro.shared.request(
+                                  baseUrl: baseURL,
+                                  pathUrl: pathURL,
+                                  jsonParam: jsonMap,
+                                  bodyParams: bodyMap,
+                                  type: HttpType.POST,
+                                  seguro: seguro,
+                                );
 
-                              ramoController.clear();
-                              fechaInicioController.clear();
-                              fechaVencimientoController.clear();
-                              condicionesParticularesController.clear();
-                              observacionesController.clear();
+                                ramoController.clear();
+                                fechaInicioController.clear();
+                                fechaVencimientoController.clear();
+                                condicionesParticularesController.clear();
+                                observacionesController.clear();
 
-                              BlocProvider.of<SeguroBloc>(context)
-                                  .add(ModificarSeguroEvent());
+                                BlocProvider.of<SeguroBloc>(context)
+                                    .add(ModificarSeguroEvent());
 
-                              Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              } else {
+                                mostrarFlushbar(context);
+                              }
                             },
                             child: const Text(
                               "Confirmar",
@@ -387,5 +392,17 @@ class _CreacionSeguro extends State<CreacionSeguro> {
             child: LinearProgressIndicator(),
           );
         });
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet.",
+        message: "No puedes registrar un nuevo cliente.",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

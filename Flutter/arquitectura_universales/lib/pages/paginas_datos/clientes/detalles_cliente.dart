@@ -446,39 +446,44 @@ class _RegistrarContacto extends State<DetallesCliente> {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () async {
-                              Map<String, dynamic> bodyMap;
-                              bodyMap = {
-                                "dniCl": cliente.dnicl,
-                                "nombreCl": cliente.nombrecl,
-                                "apellido1": cliente.apellido1,
-                                "apellido2": cliente.apellido2,
-                                "claseVia": cliente.clasevia,
-                                "nombreVia": cliente.nombrevia,
-                                "numeroVia": cliente.numerovia,
-                                "codPostal": cliente.codpostal,
-                                "ciudad": cliente.ciudad,
-                                "telefono": (cliente.telefono),
-                                "observaciones": cliente.observaciones
-                              };
+                              if (MyApp.conectedToNetwork) {
+                                Map<String, dynamic> bodyMap;
+                                bodyMap = {
+                                  "dniCl": cliente.dnicl,
+                                  "nombreCl": cliente.nombrecl,
+                                  "apellido1": cliente.apellido1,
+                                  "apellido2": cliente.apellido2,
+                                  "claseVia": cliente.clasevia,
+                                  "nombreVia": cliente.nombrevia,
+                                  "numeroVia": cliente.numerovia,
+                                  "codPostal": cliente.codpostal,
+                                  "ciudad": cliente.ciudad,
+                                  "telefono": (cliente.telefono),
+                                  "observaciones": cliente.observaciones
+                                };
 
-                              var jsonMap = json.encode(bodyMap);
+                                var jsonMap = json.encode(bodyMap);
 
-                              final response = ApiManagerCliente.shared.request(
-                                  baseUrl: baseURL,
-                                  pathUrl: pathURL,
-                                  jsonParam: jsonMap,
-                                  bodyParams: bodyMap,
-                                  type: HttpType.PUT,
-                                  cliente: cliente);
+                                final response = ApiManagerCliente.shared
+                                    .request(
+                                        baseUrl: baseURL,
+                                        pathUrl: pathURL,
+                                        jsonParam: jsonMap,
+                                        bodyParams: bodyMap,
+                                        type: HttpType.PUT,
+                                        cliente: cliente);
 
-                              BlocProvider.of<ClienteBloc>(context)
-                                  .add(ModificarCliente(cliente: cliente));
+                                BlocProvider.of<ClienteBloc>(context)
+                                    .add(ModificarCliente(cliente: cliente));
 
-                              Navigator.pop(context, true);
-                              //await mostrarCarga(context);
-                              // int count = 0;
-                              // Navigator.of(context)
-                              //     .popUntil((_) => count++ >= 2);
+                                Navigator.pop(context, true);
+                                //await mostrarCarga(context);
+                                // int count = 0;
+                                // Navigator.of(context)
+                                //     .popUntil((_) => count++ >= 2);
+                              } else {
+                                mostrarFlushbar(context);
+                              }
                             },
                             child: const Text(
                               "Confirmar",
@@ -513,5 +518,17 @@ class _RegistrarContacto extends State<DetallesCliente> {
             child: LinearProgressIndicator(),
           );
         });
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet",
+        message: "No puedes editar el cliente",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

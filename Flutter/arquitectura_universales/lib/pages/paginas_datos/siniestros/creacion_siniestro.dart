@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
@@ -28,7 +29,7 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
         _currentSelectedDate = selectedDate;
       });
       fechaSiniestroController.text =
-          DateFormat('dd-MM-yyyy').format(_currentSelectedDate);
+          DateFormat('yyyy-MM-dd').format(_currentSelectedDate);
     }
   }
 
@@ -291,38 +292,42 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () {
-                              Map<String, dynamic> bodyMap;
-                              bodyMap = {
-                                "fechaSiniestro": siniestro.fechaSiniestro,
-                                "causas": siniestro.causas,
-                                "aceptado": siniestro.aceptado,
-                                "indemnizacion": siniestro.indemnizacion,
-                              };
+                              if (MyApp.conectedToNetwork) {
+                                Map<String, dynamic> bodyMap;
+                                bodyMap = {
+                                  "fechaSiniestro": siniestro.fechaSiniestro,
+                                  "causas": siniestro.causas,
+                                  "aceptado": siniestro.aceptado,
+                                  "indemnizacion": siniestro.indemnizacion,
+                                };
 
-                              var jsonMap = json.encode(bodyMap);
+                                var jsonMap = json.encode(bodyMap);
 
-                              print(
-                                  "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
+                                print(
+                                    "EL CLIENTE QUE ESTOY MANDANDO ES:  ${jsonMap}");
 
-                              ApiManagerSiniestro.shared.request(
-                                baseUrl: baseURL,
-                                pathUrl: pathURL,
-                                jsonParam: jsonMap,
-                                bodyParams: bodyMap,
-                                type: HttpType.POST,
-                                siniestro: siniestro,
-                              );
+                                ApiManagerSiniestro.shared.request(
+                                  baseUrl: baseURL,
+                                  pathUrl: pathURL,
+                                  jsonParam: jsonMap,
+                                  bodyParams: bodyMap,
+                                  type: HttpType.POST,
+                                  siniestro: siniestro,
+                                );
 
-                              fechaSiniestroController.clear();
-                              fechaInicioController.clear();
-                              fechaVencimientoController.clear();
-                              condicionesParticularesController.clear();
-                              observacionesController.clear();
+                                fechaSiniestroController.clear();
+                                fechaInicioController.clear();
+                                fechaVencimientoController.clear();
+                                condicionesParticularesController.clear();
+                                observacionesController.clear();
 
-                              BlocProvider.of<SiniestroBloc>(context)
-                                  .add(ModificarSiniestroEvent());
+                                BlocProvider.of<SiniestroBloc>(context)
+                                    .add(ModificarSiniestroEvent());
 
-                              Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              } else {
+                                mostrarFlushbar(context);
+                              }
                             },
                             child: const Text(
                               "Confirmar",
@@ -348,5 +353,17 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
             child: LinearProgressIndicator(),
           );
         });
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet.",
+        message: "No puedes registrar un nuevo cliente.",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

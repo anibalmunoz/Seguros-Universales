@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
@@ -303,32 +304,36 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                       builder: (context, state) {
                         return TextButton(
                             onPressed: () {
-                              Seguro seguroEnviar = seguro;
-                              Map<String, dynamic> bodyMap;
-                              bodyMap = {
-                                "numeroPoliza": seguro.numeroPoliza,
-                                "ramo": seguro.ramo,
-                                "fechaInicio": seguro.fechaInicio,
-                                "fechaVencimiento": seguro.fechaVencimiento,
-                                "condicionesParticulares":
-                                    seguro.condicionesParticulares,
-                                "obervaciones": seguro.observaciones,
-                              };
+                              if (MyApp.conectedToNetwork) {
+                                Seguro seguroEnviar = seguro;
+                                Map<String, dynamic> bodyMap;
+                                bodyMap = {
+                                  "numeroPoliza": seguro.numeroPoliza,
+                                  "ramo": seguro.ramo,
+                                  "fechaInicio": seguro.fechaInicio,
+                                  "fechaVencimiento": seguro.fechaVencimiento,
+                                  "condicionesParticulares":
+                                      seguro.condicionesParticulares,
+                                  "obervaciones": seguro.observaciones,
+                                };
 
-                              var jsonMap = json.encode(bodyMap);
+                                var jsonMap = json.encode(bodyMap);
 
-                              ApiManagerSeguro.shared.request(
-                                  baseUrl: baseURL,
-                                  pathUrl: pathURL,
-                                  jsonParam: jsonMap,
-                                  bodyParams: bodyMap,
-                                  type: HttpType.PUT,
-                                  seguro: seguro);
+                                ApiManagerSeguro.shared.request(
+                                    baseUrl: baseURL,
+                                    pathUrl: pathURL,
+                                    jsonParam: jsonMap,
+                                    bodyParams: bodyMap,
+                                    type: HttpType.PUT,
+                                    seguro: seguro);
 
-                              BlocProvider.of<SeguroBloc>(context)
-                                  .add(ModificarSeguroEvent());
+                                BlocProvider.of<SeguroBloc>(context)
+                                    .add(ModificarSeguroEvent());
 
-                              Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              } else {
+                                mostrarFlushbar(context);
+                              }
                             },
                             child: const Text(
                               "Confirmar",
@@ -354,5 +359,17 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
             child: LinearProgressIndicator(),
           );
         });
+  }
+
+  mostrarFlushbar(context) async {
+    if (!MyApp.conectedToNetwork) {
+      Flushbar(
+        title: "Sin conexión a internet",
+        message: "No puedes editar el cliente",
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }
