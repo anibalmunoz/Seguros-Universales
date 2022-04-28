@@ -213,7 +213,7 @@ export class SegurosComponent implements OnInit {
   }
 
   mostrarEditarToast() {
-    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Cliente editado correctamente' });
+    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Seguro editado correctamente' });
   }
 
   mostrarDeleteToast() {

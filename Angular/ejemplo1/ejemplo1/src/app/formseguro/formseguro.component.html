@@ -1,219 +1,227 @@
-<p-dialog header="No valido" [(visible)]="display">
-    No existe cliente con el DNI ingresado, por favor ingrese un DNI válido
-</p-dialog>
+<body>
 
 
-<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
-
-<div class="row">
-
-    <label class="form-label">
-        <b>
-            <font color="black">Buscar DNI del cliente</font>
-        </b>
-    </label>
+    <p-dialog header="No valido" [(visible)]="display">
+        No existe cliente con el DNI ingresado, por favor ingrese un DNI válido
+    </p-dialog>
 
 
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 
-    <div class="col-md-3">
-        <div class="mb-4">
-
-            <input type="number" pInputText class="form-control" required [(ngModel)]="seguroNuevo.dniCl"
-                [ngModelOptions]="{standalone: true}" max="10">
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="mb-4">
-            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
-                (click)="buscarCliente(seguroNuevo.dniCl)">
-            </button>
-        </div>
-    </div>
-
-    <div class="col-md-12">
-        <img src="https://www.universales.com/assets/img/dillo.png" alt="..." height="350" class="float-end">
-    </div>
-
-
-
-</div>
-
-
-<form id="cliente" *ngIf="mostrarDatosCliente">
-
-    <font COLOR="black" [size]="6">
-        Información del cliente
-    </font>
-    <br>
-
-    <br>
-    <br>
     <div class="row">
-        <div class="col-md-6 ">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.nombreCl" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Nombre</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.apellido1" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Primer Apellido</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" maxlength="40" [(ngModel)]="cliente.apellido2"
-                        [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Segundo Apellido</label>
-                </span>
-            </div>
-        </div>
+
+        <label class="form-label">
+            <b>
+                <font color="black">Buscar DNI del cliente</font>
+            </b>
+        </label>
+
+
+
         <div class="col-md-3">
             <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.claseVia" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Clase Vía</label>
-                </span>
+
+                <input type="number" pInputText class="form-control" required [(ngModel)]="seguroNuevo.dniCl"
+                    [ngModelOptions]="{standalone: true}" max="10">
             </div>
         </div>
+
         <div class="col-md-3">
             <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Nombre Vía</label>
-                </span>
+                <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-primary"
+                    (click)="buscarCliente(seguroNuevo.dniCl)">
+                </button>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="number" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Número Vía</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="number" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.codPostal" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Código Postal</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.ciudad" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Ciudad</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="number" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="cliente.telefono" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Teléfono</label>
-                </span>
-            </div>
-        </div>
+
         <div class="col-md-12">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" maxlength="75"
-                        [(ngModel)]="cliente.observaciones" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-label">Observaciones</label>
-                </span>
-            </div>
+            <img src="https://www.universales.com/assets/img/dillo.png" alt="..." height="350" class="float-end">
         </div>
+
+
+        <hr>
     </div>
-</form>
 
-<form id="crearSeguro" *ngIf="mostrarFormulario">
-    <br>
-    <h3>Nuevo seguro</h3>
-    <div class="row">
-        <br>
-        <!-- <div class="col-md-3"> -->
-        <label class="form-label"> <b>
-                <font color="black">Selecciona la compania</font>
-            </b> </label>
-        <br>
-        <p-dropdown [options]="companias" [required]="true" optionLabel="nombreCompania" [showClear]="false"
-            [(ngModel)]="compania" class="float-end" [ngModelOptions]="{standalone: true}" class=required>
-        </p-dropdown>
-        <!-- </div> -->
-        <br>
-        <br>
-        <br>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <label class="form-label"> <b>
-                        <font color="black">Fecha de Inicio</font>
-                    </b> </label>
-                <input type="date" pInputText class="form-control" required [(ngModel)]="seguroNuevo.fechaI"
-                    [ngModelOptions]="{standalone: true}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <label class="form-label"><b>Fecha de Vencimiento</b></label>
-                <input type="date" pInputText class="form-control" [(ngModel)]="seguroNuevo.fechaV"
-                    [ngModelOptions]="{standalone: true}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.ramo" [ngModelOptions]="{standalone: true}">
-                    <label class="form-label">Ramo</label>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.condicionesParticulares" [ngModelOptions]="{standalone: true}">
-                    <label class="form-label">condiciones particulares</label>
-                </span>
-            </div>
-        </div>
 
-        <div class="col-md-9">
-            <div class="mb-4">
-                <span class="p-float-label">
-                    <input type="text" pInputText class="form-control" required maxlength="40"
-                        [(ngModel)]="seguroNuevo.obervaciones" [ngModelOptions]="{standalone: true}">
-                    <label class="form-label">Observaciones</label>
-                </span>
+    <form id="cliente" *ngIf="mostrarDatosCliente">
+
+        <font COLOR="black" [size]="6">
+            Información del cliente
+        </font>
+        <br>
+
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.nombreCl" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.apellido1" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Primer Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" maxlength="40"
+                            [(ngModel)]="cliente.apellido2" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Segundo Apellido</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.claseVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Clase Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.nombreVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Nombre Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.numeroVia" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Número Vía</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.codPostal" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Código Postal</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.ciudad" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Ciudad</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="number" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="cliente.telefono" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Teléfono</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" maxlength="75"
+                            [(ngModel)]="cliente.observaciones" [ngModelOptions]="{standalone: true}" disabled>
+                        <label class="form-label">Observaciones</label>
+                    </span>
+                </div>
             </div>
         </div>
+        <hr>
 
-        <div>
-            <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                    class="bi bi-check-square-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
-                </svg> Guardar
-            </button>
+    </form>
+
+    <form id="crearSeguro" *ngIf="mostrarFormulario">
+        <br>
+        <h3>Nuevo seguro</h3>
+        <div class="row">
+            <br>
+            <!-- <div class="col-md-3"> -->
+            <label class="form-label"> <b>
+                    <font color="black">Selecciona la compania</font>
+                </b> </label>
+            <br>
+            <p-dropdown [options]="companias" [required]="true" optionLabel="nombreCompania" [showClear]="false"
+                [(ngModel)]="compania" class="float-end" [ngModelOptions]="{standalone: true}" class=required>
+            </p-dropdown>
+            <!-- </div> -->
+            <br>
+            <br>
+            <br>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"> <b>
+                            <font color="black">Fecha de Inicio</font>
+                        </b> </label>
+                    <input type="date" pInputText class="form-control" required [(ngModel)]="seguroNuevo.fechaI"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <label class="form-label"><b>Fecha de Vencimiento</b></label>
+                    <input type="date" pInputText class="form-control" [(ngModel)]="seguroNuevo.fechaV"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguroNuevo.ramo" [ngModelOptions]="{standalone: true}">
+                        <label class="form-label">Ramo</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguroNuevo.condicionesParticulares" [ngModelOptions]="{standalone: true}">
+                        <label class="form-label">condiciones particulares</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="form-control" required maxlength="40"
+                            [(ngModel)]="seguroNuevo.obervaciones" [ngModelOptions]="{standalone: true}">
+                        <label class="form-label">Observaciones</label>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-outline-success float-end" (click)="enviarFormulario()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
+                    </svg> Guardar
+                </button>
+            </div>
+            <!-- <br><br> -->
         </div>
-        <!-- <br><br> -->
-    </div>
-</form>
+        <hr>
+
+    </form>
+</body>

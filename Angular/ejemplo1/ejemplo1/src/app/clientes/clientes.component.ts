@@ -51,7 +51,7 @@ export class ClientesComponent implements OnInit {
   ref?: DynamicDialogRef;
   position: string = "";
   mostrarBotonNuevo = true;
-  
+
   value3: string = "";
 
   constructor(private clienteService: ClienteService, private confirmationService: ConfirmationService,
@@ -207,6 +207,14 @@ export class ClientesComponent implements OnInit {
     //clientePaginado(pagina,cantidad)
     this.clienteService.clientePaginado(pagina, cantidad).subscribe(
       (res: any) => this.mostrarPaginado(res)
+    );
+  }
+
+  obtenerPaginadoNombre() {   
+    console.log(this.value3);
+    this.clienteService.clientePaginadoNombre(this.pagina, this.filas, this.value3).subscribe(
+      (res: any) => this.mostrarPaginado(res)
+    
     );
   }
 

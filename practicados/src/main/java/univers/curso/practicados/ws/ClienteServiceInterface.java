@@ -25,17 +25,17 @@ public interface ClienteServiceInterface {
 
 	@GetMapping(path = "/buscar")
 	public List<Cliente> buscar();
-	
+
 	/*
 	 * Buscar por DNI
 	 */
-	
+
 	@GetMapping(path = "/buscar/dni/{dniCl}")
 	public List<Cliente> buscarDni(@PathVariable Integer dniCl);
-	
+
 	@GetMapping(path = "/buscar/nombre/contiene/{nombreCl}")
 	public List<Cliente> buscarDniContiene(@PathVariable String nombreCl);
-	
+
 	/*
 	 * 
 	 */
@@ -119,19 +119,22 @@ public interface ClienteServiceInterface {
 
 	@GetMapping(path = "/funcion")
 	public List<GroupByDto> groupBy();
-	
-	
+
 	/*
 	 * Paginador de clientes
 	 */
 	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
-	public Page<Cliente> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
-	
+	public Page<Cliente> buscarPaginado(@PathVariable("pagina") int pagina, @PathVariable("cantidad") int cantidad);
+
+	@GetMapping(path = "/paginado/{pagina}/{cantidad}/{nombreCl}")
+	public Page<Cliente> buscarPaginadoNombre(@PathVariable("pagina") int pagina,
+			@PathVariable("cantidad") int cantidad, @PathVariable("nombreCl") String nombre);
+
 	/*
 	 * LOGIN
 	 */
-	
-	@PostMapping(path="/login")
-	public ResponseEntity<Cliente>  login(@RequestBody ClienteDto clienteDto);
-	
+
+	@PostMapping(path = "/login")
+	public ResponseEntity<Cliente> login(@RequestBody ClienteDto clienteDto);
+
 }

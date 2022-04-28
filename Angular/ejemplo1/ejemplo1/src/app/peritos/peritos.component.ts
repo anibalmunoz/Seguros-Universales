@@ -65,6 +65,13 @@ export class PeritosComponent implements OnInit {
     );
   }
 
+  obtenerPaginadoNombre() {   
+    console.log(this.value3);
+    this.peritoService.peritoPaginadoNombre(this.pagina, this.filas, this.value3).subscribe(
+      (res: any) => this.mostrarPaginado(res)    
+    );
+  }
+
   mostrarPaginado(pageable: any) {
     this.paginado = pageable;
     this.peritos = pageable.content;

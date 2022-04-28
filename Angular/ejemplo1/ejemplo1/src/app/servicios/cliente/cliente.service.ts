@@ -41,8 +41,8 @@ export class ClienteService {
     return this.consumirGet("cliente/buscar");
   }
 
-  buscarClientePorDNI(dni:any) {
-    return this.consumirGet("cliente/buscar/dni/"+dni);
+  buscarClientePorDNI(dni: any) {
+    return this.consumirGet("cliente/buscar/dni/" + dni);
   }
 
   guardarCliente(cliente: any) {
@@ -53,6 +53,10 @@ export class ClienteService {
 
   clientePaginado(pagina: number, cantidad: number) {
     return this.consumirGet("cliente/paginado/" + pagina + "/" + cantidad)
+  }
+
+  clientePaginadoNombre(pagina: number, cantidad: number, nombre: any) {
+    return this.consumirGet("cliente/paginado/" + pagina + "/" + cantidad + "/" + nombre);
   }
 
   //Eliminar cliente

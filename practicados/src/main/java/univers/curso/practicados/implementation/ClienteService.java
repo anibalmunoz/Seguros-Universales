@@ -228,4 +228,11 @@ public class ClienteService implements ClienteServiceInterface {
 		}
 	}
 
+	@Override
+	public Page<Cliente> buscarPaginadoNombre(int pagina, int cantidad, String nombre) {
+		Pageable pageable = PageRequest.of(pagina, cantidad);
+		return clienteRepository.findByNombreClContaining(pageable, nombre);
+		
+	}
+
 }

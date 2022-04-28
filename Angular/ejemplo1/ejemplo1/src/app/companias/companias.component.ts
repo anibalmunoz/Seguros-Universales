@@ -104,13 +104,13 @@ export class CompaniasComponent implements OnInit {
   }
 
   mostrarGuardarToast() {
-    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Cliente guardado correctamente' });
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Info', detail: 'Compania guardada correctamente' });
   }
   mostrarEditarToast() {
-    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Cliente editado correctamente' });
+    this.messageService.add({ key: 'te', severity: 'warn', summary: 'Info', detail: 'Compania editada correctamente' });
   }
   mostrarDeleteToast() {
-    this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Cliente eliminado correctamente' });
+    this.messageService.add({ key: 'td', severity: 'error', summary: 'Info', detail: 'Compania eliminada correctamente' });
   }
 
   //IMPLEMENTACION DE LAS TABLAS CON PAGINACIÓN CUSTOM

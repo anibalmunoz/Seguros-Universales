@@ -55,5 +55,9 @@ public interface PeritoServiceInterface {
 	//Paginado
 	@GetMapping(path = "/paginado/{pagina}/{cantidad}")
 	public Page<Perito> buscarPaginado(@PathVariable("pagina") int pagina, @ PathVariable("cantidad") int cantidad);
+	
+	@GetMapping(path = "/paginado/{pagina}/{cantidad}/{nombrePerito}")
+	public Page<Perito> buscarPaginadoNombre(@PathVariable("pagina") int pagina,
+			@PathVariable("cantidad") int cantidad, @PathVariable("nombrePerito") String nombrePerito);
 
 }

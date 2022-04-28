@@ -47,6 +47,11 @@ export class PeritoService {
     return this.consumirGet("perito/paginado/" + pagina + "/" + cantidad)
   }
 
+  peritoPaginadoNombre(pagina: number, cantidad: number, nombre: any) {
+    return this.consumirGet("perito/paginado/" + pagina + "/" + cantidad + "/" + nombre)
+  }
+
+
   guardarPerito(perito: any) {
     return this.consumirPost("perito/guardar", perito);
   }

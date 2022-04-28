@@ -34,7 +34,7 @@ public class PeritoService implements PeritoServiceInterface {
 	public List<Perito> buscarDni(Integer dniPerito) {
 		return peritoRepository.findByDniPeritoEquals(dniPerito);
 	}
-	
+
 	@Override
 	public ResponseEntity<Perito> savePerito(PeritoDto peritoDto) {
 		Perito perito = convertirPeritoDtoAPerito(peritoDto);
@@ -77,13 +77,20 @@ public class PeritoService implements PeritoServiceInterface {
 	public List<Object[]> prueba() {
 		return peritoRepository.prueba();
 	}
-	
-	//Paginado
-	
+
+	// Paginado
+
 	@Override
 	public Page<Perito> buscarPaginado(int pagina, int cantidad) {
 		Pageable pageable = PageRequest.of(pagina, cantidad, Sort.by(Direction.ASC, "dniPerito"));
 		return peritoRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<Perito> buscarPaginadoNombre(int pagina, int cantidad, String nombrePerito) {
+		Pageable pageable = PageRequest.of(pagina, cantidad);
+		return peritoRepository.findByNombrePeritoContaining(pageable, nombrePerito);
+
 	}
 
 }

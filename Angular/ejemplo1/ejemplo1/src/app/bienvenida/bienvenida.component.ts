@@ -16,11 +16,29 @@ export class BienvenidaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saludar(){
-    this.saludo = "Hola "+ this.nombre + " mucho gusto";
+  saludar() {
+    this.saludo = "Hola " + this.nombre + " mucho gusto";
   }
 
-    
 
+  irClientes() {
+    location.href = "/clientes";
+  }
+
+  irSeguros() {
+    location.href = "/seguros";
+  }
+
+  irSiniestros() {
+    location.href = "/siniestros"
+  }
+
+  irCompanias() {
+    location.href = "/companias"
+  }
+
+  irPeritos() {
+    location.href = "/peritos"
+  }
 
 }
