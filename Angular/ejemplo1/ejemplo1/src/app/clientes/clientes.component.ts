@@ -84,8 +84,7 @@ export class ClientesComponent implements OnInit {
 
 
     this.obtenerPaginado(0, this.filas);
-    //setInterval(()=>this.obtenerClientes(),1000) //FORMA DE CARGAR UN METODO CADA SEGUNDO
-    //this.primengConfig.ripple = true;
+   
   }
 
   flotanteEditar(cliente: any) {
@@ -94,7 +93,6 @@ export class ClientesComponent implements OnInit {
       header: 'Edicion',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
         this.modificarCliente(cliente);
       },
       reject: () => {
@@ -201,7 +199,7 @@ export class ClientesComponent implements OnInit {
   }
 
 
-  //PRUEBA DE CONSUMO DE PAGEABLE 
+  //CONSUMO DE PAGEABLE 
 
   obtenerPaginado(pagina: number, cantidad: number) {
     //clientePaginado(pagina,cantidad)

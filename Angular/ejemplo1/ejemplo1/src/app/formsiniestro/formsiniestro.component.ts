@@ -63,12 +63,6 @@ export class FormsiniestroComponent implements OnInit {
 
 
 
-
-    //this.siniestroNuevo.perito.dniPerito = 1;
-
-
-
-
     if (formulario.reportValidity()) {
       this.siniestroService.guardarSiniestro(this.siniestroNuevo).subscribe(
         (res: any) => this.finalizarGuardar(res)

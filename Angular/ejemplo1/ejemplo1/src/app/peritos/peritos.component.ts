@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PeritoService } from '../servicios/perito/perito.service';
-import { SiniestroService } from '../servicios/siniestro/siniestro.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
 
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MenuItem } from 'primeng/api';
 import { FormPeritoComponent } from '../form-perito/form-perito.component';
 
 
@@ -59,7 +56,6 @@ export class PeritosComponent implements OnInit {
 
 
   obtenerPaginado(pagina: number, cantidad: number) {
-    //clientePaginado(pagina,cantidad)
     this.peritoService.buscarPeritoPaginado(pagina, cantidad).subscribe(
       (res: any) => this.mostrarPaginado(res)
     );
@@ -168,7 +164,6 @@ export class PeritosComponent implements OnInit {
       header: 'Edicion',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
         this.modificaPerito(perito);
       },
       reject: () => {

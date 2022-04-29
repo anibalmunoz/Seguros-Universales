@@ -186,7 +186,7 @@
 
 <br>
 
-<div class="card">
+<div class="card" *ngIf="!mostrarFormulario">
     <div class="col-md-12" *ngIf="mostrarBotonNuevo">
         <button type="button" class="btn btn-outline-primary float-end" (click)="mostrarFormularios()">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
@@ -256,4 +256,5 @@
         <font [size]="5" class="float-end">Filas</font>
     </div>
 </div>
-<br>
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>

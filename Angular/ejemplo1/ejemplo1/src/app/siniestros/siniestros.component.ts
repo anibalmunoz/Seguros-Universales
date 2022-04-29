@@ -197,7 +197,6 @@ export class SiniestrosComponent implements OnInit {
       if (respuesta) {
         this.mostrarGuardarToast();
         this.reset();
-        //this.ngOnInit();
       }
     });
   }

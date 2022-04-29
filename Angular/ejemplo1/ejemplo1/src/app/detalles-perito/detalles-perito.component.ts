@@ -160,7 +160,6 @@ export class DetallesPeritoComponent implements OnInit {
       if (respuesta) {
         this.mostrarGuardarToast();
         this.reset();
-        //this.ngOnInit();
       }
     });
   }

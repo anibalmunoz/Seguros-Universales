@@ -89,7 +89,6 @@ export class SegurosComponent implements OnInit {
   //PRUEBA DE CONSUMO DE PAGEABLE 
 
   obtenerPaginado(pagina: number, cantidad: number) {
-    //clientePaginado(pagina,cantidad)
     this.seguroService.seguroPaginado(pagina, cantidad).subscribe(
       (res: any) => this.mostrarPaginado(res)
     );
@@ -153,7 +152,6 @@ export class SegurosComponent implements OnInit {
   }
 
   reset() {
-    //this.first = 0;
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;
@@ -232,7 +230,6 @@ export class SegurosComponent implements OnInit {
       if (respuesta) {
         this.mostrarGuardarToast();
         this.reset();
-        //this.ngOnInit();
       }
     });
   }

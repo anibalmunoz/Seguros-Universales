@@ -108,7 +108,7 @@
 <br>
 <br>
 
-<div class="card ">
+<div class="card " *ngIf="!mostrarFormulario">
 
     <div class="col-md-12" *ngIf="mostrarBotonNuevo">
         <button type="button" class="btn btn-outline-primary float-end" (click)="formularioComponent()">
@@ -120,11 +120,7 @@
         <div class="col-md-7">
             <h2 class="float-end">Companias</h2>
         </div>
-        <!-- <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"></button>
-        <span class=""> -->
-            <!---i class="pi pi-search"--->
-            <!-- <input type="text" pInputText placeholder="Buscar Nombre" [(ngModel)]="value3" />
-        </span> -->
+  
     </div>
 
 
@@ -166,16 +162,7 @@
                         (click)="flotanteEliminar(c)">
                     </button>
                 </td>
-                <!-- <td>
-                            <button pButton pRipple type="button" icon="pi pi-list" class="p-button-rounded p-button-primary"
-                                (click)="irClienteSeguros(c)">
-                            </button>
-                        </td>
-                        <!-- <td>
-                            <div style="height: 5px; position: relative;" class="row speeddial-circle-demo">
-                                <p-speedDial [model]="items" direction="right"></p-speedDial>
-                            </div>                    
-                        </td> -->
+         
             </tr>
         </ng-template>
 

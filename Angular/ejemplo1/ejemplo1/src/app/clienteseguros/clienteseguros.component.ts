@@ -204,8 +204,7 @@ export class ClientesegurosComponent implements OnInit {
     }
   }
 
-  reset() {
-    //this.first = 0;
+  reset() {  
     this.finalPagina = false;
     this.primeraPagina = true;
     this.pagina = 0;
@@ -253,7 +252,6 @@ export class ClientesegurosComponent implements OnInit {
       if (respuesta) {
         this.mostrarGuardarToast();
         this.reset();
-        //this.ngOnInit();
       }
     });
   }

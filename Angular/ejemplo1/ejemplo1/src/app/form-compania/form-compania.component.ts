@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { CompaniaService } from '../servicios/compania/compania.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -16,8 +15,7 @@ export class FormCompaniaComponent implements OnInit {
   parametro: any;
 
 
-  constructor(private companiaService: CompaniaService, public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(private companiaService: CompaniaService, public ref: DynamicDialogRef, public config: DynamicDialogConfig,) { }
 
   ngOnInit(): void {
    

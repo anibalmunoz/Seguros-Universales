@@ -3,8 +3,6 @@ import { SiniestroService } from '../servicios/siniestro/siniestro.service';
 import { SeguroService } from '../servicios/seguro/seguro.service';
 import { ClienteService } from '../servicios/cliente/cliente.service';
 import { PeritoService } from '../servicios/perito/perito.service';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

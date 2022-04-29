@@ -102,10 +102,7 @@ export class FormseguroComponent implements OnInit {
 
 
 
-  // finalizarGuardar(respuesta: any) {
-  //   console.log(respuesta.numeroPoliza);
-  //   this.guardarCompaniaSeguro(respuesta);
-  // }
+
 
   guardarCompaniaSeguro(seguro: any) {
     this.companiaSeguro.numeroPoliza = seguro.numeroPoliza;

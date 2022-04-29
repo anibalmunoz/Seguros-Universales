@@ -81,7 +81,6 @@ export class CompaniasComponent implements OnInit {
       header: 'Edicion',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
         this.modificarCompania(compania);
       },
       reject: () => {
@@ -164,8 +163,7 @@ export class CompaniasComponent implements OnInit {
 
 
 
-  obtenerPaginado(pagina: number, cantidad: number) {
-    //clientePaginado(pagina,cantidad)
+  obtenerPaginado(pagina: number, cantidad: number) {    
     this.companiaService.companiaPaginado(pagina, cantidad).subscribe(
       (res: any) => this.mostrarPaginado(res)
     );
