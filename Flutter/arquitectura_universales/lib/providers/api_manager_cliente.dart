@@ -40,7 +40,8 @@ class ApiManagerCliente {
           if (response.statusCode == 200 && response.body != null
               //&&              contador == 0
               ) {
-            final body = json.decode(response.body);
+            //utf8.decode(response.bodyBytes)
+            final body = json.decode(utf8.decode(response.bodyBytes));
 
             for (var item in body) {
               clientes.add(Cliente(

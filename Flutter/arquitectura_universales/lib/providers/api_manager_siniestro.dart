@@ -38,7 +38,7 @@ class ApiManagerSiniestro {
           List<Siniestro> siniestros = [];
 
           if (response.statusCode == 200) {
-            final body = json.decode(response.body);
+            final body = json.decode(utf8.decode(response.bodyBytes));
 
             for (var item in body) {
               siniestros.add(Siniestro(
