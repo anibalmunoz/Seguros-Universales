@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/repository/cliente_repository.dart';
 import 'package:arquitectura_universales/util/app_type.dart';

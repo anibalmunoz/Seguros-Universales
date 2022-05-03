@@ -10,6 +10,7 @@ import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_c
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,95 +35,113 @@ class ClientesPage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           key: _scaffKey,
-          appBar: AppBar(
-            backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-                ? Colors.blue[900]
-                : Colors.grey[900],
-            bottom: const PreferredSize(
-              preferredSize: Size(12, 12),
-              child: Text(""),
-            ),
-            title: const Text(
-              "Clientes",
-              style: TextStyle(height: 4),
-            ),
-            actions: [
-              Container(
-                margin: const EdgeInsets.only(top: 37.0),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 25.0),
-                child: BlocProvider(
-                  create: (context) => ClienteBloc(),
-                  child: BlocListener<ClienteBloc, ClienteState>(
-                    listener: (context, state) {
-                      switch (state.runtimeType) {
-                        case IrACreacionState:
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (cxt) => CreacionCliente(
-                                      titulo: "Crear nuevo cliente")));
-                          break;
-                      }
-                    },
-                    child: BlocBuilder<ClienteBloc, ClienteState>(
-                      builder: (context, state) {
-                        return IconButton(
-                            icon: const Icon(Icons.person_add_alt_sharp,
-                                color: Colors.amber),
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => CreacionCliente(
-                              //           titulo: "Crear nuevo cliente"),
-                              //     )).then((value) => null);
+          appBar: conectedToNetwork
+              ? AppBar(
+                  backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Colors.blue[900]
+                      : Colors.grey[900],
+                  bottom: const PreferredSize(
+                    preferredSize: Size(12, 12),
+                    child: Text(""),
+                  ),
+                  title: const Text(
+                    "Clientes",
+                    style: TextStyle(height: 4),
+                  ),
+                  actions: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 37.0),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 25.0),
+                      child: BlocProvider(
+                        create: (context) => ClienteBloc(),
+                        child: BlocListener<ClienteBloc, ClienteState>(
+                          listener: (context, state) {
+                            switch (state.runtimeType) {
+                              case IrACreacionState:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (cxt) => CreacionCliente(
+                                            titulo: "Crear nuevo cliente")));
+                                break;
+                            }
+                          },
+                          child: BlocBuilder<ClienteBloc, ClienteState>(
+                            builder: (context, state) {
+                              return IconButton(
+                                  icon: const Icon(Icons.person_add_alt_sharp,
+                                      color: Colors.amber),
+                                  onPressed: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) => CreacionCliente(
+                                    //           titulo: "Crear nuevo cliente"),
+                                    //     )).then((value) => null);
 
-                              BlocProvider.of<ClienteBloc>(context)
-                                  .add(CreacionClienteEvent());
+                                    BlocProvider.of<ClienteBloc>(context)
+                                        .add(CreacionClienteEvent());
 
-                              BlocProvider.of<ClienteBloc>(context)
-                                  .add(ReturnListaPressed());
-                            });
-                      },
+                                    BlocProvider.of<ClienteBloc>(context)
+                                        .add(ReturnListaPressed());
+                                  });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 37.0),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 25.0),
+                      child: IconButton(
+                          icon: const Icon(Icons.dangerous_outlined,
+                              color: Colors.amber),
+                          onPressed: () async {
+                            //ClienteRepository.shared.modificarTablaCliente();
+                            //snack();
+                            Map<String, dynamic> bodyMap;
+                            bodyMap = {
+                              "correo": "asdf",
+                              "contrasena": "asfd",
+                            };
+                            var jsonMap = json.encode(bodyMap);
+                            final response = await ApiManagerClienteLogin.shared
+                                .request(
+                                    baseUrl: baseURL,
+                                    pathUrl: "cliente/login",
+                                    jsonParam: jsonMap,
+                                    type: HttpType.POST);
+
+                            if (response?.statusCode == 403) {
+                              basicBloc.add(Error403());
+                            }
+                            print(
+                                "EL CODIGO DE ERROR DEVUELTO ES: ${response?.statusCode}");
+                          }),
+                    ),
+                  ],
+                )
+              : AppBar(
+                  backgroundColor: Colors.red[900],
+                  bottom: const PreferredSize(
+                    preferredSize: Size(0, 0),
+                    child: Text(
+                      "Sin conexión",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  title: const Text(
+                    "",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      height: 4,
                     ),
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 37.0),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 25.0),
-                child: IconButton(
-                    icon: const Icon(Icons.dangerous_outlined,
-                        color: Colors.amber),
-                    onPressed: () async {
-                      //ClienteRepository.shared.modificarTablaCliente();
-                      //snack();
-                      Map<String, dynamic> bodyMap;
-                      bodyMap = {
-                        "correo": "asdf",
-                        "contrasena": "asfd",
-                      };
-                      var jsonMap = json.encode(bodyMap);
-                      final response = await ApiManagerClienteLogin.shared
-                          .request(
-                              baseUrl: baseURL,
-                              pathUrl: "cliente/login",
-                              jsonParam: jsonMap,
-                              type: HttpType.POST);
-
-                      if (response?.statusCode == 403) {
-                        basicBloc.add(Error403());
-                      }
-                      print(
-                          "EL CODIGO DE ERROR DEVUELTO ES: ${response?.statusCode}");
-                    }),
-              ),
-            ],
-          ),
           body: FutureBuilder(
             future: ApiManagerCliente.shared.request(
                 baseUrl: baseURL, pathUrl: pathURL, type: HttpType.GET),

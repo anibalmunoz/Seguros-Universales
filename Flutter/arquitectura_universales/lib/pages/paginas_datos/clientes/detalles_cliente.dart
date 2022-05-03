@@ -435,10 +435,8 @@ class _RegistrarContacto extends State<DetallesCliente> {
                     listener: (context, state) {
                       switch (state.runtimeType) {
                         case GuardandoCliente:
-//                          mostrarCarga(context);
                           break;
                         case ClienteGuardado:
-                          //                        mostrarCarga(context);
                           break;
                       }
                     },

@@ -52,6 +52,9 @@ dependencies:
   intl: ^0.17.0
   another_flushbar: ^1.10.28
   flutter_offline: ^2.1.0
+  shared_preferences: ^2.0.13
+  encrypt: ^5.0.1
+  local_auth: ^2.0.0
 
 dev_dependencies:
   flutter_test:

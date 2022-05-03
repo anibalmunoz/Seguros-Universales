@@ -18,63 +18,82 @@ class SiniestrosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.blue[900]
-              : Colors.grey[900],
-          bottom: const PreferredSize(
-            preferredSize: Size(13, 13),
-            child: Text(""),
-          ),
-          title: const Text(
-            "Siniestros",
-            style: TextStyle(height: 4),
-          ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(top: 33.0),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20.0),
-              child: BlocProvider(
-                create: (context) => SiniestroBloc(),
-                child: BlocListener<SiniestroBloc, SiniestroState>(
-                  listener: (context, state) {
-                    switch (state.runtimeType) {
-                      case IrACreacionState:
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (cxt) => CreacionSiniestro(
-                                    titulo: "Crear nuevo Siniestro")));
-                        break;
-                    }
-                  },
-                  child: BlocBuilder<SiniestroBloc, SiniestroState>(
-                    builder: (context, state) {
-                      return IconButton(
-                          icon: const Icon(Icons.add_circle_outline_rounded,
-                              color: Colors.amber),
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => CreacionSiniestro(
-                            //           titulo: "Crear nuevo siniestro"),
-                            //     )).then((value) => null);
-                            BlocProvider.of<SiniestroBloc>(context)
-                                .add(CreacionSiniestroEvent());
+        appBar: MyApp.conectedToNetwork
+            ? AppBar(
+                backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+                    ? Colors.blue[900]
+                    : Colors.grey[900],
+                bottom: const PreferredSize(
+                  preferredSize: Size(13, 13),
+                  child: Text(""),
+                ),
+                title: const Text(
+                  "Siniestros",
+                  style: TextStyle(height: 4),
+                ),
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 33.0),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20.0),
+                    child: BlocProvider(
+                      create: (context) => SiniestroBloc(),
+                      child: BlocListener<SiniestroBloc, SiniestroState>(
+                        listener: (context, state) {
+                          switch (state.runtimeType) {
+                            case IrACreacionState:
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (cxt) => CreacionSiniestro(
+                                          titulo: "Crear nuevo Siniestro")));
+                              break;
+                          }
+                        },
+                        child: BlocBuilder<SiniestroBloc, SiniestroState>(
+                          builder: (context, state) {
+                            return IconButton(
+                                icon: const Icon(
+                                    Icons.add_circle_outline_rounded,
+                                    color: Colors.amber),
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => CreacionSiniestro(
+                                  //           titulo: "Crear nuevo siniestro"),
+                                  //     )).then((value) => null);
+                                  BlocProvider.of<SiniestroBloc>(context)
+                                      .add(CreacionSiniestroEvent());
 
-                            BlocProvider.of<SiniestroBloc>(context)
-                                .add(ReturnListaPressedEvent());
-                          });
-                    },
+                                  BlocProvider.of<SiniestroBloc>(context)
+                                      .add(ReturnListaPressedEvent());
+                                });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : AppBar(
+                backgroundColor: Colors.red[900],
+                bottom: const PreferredSize(
+                  preferredSize: Size(0, 0),
+                  child: Text(
+                    "Sin conexión",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                title: const Text(
+                  "",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    height: 4,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
         body: FutureBuilder(
           future: ApiManagerSiniestro.shared
               .request(baseUrl: baseURL, pathUrl: pathURL, type: HttpType.GET),

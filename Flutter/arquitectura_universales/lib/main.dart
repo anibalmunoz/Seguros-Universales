@@ -17,6 +17,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:local_auth/local_auth.dart';
 
 void main() {
   runZonedGuarded(
@@ -116,9 +117,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //if (MyApp.conectedToNetwork) {
     _firebase = inicializarFirebase();
     if (MyApp.conectedToNetwork) {
       if (!MyApp.conectedToNetwork) {
@@ -132,7 +131,17 @@ class _MyAppState extends State<MyApp> {
         ).show(context);
       }
     }
-    //}
+
+    FormularioLogin.asignarDesdeSharedPreferences();
+
+    //Lector de huellas
+
+    FormularioLogin.localAuth = LocalAuthentication();
+    FormularioLogin.localAuth!.canCheckBiometrics.then((value) {
+      FormularioLogin.isBiometricAvailable = value;
+    });
+
+    //FIN DE LECTOR DE HUELLAS
   }
 
   @override

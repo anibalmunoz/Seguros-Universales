@@ -18,64 +18,82 @@ class SegurosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-              ? Colors.blue[900]
-              : Colors.grey[900],
-          bottom: const PreferredSize(
-            preferredSize: Size(13, 13),
-            child: Text(""),
-          ),
-          title: const Text(
-            "Seguros",
-            style: TextStyle(height: 4),
-          ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(top: 33.0),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20.0),
-              child: BlocProvider(
-                create: (context) => SeguroBloc(),
-                child: BlocListener<SeguroBloc, SeguroState>(
-                  listener: (context, state) {
-                    switch (state.runtimeType) {
-                      case IrACreacionState:
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (cxt) => CreacionSeguro(
-                                    titulo: "Crear nuevo Seguro")));
-                        break;
-                    }
-                  },
-                  child: BlocBuilder<SeguroBloc, SeguroState>(
-                    builder: (context, state) {
-                      return IconButton(
-                          icon: const Icon(Icons.health_and_safety,
-                              color: Colors.amber),
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => CreacionSeguro(
-                            //           titulo: "Crear nuevo seguro"),
-                            //     )).then((value) => null);
+        appBar: MyApp.conectedToNetwork
+            ? AppBar(
+                backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+                    ? Colors.blue[900]
+                    : Colors.grey[900],
+                bottom: const PreferredSize(
+                  preferredSize: Size(13, 13),
+                  child: Text(""),
+                ),
+                title: const Text(
+                  "Seguros",
+                  style: TextStyle(height: 4),
+                ),
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 33.0),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20.0),
+                    child: BlocProvider(
+                      create: (context) => SeguroBloc(),
+                      child: BlocListener<SeguroBloc, SeguroState>(
+                        listener: (context, state) {
+                          switch (state.runtimeType) {
+                            case IrACreacionState:
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (cxt) => CreacionSeguro(
+                                          titulo: "Crear nuevo Seguro")));
+                              break;
+                          }
+                        },
+                        child: BlocBuilder<SeguroBloc, SeguroState>(
+                          builder: (context, state) {
+                            return IconButton(
+                                icon: const Icon(Icons.health_and_safety,
+                                    color: Colors.amber),
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => CreacionSeguro(
+                                  //           titulo: "Crear nuevo seguro"),
+                                  //     )).then((value) => null);
 
-                            BlocProvider.of<SeguroBloc>(context)
-                                .add(CreacionSeguroEvent());
+                                  BlocProvider.of<SeguroBloc>(context)
+                                      .add(CreacionSeguroEvent());
 
-                            BlocProvider.of<SeguroBloc>(context)
-                                .add(ReturnListaPressedEvent());
-                          });
-                    },
+                                  BlocProvider.of<SeguroBloc>(context)
+                                      .add(ReturnListaPressedEvent());
+                                });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : AppBar(
+                backgroundColor: Colors.red[900],
+                bottom: const PreferredSize(
+                  preferredSize: Size(0, 0),
+                  child: Text(
+                    "Sin conexión",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                title: const Text(
+                  "",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    height: 4,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
         body: FutureBuilder(
           future: ApiManagerSeguro.shared
               .request(baseUrl: baseURL, pathUrl: pathURL, type: HttpType.GET),
