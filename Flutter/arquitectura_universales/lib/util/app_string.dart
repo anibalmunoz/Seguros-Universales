@@ -71,4 +71,15 @@ enum Strings {
   consultaEliminarSeguro,
   seguroEliminado,
   verifiqueHuella,
+  //CREACION SEGUROS
+  ramoField,
+  fechaInicio,
+  fechaVencimientoField,
+  botonGuardarSeguro,
+  consultaGuardarSeguro,
+  flushbarNoPuedesRegistrarseguro,
+  //DETALLES SEGUROS
+  numeroPoliza,
+  condicionesParticulares,
+  botonModificarSeguro,
 }

@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
-import 'package:arquitectura_universales/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetallesSeguro extends StatefulWidget {
@@ -35,6 +36,9 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
   @override
   Widget build(BuildContext context) {
     Seguro seg = widget.seguro;
+
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -104,19 +108,22 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                       },
                                       keyboardType: TextInputType.number,
                                       initialValue: seg.numeroPoliza.toString(),
                                       //readOnly: true,
                                       enabled: false,
-                                      decoration: const InputDecoration(
-                                          icon: Icon(Icons.numbers),
-                                          labelText: "Número Poliza",
-                                          border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                          icon: const Icon(Icons.numbers),
+                                          labelText: localizations
+                                              .dictionary(Strings.numeroPoliza),
+                                          border: const OutlineInputBorder(),
                                           isDense: false,
-                                          contentPadding: EdgeInsets.all(10)),
+                                          contentPadding:
+                                              const EdgeInsets.all(10)),
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(
@@ -125,19 +132,23 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.ramo = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
                                       initialValue: seg.ramo,
-                                      decoration: const InputDecoration(
-                                          icon: Icon(Icons.text_fields_rounded),
-                                          labelText: "Ramo",
-                                          border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                          icon: const Icon(
+                                              Icons.text_fields_rounded),
+                                          labelText: localizations
+                                              .dictionary(Strings.ramoField),
+                                          border: const OutlineInputBorder(),
                                           isDense: false,
-                                          contentPadding: EdgeInsets.all(10)),
+                                          contentPadding:
+                                              const EdgeInsets.all(10)),
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(
@@ -146,16 +157,18 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.fechaInicio = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.datetime,
                                       initialValue: seg.fechaInicio,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.date_range),
-                                        labelText: "Fecha Inicio",
+                                        labelText: localizations
+                                            .dictionary(Strings.fechaInicio),
                                         //helperText: "Aa@45678",
                                         border: OutlineInputBorder(),
                                         isDense: false,
@@ -169,16 +182,18 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.fechaVencimiento = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.datetime,
                                       initialValue: seg.fechaVencimiento,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.date_range),
-                                        labelText: "Fecha Vencimiento",
+                                        labelText: localizations.dictionary(
+                                            Strings.fechaVencimientoField),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -191,16 +206,18 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.condicionesParticulares = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
                                       initialValue: seg.condicionesParticulares,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.read_more_outlined),
-                                        labelText: "Condiciones Particulares",
+                                        labelText: localizations.dictionary(
+                                            Strings.condicionesParticulares),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -213,16 +230,18 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.observaciones = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
                                       initialValue: seg.observaciones,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.folder),
-                                        labelText: "Observaciones",
+                                        labelText: localizations
+                                            .dictionary(Strings.observaciones),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -250,8 +269,8 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                             // }
                                           }
                                         },
-                                        child: const Text(
-                                            '               Modificar Seguro               '),
+                                        child: Text(localizations.dictionary(
+                                            Strings.botonModificarSeguro)),
                                       ),
                                     ),
                                   ],

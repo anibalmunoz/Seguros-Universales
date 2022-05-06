@@ -85,4 +85,16 @@ const Map<Strings, String> dictionary_es = {
   Strings.consultaEliminarSeguro: "¿Estas seguro de eliminar el seguro ",
   Strings.seguroEliminado: "Seguro eliminado correctamente",
   Strings.verifiqueHuella: "Por favor verifique su huella",
+  //CREACION SEGUROS
+  Strings.ramoField: "Ramo",
+  Strings.fechaInicio: "Fecha de Inicio",
+  Strings.fechaVencimientoField: "Fecha de Vencimiento",
+  Strings.botonGuardarSeguro: "               Guardar Seguro               ",
+  Strings.consultaGuardarSeguro: "¿Estas seguro de guardar la nueva poliza? ",
+  Strings.flushbarNoPuedesRegistrarseguro:
+      "No puedes registrar un nuevo seguro",
+  //DETALLES SEGUROS
+  Strings.numeroPoliza: "Número Poliza",
+  Strings.condicionesParticulares: "Condicionnes Particulares",
+  Strings.botonModificarSeguro: "               Modificar Seguro               "
 };

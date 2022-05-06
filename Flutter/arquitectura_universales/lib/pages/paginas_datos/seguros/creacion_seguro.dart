@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
-import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
-import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
-import 'package:arquitectura_universales/util/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -80,7 +79,10 @@ class _CreacionSeguro extends State<CreacionSeguro> {
 
   @override
   Widget build(BuildContext context) {
-    Seguro seg = new Seguro();
+    Seguro seg = Seguro();
+
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -149,18 +151,22 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                       controller: ramoController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.ramo = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
-                                      decoration: const InputDecoration(
-                                          icon: Icon(Icons.text_fields_rounded),
-                                          labelText: "Ramo",
-                                          border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                          icon: const Icon(
+                                              Icons.text_fields_rounded),
+                                          labelText: localizations.dictionary(
+                                              Strings.condicionesParticulares),
+                                          border: const OutlineInputBorder(),
                                           isDense: false,
-                                          contentPadding: EdgeInsets.all(10)),
+                                          contentPadding:
+                                              const EdgeInsets.all(10)),
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(
@@ -174,18 +180,21 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                       controller: fechaInicioController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.fechaInicio = valor;
                                         return null;
                                       },
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.date_range),
-                                        labelText: "Fecha Inicio",
+                                      decoration: InputDecoration(
+                                        icon: const Icon(Icons.date_range),
+                                        labelText: localizations
+                                            .dictionary(Strings.fechaInicio),
                                         //helperText: "Aa@45678",
-                                        border: OutlineInputBorder(),
+                                        border: const OutlineInputBorder(),
                                         isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
                                       ),
                                     ),
                                     Container(
@@ -200,17 +209,20 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                       controller: fechaVencimientoController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.fechaVencimiento = valor;
                                         return null;
                                       },
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.date_range),
-                                        labelText: "Fecha de Vencimiento",
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        icon: const Icon(Icons.date_range),
+                                        labelText: localizations.dictionary(
+                                            Strings.fechaVencimientoField),
+                                        border: const OutlineInputBorder(),
                                         isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
                                       ),
                                     ),
                                     Container(
@@ -222,18 +234,22 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                           condicionesParticularesController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.condicionesParticulares = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.read_more_outlined),
-                                        labelText: "Clase Vía",
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        icon: const Icon(
+                                            Icons.read_more_outlined),
+                                        labelText: localizations
+                                            .dictionary(Strings.claseVia),
+                                        border: const OutlineInputBorder(),
                                         isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
                                       ),
                                     ),
                                     Container(
@@ -244,18 +260,21 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                       controller: observacionesController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         seg.observaciones = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
-                                      decoration: const InputDecoration(
-                                        icon: Icon(Icons.folder),
-                                        labelText: "Observaciones",
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        icon: const Icon(Icons.folder),
+                                        labelText: localizations
+                                            .dictionary(Strings.observaciones),
+                                        border: const OutlineInputBorder(),
                                         isDense: false,
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
                                       ),
                                     ),
                                     const SizedBox(height: 20),
@@ -276,8 +295,8 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                             });
                                           }
                                         },
-                                        child: const Text(
-                                            '               Guardar Seguro               '),
+                                        child: Text(localizations.dictionary(
+                                            Strings.botonGuardarSeguro)),
                                       ),
                                     ),
                                   ],
@@ -297,18 +316,21 @@ class _CreacionSeguro extends State<CreacionSeguro> {
   }
 
   Future<bool> guardarSeguro(context, seguro) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Guardar"),
-              content: const Text("¿Estas seguro de guardar la nueva poliza? "),
+              title: Text(localizations.dictionary(Strings.botonGuardar)),
+              content:
+                  Text(localizations.dictionary(Strings.consultaGuardarSeguro)),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, false);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -368,9 +390,9 @@ class _CreacionSeguro extends State<CreacionSeguro> {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Confirmar",
-                              style: TextStyle(color: Colors.green),
+                            child: Text(
+                              localizations.dictionary(Strings.botonConfirmar),
+                              style: const TextStyle(color: Colors.green),
                             ));
                       },
                     ),
@@ -395,10 +417,13 @@ class _CreacionSeguro extends State<CreacionSeguro> {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet.",
-        message: "No puedes registrar un nuevo cliente.",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message:
+            localizations.dictionary(Strings.flushbarNoPuedesRegistrarseguro),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

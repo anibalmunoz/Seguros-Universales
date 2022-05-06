@@ -86,4 +86,17 @@ const Map<Strings, String> dictionary_en = {
       "Are you sure you want to remove the insurance ",
   Strings.seguroEliminado: "Insurance removed successfully",
   Strings.verifiqueHuella: "Please check your fingerprint",
+  //CREACION SEGUROS
+  Strings.ramoField: "Branch",
+  Strings.fechaInicio: "Start date",
+  Strings.fechaVencimientoField: "Due date",
+  Strings.botonGuardarSeguro: "               Save Insurance               ",
+  Strings.consultaGuardarSeguro: "Are you sure to save the new policy? ",
+  Strings.flushbarNoPuedesRegistrarseguro:
+      "You cannot register a new insurance",
+  //DETALLES SEGUROS
+  Strings.numeroPoliza: "Policy Number",
+  Strings.condicionesParticulares: "particular conditions",
+  Strings.botonModificarSeguro:
+      "               modify insurance               ",
 };
