@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
@@ -46,6 +48,9 @@ class _RegistrarContacto extends State<DetallesCliente> {
   Widget build(BuildContext context) {
     Cliente client = widget.cliente;
 
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
@@ -57,7 +62,7 @@ class _RegistrarContacto extends State<DetallesCliente> {
         ),
         //automaticallyImplyLeading: true,
         leading: Container(
-          margin: EdgeInsets.only(top: 22.0),
+          margin: const EdgeInsets.only(top: 22.0),
           child: BlocProvider(
             create: (context) => ClienteBloc(),
             child: BlocListener<ClienteBloc, ClienteState>(
@@ -88,7 +93,7 @@ class _RegistrarContacto extends State<DetallesCliente> {
 
         title: Text(
           widget.titulo,
-          style: TextStyle(height: 4),
+          style: const TextStyle(height: 4),
         ),
         actions: [
           Container(
@@ -133,7 +138,8 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return 'Campo vacío';
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                 },
                                 keyboardType: TextInputType.number,
@@ -154,19 +160,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return 'Campo vacío';
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.nombrecl = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.nombrecl,
-                                decoration: const InputDecoration(
-                                    icon: Icon(Icons.text_fields_rounded),
-                                    labelText: "Nombre",
-                                    border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                    icon: const Icon(Icons.text_fields_rounded),
+                                    labelText: localizations
+                                        .dictionary(Strings.nombre),
+                                    border: const OutlineInputBorder(),
                                     isDense: false,
-                                    contentPadding: EdgeInsets.all(10)),
+                                    contentPadding: const EdgeInsets.all(10)),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(
@@ -175,20 +183,22 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.apellido1 = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.apellido1,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Primer Apellido",
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.text_fields_rounded),
+                                  labelText: localizations
+                                      .dictionary(Strings.primerApellido),
                                   //helperText: "Aa@45678",
-                                  border: OutlineInputBorder(),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -198,19 +208,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.apellido2 = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.apellido2,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.text_fields_rounded),
-                                  labelText: "Segundo Apellido",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.text_fields_rounded),
+                                  labelText: localizations
+                                      .dictionary(Strings.segundoApellido),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -220,19 +232,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.clasevia = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.clasevia,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Clase Vía",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.read_more_outlined),
+                                  labelText: localizations
+                                      .dictionary(Strings.claseVia),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -242,19 +256,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.nombrevia = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.nombrevia,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Nombre Vía",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.read_more_outlined),
+                                  labelText: localizations
+                                      .dictionary(Strings.nombreVia),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -264,19 +280,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.numerovia = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
                                 initialValue: client.numerovia,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.read_more_outlined),
-                                  labelText: "Número Vía",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.read_more_outlined),
+                                  labelText: localizations
+                                      .dictionary(Strings.numeroVia),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -286,19 +304,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.codpostal = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
                                 initialValue: client.codpostal,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.directions),
-                                  labelText: "Código Postal",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.directions),
+                                  labelText: localizations
+                                      .dictionary(Strings.codigoPostal),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -308,19 +328,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.ciudad = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.ciudad,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.location_city),
-                                  labelText: "Ciudad",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.location_city),
+                                  labelText:
+                                      localizations.dictionary(Strings.ciudad),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -330,19 +352,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.telefono = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.number,
                                 initialValue: client.telefono,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.phone),
-                                  labelText: "Teléfono",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.phone),
+                                  labelText: localizations
+                                      .dictionary(Strings.telefono),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               Container(
@@ -352,19 +376,21 @@ class _RegistrarContacto extends State<DetallesCliente> {
                               TextFormField(
                                 validator: (valor) {
                                   if (valor!.isEmpty) {
-                                    return "Campo vacío";
+                                    return localizations
+                                        .dictionary(Strings.campoVacio);
                                   }
                                   client.observaciones = valor;
                                   return null;
                                 },
                                 keyboardType: TextInputType.text,
                                 initialValue: client.observaciones,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.folder),
-                                  labelText: "Observaciones",
-                                  border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.folder),
+                                  labelText: localizations
+                                      .dictionary(Strings.observaciones),
+                                  border: const OutlineInputBorder(),
                                   isDense: false,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: const EdgeInsets.all(10),
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -388,8 +414,8 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                       // }
                                     }
                                   },
-                                  child: const Text(
-                                      '               Modificar Cliente               '),
+                                  child: Text(localizations.dictionary(
+                                      Strings.botonModificarCliente)),
                                 ),
                               ),
                             ],
@@ -409,14 +435,18 @@ class _RegistrarContacto extends State<DetallesCliente> {
   }
 
   Future<bool> modificarCliente(context, cliente) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return await showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Modificar"),
-              content: Text("¿Estas seguro de modificar el cliente " +
-                  cliente.nombrecl +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.modifcar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaModificarcliente) +
+                      cliente.nombrecl +
+                      "?"),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -425,8 +455,8 @@ class _RegistrarContacto extends State<DetallesCliente> {
                       //   ..pop()
                       //   ..pop();
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -483,9 +513,9 @@ class _RegistrarContacto extends State<DetallesCliente> {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Confirmar",
-                              style: TextStyle(color: Colors.green),
+                            child: Text(
+                              localizations.dictionary(Strings.botonConfirmar),
+                              style: const TextStyle(color: Colors.green),
                             ));
                       },
                     ),
@@ -519,10 +549,13 @@ class _RegistrarContacto extends State<DetallesCliente> {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet",
-        message: "No puedes editar el cliente",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEditar),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

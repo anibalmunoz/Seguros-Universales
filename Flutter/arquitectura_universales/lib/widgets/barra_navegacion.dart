@@ -1,18 +1,19 @@
-import 'package:another_flushbar/flushbar.dart';
-import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/seguros_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/siniestros_page.dart';
+import 'package:arquitectura_universales/pages/settings_page/settings_page.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BarraNavegacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BasicBloc basicBloc;
-    basicBloc = BlocProvider.of<BasicBloc>(context);
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return Scaffold(
       bottomNavigationBar: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
@@ -21,15 +22,16 @@ class BarraNavegacion extends StatelessWidget {
                 : Colors.grey[900],
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person_rounded,
-                      color: MyApp.themeNotifier.value == ThemeMode.light
-                          ? Colors.white
-                          : Colors.white),
-                  activeIcon: Icon(Icons.person_outline,
-                      color: MyApp.themeNotifier.value == ThemeMode.light
-                          ? Colors.white
-                          : Colors.white),
-                  label: ("Clientes")),
+                icon: Icon(Icons.person_rounded,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                activeIcon: Icon(Icons.person_outline,
+                    color: MyApp.themeNotifier.value == ThemeMode.light
+                        ? Colors.white
+                        : Colors.white),
+                //    label: (localizations.dictionary(Strings.barraclientes))
+              ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.security_rounded,
                     color: MyApp.themeNotifier.value == ThemeMode.light
@@ -39,7 +41,7 @@ class BarraNavegacion extends StatelessWidget {
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.white
                         : Colors.white),
-                label: "Seguros",
+                // label: localizations.dictionary(Strings.barraSeguros),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.taxi_alert,
@@ -50,18 +52,18 @@ class BarraNavegacion extends StatelessWidget {
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.white
                         : Colors.white),
-                label: ("Siniestros"),
+                // label: (localizations.dictionary(Strings.barraSiniestros)),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.logout,
+                icon: Icon(Icons.settings,
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.white
                         : Colors.white),
-                activeIcon: Icon(Icons.logout_sharp,
+                activeIcon: Icon(Icons.settings_applications_sharp,
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.white
                         : Colors.white),
-                label: ("Logout"),
+                //   label: (localizations.dictionary(Strings.barraAjustes)),
               ),
             ]),
         tabBuilder: (BuildContext context, int index) {
@@ -79,8 +81,9 @@ class BarraNavegacion extends StatelessWidget {
                 return SiniestrosPage();
               });
             case 3:
-              basicBloc.add(DeslogueadoEvent());
-              return Center();
+              return CupertinoTabView(builder: (BuildContext context) {
+                return SettingsPage();
+              });
             default:
               return CupertinoTabView(
                 builder: (BuildContext context) => ClientesPage(),

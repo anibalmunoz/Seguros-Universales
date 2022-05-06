@@ -95,8 +95,8 @@ class ApiManagerCliente {
             observaciones: item["observaciones"],
           ));
         }
-        print(
-            "LA LISTA DE CLIENTES QUE VIENE DE LA BASE DE DATOS ES: ${clientList}");
+        // print(
+        //     "LA LISTA DE CLIENTES QUE VIENE DE LA BASE DE DATOS ES: ${clientList}");
         return ClientesLista.fromDb(clientesDb);
 
       //agregarUbicacion("GET");

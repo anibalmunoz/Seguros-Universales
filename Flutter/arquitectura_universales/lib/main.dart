@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/pages/loading/loading_screen.dart';
 import 'package:arquitectura_universales/pages/page_one/formulario_login.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_page.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -18,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runZonedGuarded(
@@ -43,6 +47,8 @@ Implementación de dark light mode
       ValueNotifier(ThemeMode.system);
 
   static bool conectedToNetwork = false;
+
+  static String? idioma = "";
 }
 
 class _MyAppState extends State<MyApp> {
@@ -55,6 +61,8 @@ class _MyAppState extends State<MyApp> {
     await _inicializarRemoteConfig();
     await _inicializarRealtimeDatabase();
     await _inicializarCloudFirestore();
+    await _seleccionarTemaDeSharedPreferences();
+    await _seleccionarIdiomaDeSharedPreferences();
   }
 
   Future<void> _inicializarCrashlytics() async {
@@ -111,6 +119,26 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Future<void> _seleccionarTemaDeSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? tema = prefs.getString("tema");
+    print("EL TEMA DE SHARED PREFERENCES ES: $tema");
+    if (tema == "ThemeMode.light") {
+      MyApp.themeNotifier.value = ThemeMode.light;
+    } else if (tema == "ThemeMode.dark") {
+      MyApp.themeNotifier.value = ThemeMode.dark;
+    }
+  }
+
+  Future<void> _seleccionarIdiomaDeSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? lenguaje = prefs.getString("idioma");
+    if (lenguaje != null) {
+      MyApp.idioma = lenguaje;
+    }
+    print("EL IDIOMA QUE ESTÁ EN SHARED PREFERENCES ES ${MyApp.idioma}");
+  }
+
   Future<void> _inicializarCloudFirestore() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
   }
@@ -136,10 +164,16 @@ class _MyAppState extends State<MyApp> {
 
     //Lector de huellas
 
-    FormularioLogin.localAuth = LocalAuthentication();
-    FormularioLogin.localAuth!.canCheckBiometrics.then((value) {
-      FormularioLogin.isBiometricAvailable = value;
-    });
+    // FormularioLogin.localAuth = LocalAuthentication();
+    // FormularioLogin.localAuth!.canCheckBiometrics.then((value) {
+    //   FormularioLogin.isBiometricAvailable = value;
+    // });
+    // FormularioLogin.localAuth!.getAvailableBiometrics().then((value) => {
+    //       print("el valor es"),
+    //       print(value),
+    //       if (value.toString() != "[]")
+    //         {FormularioLogin.hayHuellaDisponible = true}
+    //     });
 
     //FIN DE LECTOR DE HUELLAS
   }
@@ -153,6 +187,16 @@ class _MyAppState extends State<MyApp> {
               valueListenable: MyApp.themeNotifier,
               builder: (_, ThemeMode currentMode, __) {
                 return MaterialApp(
+                    supportedLocales: const [
+                      Locale('es'),
+                      Locale('en'),
+                    ],
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
                     debugShowCheckedModeBanner: false,
                     title: 'Flutter Demo',
                     theme: ThemeData(
@@ -176,6 +220,13 @@ class _MyAppState extends State<MyApp> {
                         ApiManagerCliente.conectedToNetwork = connected;
                         ApiManagerSeguro.conectedToNetwork = connected;
                         ApiManagerSiniestro.conectedToNetwork = connected;
+
+                        // AppLocalizations localizations =
+                        //     Localizations.of<AppLocalizations>(
+                        //         context, AppLocalizations)!;
+
+                        // MyApp.idioma =
+                        //     localizations.dictionary(Strings.dispisitivo);
 
                         return Stack(
                           fit: StackFit.expand,

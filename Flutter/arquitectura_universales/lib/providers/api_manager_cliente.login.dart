@@ -50,7 +50,8 @@ class ApiManagerClienteLogin {
           return response;
         }
         return response;
-
+      case HttpType.PUT:
+        break;
       case HttpType.DELETE:
     }
     // final request = await http.post(uri, body: bodyParams);

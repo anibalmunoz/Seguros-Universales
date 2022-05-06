@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
 import 'package:arquitectura_universales/blocs/cliente_bloc/cliente_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/creacion_cliente.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/clientes/detalles_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,9 @@ class ClientesPage extends StatelessWidget {
     BasicBloc basicBloc;
     basicBloc = BlocProvider.of<BasicBloc>(context);
 
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return BlocProvider(
       create: (context) => ClienteBloc(),
       child: SafeArea(
@@ -44,9 +49,9 @@ class ClientesPage extends StatelessWidget {
                     preferredSize: Size(12, 12),
                     child: Text(""),
                   ),
-                  title: const Text(
-                    "Clientes",
-                    style: TextStyle(height: 4),
+                  title: Text(
+                    localizations.dictionary(Strings.tituloClientesPage),
+                    style: const TextStyle(height: 4),
                   ),
                   actions: [
                     Container(
@@ -64,7 +69,8 @@ class ClientesPage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (cxt) => CreacionCliente(
-                                            titulo: "Crear nuevo cliente")));
+                                            titulo: localizations.dictionary(Strings
+                                                .tituloCrearNuevoClientePage))));
                                 break;
                             }
                           },
@@ -127,11 +133,11 @@ class ClientesPage extends StatelessWidget {
                 )
               : AppBar(
                   backgroundColor: Colors.red[900],
-                  bottom: const PreferredSize(
-                    preferredSize: Size(0, 0),
+                  bottom: PreferredSize(
+                    preferredSize: const Size(0, 0),
                     child: Text(
-                      "Sin conexión",
-                      style: TextStyle(color: Colors.white),
+                      localizations.dictionary(Strings.appbarSinConexion),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   title: const Text(
@@ -150,9 +156,9 @@ class ClientesPage extends StatelessWidget {
                 final ClientesLista clientesLista =
                     snapshot.requireData as ClientesLista;
                 _clientes = clientesLista.clientes;
-                print("SI HAY INFORMACIÓN");
+                // print("SI HAY INFORMACIÓN");
               } else {
-                print("NO HAY INFORMACIÓN");
+                // print("NO HAY INFORMACIÓN");
               }
 
               return ListView.builder(
@@ -162,10 +168,11 @@ class ClientesPage extends StatelessWidget {
                     onLongPress: () {
                       eliminarCliente(context, _clientes[index]);
                     },
-                    title: Text("Nombre: " +
-                        _clientes[index].nombrecl +
-                        " " +
-                        _clientes[index].apellido1),
+                    title: Text(
+                        localizations.dictionary(Strings.listaClienteNombre) +
+                            _clientes[index].nombrecl +
+                            " " +
+                            _clientes[index].apellido1),
                     subtitle: Text("DNI: " + _clientes[index].dnicl.toString()),
                     leading: const CircleAvatar(
                         backgroundColor: Colors.amber,
@@ -185,7 +192,9 @@ class ClientesPage extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (cxt) => DetallesCliente(
                                           cliente: _clientes[index],
-                                          titulo: "Detalles")));
+                                          titulo: localizations.dictionary(
+                                              Strings
+                                                  .tituloDetallesClientes))));
                               break;
                           }
                         },
@@ -219,18 +228,21 @@ class ClientesPage extends StatelessWidget {
   }
 
   eliminarCliente(context, cliente) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Eliminar"),
-              content: Text("¿Estas seguro de eliminar el cliente " +
-                  cliente.nombrecl +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.eliminar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaEliminarCliente) +
+                      cliente.nombrecl +
+                      "?"),
               actions: [
                 TextButton(
-                  child: const Text("Cancelar",
-                      style: TextStyle(
+                  child: Text(localizations.dictionary(Strings.botonCancelar),
+                      style: const TextStyle(
                         color: Colors.blue,
                       )),
                   onPressed: () {
@@ -248,8 +260,9 @@ class ClientesPage extends StatelessWidget {
                         case ClienteEliminadoState:
                           Navigator.pop(context);
                           Flushbar(
-                            title: "Eliminado",
-                            message: "Cliente eliminado correctamente",
+                            title: localizations.dictionary(Strings.eliminado),
+                            message: localizations
+                                .dictionary(Strings.clienteEliminado),
                             duration: const Duration(seconds: 2),
                             margin: const EdgeInsets.only(
                                 top: 8, bottom: 55.0, left: 8, right: 8),
@@ -261,9 +274,9 @@ class ClientesPage extends StatelessWidget {
                     child: BlocBuilder<ClienteBloc, ClienteState>(
                       builder: (context, state) {
                         return TextButton(
-                          child: const Text(
-                            "Eliminar",
-                            style: TextStyle(color: Colors.red),
+                          child: Text(
+                            localizations.dictionary(Strings.eliminar),
+                            style: const TextStyle(color: Colors.red),
                           ),
                           onPressed: () {
                             if (MyApp.conectedToNetwork) {
@@ -292,10 +305,12 @@ class ClientesPage extends StatelessWidget {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet.",
-        message: "No puedes eliminar el elemento.",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEliminar),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

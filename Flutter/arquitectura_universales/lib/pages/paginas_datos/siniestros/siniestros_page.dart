@@ -102,10 +102,10 @@ class SiniestrosPage extends StatelessWidget {
               final SiniestrosLista siniestrosLista =
                   snapshot.requireData as SiniestrosLista;
               _siniestros = siniestrosLista.siniestros;
-              print("SI HAY INFORMACIÓN");
+              // print("SI HAY INFORMACIÓN");
               //print("LA LISTA DE CLIENTES ES: ${_clientes[0]}");
             } else {
-              print("NO HAY INFORMACIÓN");
+              // print("NO HAY INFORMACIÓN");
             }
 
             print("Por defecto");

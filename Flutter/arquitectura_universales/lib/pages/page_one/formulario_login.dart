@@ -1,22 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/basic_bloc/basic_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/cliente_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_cliente.login.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:arquitectura_universales/widgets/barra_navegacion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:arquitectura_universales/util/extension.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as Encrypt;
+import 'package:local_auth_android/local_auth_android.dart';
 
 class FormularioLogin extends StatelessWidget {
   FormularioLogin({Key? key}) : super(key: key);
@@ -36,6 +41,9 @@ class FormularioLogin extends StatelessWidget {
 
   static LocalAuthentication? localAuth;
   static bool isBiometricAvailable = false;
+  static bool hayHuellaDisponible = false;
+
+  late Timer timer;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +52,9 @@ class FormularioLogin extends StatelessWidget {
     // String password = FirebaseRemoteConfig.instance.getString("password");
 
     basicBloc = BlocProvider.of<BasicBloc>(context);
+
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
     askGpsAccess();
 
@@ -61,7 +72,7 @@ class FormularioLogin extends StatelessWidget {
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.blue[900]
             : Colors.grey[900],
-        title: const Text('Arquitectura'),
+        title: Text(localizations.dictionary(Strings.tituloLogin)),
         actions: [
           IconButton(
               icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
@@ -133,34 +144,47 @@ class FormularioLogin extends StatelessWidget {
                                         height: 20.0,
                                       ),
                                       TextFormField(
-                                        onTap: correoPrefs != null &&
-                                                isBiometricAvailable
-                                            ? () {
-                                                mostrarSugerenciaLogin(context);
-                                              }
-                                            : null,
+                                        onTap: () async {
+                                          await verificarDisponibilidadHuellas();
+
+                                          if (correoPrefs == null) {
+                                            await asignarDesdeSharedPreferences();
+                                          }
+                                          if (correoPrefs != null &&
+                                              isBiometricAvailable &&
+                                              hayHuellaDisponible) {
+                                            await mostrarSugerenciaLogin(
+                                                context);
+                                          }
+                                        },
                                         //autofillHints: [AutofillHints.email],
                                         controller: correoController,
                                         validator: (valor) {
                                           //client.correo = valor;
                                           if (valor!.isEmpty) {
-                                            return 'Correo vacío';
+                                            return localizations.dictionary(
+                                                Strings.correoVacio);
                                           }
                                           if (!valor.isValidEmail) {
-                                            return 'Correo Inválido';
+                                            return localizations.dictionary(
+                                                Strings.correoInvalido);
                                           }
 
                                           return null;
                                         },
                                         keyboardType:
                                             TextInputType.emailAddress,
-                                        decoration: const InputDecoration(
-                                            icon: Icon(Icons.mail_outline),
-                                            labelText: "Correo electrónico",
-                                            helperText: "correo@correo.com",
-                                            border: OutlineInputBorder(),
+                                        decoration: InputDecoration(
+                                            icon:
+                                                const Icon(Icons.mail_outline),
+                                            labelText: localizations.dictionary(
+                                                Strings
+                                                    .textFieldCorreoElectronico),
+                                            helperText: "mail@mail.com",
+                                            border: const OutlineInputBorder(),
                                             isDense: false,
-                                            contentPadding: EdgeInsets.all(10)),
+                                            contentPadding:
+                                                const EdgeInsets.all(10)),
                                       ),
                                       Container(
                                         margin: const EdgeInsets.only(
@@ -171,13 +195,13 @@ class FormularioLogin extends StatelessWidget {
                                         validator: (valor) {
                                           client.contrasena = valor;
                                           if (valor!.isEmpty) {
-                                            return "Campo vacío";
+                                            return localizations
+                                                .dictionary(Strings.campoVacio);
                                           }
                                           if (!valor.isValidPassword) {
-                                            return "La contraseña debe tener:\nMinimo 8 caracteres\nAl menos una letra mayúscula\n"
-                                                "Al menos una letra minucula\n"
-                                                "Al menos un dígito\n"
-                                                "Al menos 1 caracter especial";
+                                            return localizations.dictionary(
+                                                Strings
+                                                    .contrasenaInvalidaDebeTener);
                                           }
 
                                           return null;
@@ -185,13 +209,16 @@ class FormularioLogin extends StatelessWidget {
                                         obscureText: true,
                                         keyboardType:
                                             TextInputType.visiblePassword,
-                                        decoration: const InputDecoration(
-                                          icon: Icon(Icons.password_outlined),
-                                          labelText: "Contraseña",
+                                        decoration: InputDecoration(
+                                          icon: const Icon(
+                                              Icons.password_outlined),
+                                          labelText: localizations.dictionary(
+                                              Strings.textFieldContrasena),
                                           helperText: "Aa@45678",
-                                          border: OutlineInputBorder(),
+                                          border: const OutlineInputBorder(),
                                           isDense: false,
-                                          contentPadding: EdgeInsets.all(10),
+                                          contentPadding:
+                                              const EdgeInsets.all(10),
                                         ),
                                       ),
                                       const SizedBox(height: 20),
@@ -212,7 +239,8 @@ class FormularioLogin extends StatelessWidget {
                                               }
                                             }
                                           },
-                                          child: const Text('Ingresar'),
+                                          child: Text(localizations.dictionary(
+                                              Strings.botonIngresar)),
                                         ),
                                       )
                                     ],
@@ -232,7 +260,7 @@ class FormularioLogin extends StatelessWidget {
     );
   }
 
-  Future<void> cambiarALight() async {
+  static Future<void> cambiarALight() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("modo");
     await ref.set({"modo": "ThemeMode.light"});
 
@@ -241,13 +269,18 @@ class FormularioLogin extends StatelessWidget {
       final data = event.snapshot.value;
       print("LA DATA OBTENIDA ES: ${data}");
     });
+
+    //GUARDAR EN SHARED PREFERENCES
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("tema", "ThemeMode.light");
   }
 
   //  update(data) {
   //     return null;
   //   }
 
-  Future<void> cambiarADarck() async {
+  static Future<void> cambiarADarck() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("modo");
     await ref.set({"modo": "ThemeMode.dark"});
 
@@ -256,12 +289,17 @@ class FormularioLogin extends StatelessWidget {
       final data = event.snapshot.value;
       print("LA DATA OBTENIDA ES: ${data}");
     });
+
+    //GUARDAR EN SHARED PREFERENCES
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("tema", "ThemeMode.dark");
   }
 
   Future<bool> login(context, bool guardado) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     if (!guardado) {
-      print("ESTA CONECTADO? : $conectedToNetwork");
-
       if (conectedToNetwork) {
         Map<String, dynamic> bodyMap;
         bodyMap = {
@@ -269,35 +307,26 @@ class FormularioLogin extends StatelessWidget {
           "contrasena": contrasenaController.text
         };
         var jsonMap = json.encode(bodyMap);
-        print(
-            "EL CLIENTE QUE ESTOY MANDANDO EN ESTE LOGIN DE AHORA ES:  $jsonMap");
+
         final response = await ApiManagerClienteLogin.shared.request(
             baseUrl: baseURL,
             pathUrl: pathURL,
             jsonParam: jsonMap,
             type: HttpType.POST);
 
-        print(
-            "LA RESPUESTA DESDE LA PAGINA DE CLIENTE ES: ${response?.statusCode}");
-
-        print("EL CUERPO DE LA RESPUESTA ES: ${response?.body}");
-
         if (response?.body != "") {
-          // BlocProvider.of<BasicBloc>(context)
-          //     .add(LoginButtonPressed(nombre: nombre));
-          // BasicBloc basicBloc;
-          // basicBloc = BlocProvider.of<BasicBloc>(context);
-
-          // basicBloc.add(LogueadoEvent());
-
           //SHARED PREFERENCES
 
-          await consultarGuardarCredenciales(context).then((value) async {
-            if (value == true) {
-              await guardarEnSharedPreferences(
-                  correoController.text, contrasenaController.text);
-            }
-          });
+          await verificarDisponibilidadHuellas();
+
+          if (hayHuellaDisponible && isBiometricAvailable) {
+            await consultarGuardarCredenciales(context).then((value) async {
+              if (value == true) {
+                await guardarEnSharedPreferences(
+                    correoController.text, contrasenaController.text);
+              }
+            });
+          }
 
           //FIN SHARED PREFERENCES
 
@@ -305,9 +334,10 @@ class FormularioLogin extends StatelessWidget {
         } else {
           showDialog(
               context: context,
-              builder: (context) => const AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Credenciales Inválidas, intenta nuevamente")));
+              builder: (context) => AlertDialog(
+                  title: const Text("Error"),
+                  content: Text(localizations
+                      .dictionary(Strings.errorCredencialesInvalidas))));
           return false;
         }
       } else {
@@ -323,13 +353,14 @@ class FormularioLogin extends StatelessWidget {
         } else {
           showDialog(
               context: context,
-              builder: (context) => const AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Credenciales Inválidas, intenta nuevamente")));
+              builder: (context) => AlertDialog(
+                  title: const Text("Error"),
+                  content: Text(localizations
+                      .dictionary(Strings.errorCredencialesInvalidas))));
 
           Flushbar(
-            title: "Sin conexión a internet",
-            message: "No tienes conexión a internet",
+            title: localizations.dictionary(Strings.flushbarSinconexion),
+            message: localizations.dictionary(Strings.flushbarNoTienesConexion),
             duration: const Duration(seconds: 2),
             margin:
                 const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
@@ -396,7 +427,7 @@ class FormularioLogin extends StatelessWidget {
     String correoEncriptado = await encriptar(correo);
     String contrasenaEncriptada = await encriptar(contrasena);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    //prefs.clear();
     await prefs.setString("correo", correoEncriptado.toString());
     await prefs.setString("contrasena", contrasenaEncriptada.toString());
   }
@@ -420,50 +451,94 @@ class FormularioLogin extends StatelessWidget {
     }
   }
 
-  static Future<void> eliminarSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-  }
+  // static Future<void> eliminarSharedPreferences() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
+  // }
 
   mostrarSugerenciaLogin(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     showDialog(
         barrierDismissible: true,
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Ingresar"),
-              content: Text(
-                  "Ultima sesión registrada: $correoPrefs, ¿Quieres iniciar sesión con este correo?"),
+              title: Text(localizations.dictionary(Strings.botonIngresar)),
+              content: Text(localizations
+                      .dictionary(Strings.dialogUltimaSesionCon) +
+                  correoPrefs! +
+                  localizations.dictionary(Strings.dialogQuieresIniciarCon)),
               actions: [
                 TextButton(
-                  child: const Text("Cancelar",
-                      style: TextStyle(
+                  child: Text(localizations.dictionary(Strings.botonCancelar),
+                      style: const TextStyle(
                         color: Colors.grey,
                       )),
                   onPressed: () async {
-                    await eliminarSharedPreferences();
+                    // await eliminarSharedPreferences();
                     Navigator.pop(context);
                   },
                 ),
                 TextButton(
-                  child: const Text(
-                    "Ingresar",
-                    style: TextStyle(color: Colors.blue),
+                  child: Text(
+                    localizations.dictionary(Strings.botonIngresar),
+                    style: const TextStyle(color: Colors.blue),
                   ),
                   onPressed: () async {
-                    var didAuthenticate = await localAuth!.authenticate(
-                      localizedReason: "Por favor identifícate",
-                      options: const AuthenticationOptions(biometricOnly: true),
-                    );
+                    try {
+                      var androidStrings = AndroidAuthMessages(
+                          signInTitle:
+                              localizations.dictionary(Strings.botonIngresar),
+                          biometricHint:
+                              localizations.dictionary(Strings.verifiqueHuella),
+                          cancelButton:
+                              localizations.dictionary(Strings.botonCancelar),
+                          biometricRequiredTitle: "",
+                          deviceCredentialsSetupDescription: "",
+                          //biometricNotRecognized: "No reconocida",
+                          //biometricSuccess: "Huella reconocida",
+                          deviceCredentialsRequiredTitle: "",
+                          goToSettingsButton: "",
+                          goToSettingsDescription: "");
 
-                    if (didAuthenticate) {
-                      Navigator.pop(context);
-                      bool logueado = await login(context, true);
-                      if (logueado) {
-                        agregarUbicacion();
-                        FormularioLogin.basicBloc!.add(LogueadoEvent());
+                      //     // goToSettingsButton: 'settings',
+                      //     // goToSettingsDescription:
+                      //     //     'Please set up your Touch ID.',
+                      //     // lockOut: 'Please reenable your Touch ID'
+                      //     );
+
+                      var didAuthenticate = await localAuth!.authenticate(
+                          authMessages: [androidStrings],
+                          localizedReason: localizations
+                              .dictionary(Strings.lectorSolicitudIdentificarse),
+                          options: const AuthenticationOptions(
+                            biometricOnly: true,
+                            useErrorDialogs: false,
+                            stickyAuth: false,
+                          ));
+
+                      if (didAuthenticate) {
+                        Navigator.pop(context);
+                        bool logueado = await login(context, true);
+                        if (logueado) {
+                          agregarUbicacion();
+                          FormularioLogin.basicBloc!.add(LogueadoEvent());
+                        }
+                      } else {
+                        Navigator.pop(context);
                       }
-                    } else {
-                      Navigator.pop(context);
+                    } on PlatformException catch (e) {
+                      if (e.code.toString() == "LockedOut") {
+                        print("Intento de manejar error ${e.code.toString()}");
+                        Navigator.pop(context);
+                        mostrarFlushbar(context, "temporal");
+                      }
+                      if (e.code.toString() == "PermanentlyLockedOut") {
+                        print("Intento de manejar error ${e.code.toString()}");
+                        Navigator.pop(context);
+                        mostrarFlushbar(context, "permanente");
+                      }
+                      print("${e.message}");
                     }
                   },
                 ),
@@ -472,17 +547,19 @@ class FormularioLogin extends StatelessWidget {
   }
 
   Future<bool> consultarGuardarCredenciales(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     return await showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Ingresar"),
-              content: const Text(
-                  "¿Quieres guardar tus datos para iniciar rapidamente la próxima vez?"),
+              title: Text(localizations.dictionary(Strings.botonIngresar)),
+              content: Text(
+                  localizations.dictionary(Strings.dialogSugerenciaIngresar)),
               actions: [
                 TextButton(
-                  child: const Text("Cancelar",
-                      style: TextStyle(
+                  child: Text(localizations.dictionary(Strings.botonCancelar),
+                      style: const TextStyle(
                         color: Colors.grey,
                       )),
                   onPressed: () {
@@ -490,9 +567,9 @@ class FormularioLogin extends StatelessWidget {
                   },
                 ),
                 TextButton(
-                  child: const Text(
-                    "Guardar",
-                    style: TextStyle(color: Colors.blue),
+                  child: Text(
+                    localizations.dictionary(Strings.botonGuardar),
+                    style: const TextStyle(color: Colors.blue),
                   ),
                   onPressed: () async {
                     Navigator.pop(context, true);
@@ -538,5 +615,48 @@ class FormularioLogin extends StatelessWidget {
     // //print(encrypted.base64);
 
     return plainText;
+  }
+
+  Future<void> verificarDisponibilidadHuellas() async {
+    localAuth = LocalAuthentication();
+    await localAuth!.canCheckBiometrics.then((value) {
+      isBiometricAvailable = value;
+    });
+    await localAuth!.getAvailableBiometrics().then((value) => {
+          if (value.toString() != "[]")
+            {hayHuellaDisponible = true}
+          else
+            {hayHuellaDisponible = false}
+        });
+  }
+
+  mostrarFlushbar(context, String tipo) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    int segundos = 30;
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      segundos = segundos - 1;
+    });
+    if (tipo == "temporal") {
+      Flushbar(
+        title: localizations
+            .dictionary(Strings.flushbarBloqueoLectorTemporalTitulo),
+        message: localizations
+            .dictionary(Strings.flushbarBloqueoLectorTemporalMensaje),
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    } else {
+      Flushbar(
+        title: localizations
+            .dictionary(Strings.flushbarBloqueoLectorPermanenteTitulo),
+        message: localizations
+            .dictionary(Strings.flushbarBloqueoLectorPermanenteMensaje),
+        duration: const Duration(seconds: 6),
+        margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    }
   }
 }

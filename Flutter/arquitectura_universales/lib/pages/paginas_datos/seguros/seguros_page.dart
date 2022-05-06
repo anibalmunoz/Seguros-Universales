@@ -1,10 +1,12 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/seguro_bloc/seguro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/seguro-model.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/creacion_seguro.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/detalles_seguro.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,9 @@ class SegurosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return SafeArea(
       child: Scaffold(
         appBar: MyApp.conectedToNetwork
@@ -27,9 +32,9 @@ class SegurosPage extends StatelessWidget {
                   preferredSize: Size(13, 13),
                   child: Text(""),
                 ),
-                title: const Text(
-                  "Seguros",
-                  style: TextStyle(height: 4),
+                title: Text(
+                  localizations.dictionary(Strings.tituloSegurosPage),
+                  style: const TextStyle(height: 4),
                 ),
                 actions: [
                   Container(
@@ -47,7 +52,8 @@ class SegurosPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (cxt) => CreacionSeguro(
-                                          titulo: "Crear nuevo Seguro")));
+                                          titulo: localizations.dictionary(Strings
+                                              .tituloCrearNuevoSeguroPage))));
                               break;
                           }
                         },
@@ -79,11 +85,11 @@ class SegurosPage extends StatelessWidget {
               )
             : AppBar(
                 backgroundColor: Colors.red[900],
-                bottom: const PreferredSize(
+                bottom: PreferredSize(
                   preferredSize: Size(0, 0),
                   child: Text(
-                    "Sin conexión",
-                    style: TextStyle(color: Colors.white),
+                    localizations.dictionary(Strings.appbarSinConexion),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 title: const Text(
@@ -102,13 +108,13 @@ class SegurosPage extends StatelessWidget {
               final SegurosLista segurosLista =
                   snapshot.requireData as SegurosLista;
               _seguros = segurosLista.seguros;
-              print("SI HAY INFORMACIÓN");
+              // print("SI HAY INFORMACIÓN");
               //print("LA LISTA DE CLIENTES ES: ${_clientes[0]}");
             } else {
-              print("NO HAY INFORMACIÓN");
+              // print("NO HAY INFORMACIÓN");
             }
 
-            print("Por defecto");
+            // print("Por defecto");
             return ListView.builder(
               itemCount: _seguros.length,
               itemBuilder: (context, index) {
@@ -116,13 +122,14 @@ class SegurosPage extends StatelessWidget {
                   onLongPress: () {
                     eliminarSeguro(context, _seguros[index]);
                   },
-                  title: Text("Poliza # " +
+                  title: Text(localizations.dictionary(Strings.poliza) +
                       _seguros[index].numeroPoliza +
-                      ", Ramo: " +
+                      localizations.dictionary(Strings.ramo) +
                       _seguros[index].ramo),
 
-                  subtitle: Text("Fecha de Vencimiento: " +
-                      _seguros[index].fechaVencimiento.toString()),
+                  subtitle: Text(
+                      localizations.dictionary(Strings.fechaVencimiento) +
+                          _seguros[index].fechaVencimiento.toString()),
                   // subtitle: Text("Condiciones: " +
                   //     _seguros[index].condicionesParticulares),
                   leading: const CircleAvatar(
@@ -143,7 +150,8 @@ class SegurosPage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (cxt) => DetallesSeguro(
                                         seguro: _seguros[index],
-                                        titulo: "Detalles")));
+                                        titulo: localizations.dictionary(
+                                            Strings.tituloDetallesClientes))));
                             break;
                         }
                       },
@@ -155,13 +163,6 @@ class SegurosPage extends StatelessWidget {
                                 color: Colors.indigo,
                               ),
                               onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => DetallesSeguro(
-                                //           seguro: _seguros[index], titulo: "Detalles"),
-                                //     ));
-
                                 BlocProvider.of<SeguroBloc>(context)
                                     .add(DetallesButtonPressedEvent());
 
@@ -182,20 +183,23 @@ class SegurosPage extends StatelessWidget {
   }
 
   eliminarSeguro(context, seguro) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Eliminar"),
-              content: Text("¿Estas seguro de eliminar el seguro " +
-                  seguro.numeroPoliza +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.eliminar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaEliminarSeguro) +
+                      seguro.numeroPoliza +
+                      "?"),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -209,8 +213,9 @@ class SegurosPage extends StatelessWidget {
                         case SeguroEliminadoState:
                           Navigator.pop(context);
                           Flushbar(
-                            title: "Eliminado",
-                            message: "Seguro eliminado correctamente",
+                            title: localizations.dictionary(Strings.eliminado),
+                            message: localizations
+                                .dictionary(Strings.seguroEliminado),
                             duration: const Duration(seconds: 2),
                             margin: const EdgeInsets.only(
                                 top: 8, bottom: 55.0, left: 8, right: 8),
@@ -226,7 +231,7 @@ class SegurosPage extends StatelessWidget {
                               if (MyApp.conectedToNetwork) {
                                 final response = ApiManagerSeguro.shared
                                     .request(
-                                        baseUrl: MyApp().baseURL,
+                                        baseUrl: const MyApp().baseURL,
                                         pathUrl: "/seguro/eliminar/" +
                                             seguro.numeroPoliza.toString(),
                                         type: HttpType.DELETE,
@@ -239,9 +244,9 @@ class SegurosPage extends StatelessWidget {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Eliminar",
-                              style: TextStyle(color: Colors.red),
+                            child: Text(
+                              localizations.dictionary(Strings.eliminar),
+                              style: const TextStyle(color: Colors.red),
                             ));
                       },
                     ),
@@ -252,10 +257,13 @@ class SegurosPage extends StatelessWidget {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet.",
-        message: "No puedes eliminar el elemento.",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEliminar),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),
