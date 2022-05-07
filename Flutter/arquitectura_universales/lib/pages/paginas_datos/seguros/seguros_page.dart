@@ -151,7 +151,7 @@ class SegurosPage extends StatelessWidget {
                                     builder: (cxt) => DetallesSeguro(
                                         seguro: _seguros[index],
                                         titulo: localizations.dictionary(
-                                            Strings.tituloDetallesClientes))));
+                                            Strings.tituloDetalles))));
                             break;
                         }
                       },

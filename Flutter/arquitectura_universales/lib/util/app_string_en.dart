@@ -47,7 +47,7 @@ const Map<Strings, String> dictionary_en = {
   Strings.tituloCrearNuevoClientePage: "Create new customer",
   Strings.appbarSinConexion: "Without connection",
   Strings.listaClienteNombre: "Name: ",
-  Strings.tituloDetallesClientes: "Details",
+  Strings.tituloDetalles: "Details",
   Strings.eliminar: "Delete",
   Strings.consultaEliminarCliente:
       "Are you sure you want to remove the client ",
@@ -99,4 +99,28 @@ const Map<Strings, String> dictionary_en = {
   Strings.condicionesParticulares: "particular conditions",
   Strings.botonModificarSeguro:
       "               modify insurance               ",
+  Strings.consultaModificarSeguro: "Are you sure to modify the insurance ",
+  Strings.noPuedeEditarSeguro: "You can't edit the insurance",
+  //SINIESTROS
+  Strings.tituloSiniestrosPage: "Claims",
+  Strings.tituloCrearNuevoSiniestroPage: "Register new Claim",
+  Strings.listaCausas: " Causes: ",
+  Strings.listaFechaSiniestro: "Claim Date: ",
+  Strings.consultaEliminarSiniestro: "Are you sure to remove the claim  ",
+  //CREACION SINIESTROS
+  Strings.siniestroEliminado: "Claim removed successfully",
+  Strings.fechaSiniestro: "Date of the accident",
+  Strings.causasSiniestro: "Causes",
+  Strings.aceptado: "Accepted",
+  Strings.indemnizacion: "Compensation",
+  Strings.botonRegistrarSiniestro:
+      "               Register Claim               ",
+  Strings.consultaRegistrarSiniestro:
+      "Are you sure to register the new Sinister? ",
+  Strings.flushbarNoPuedesRegistrarSiniestro: "You cannot register a new claim",
+  Strings.idSiniestro: "Claim ID",
+  Strings.botonModificarSiniestro:
+      "                 Modify Claim                 ",
+  Strings.consultaModificarSiniestro: "Are you sure to modify the claim ",
+  Strings.noPuedeEditarSiniestro: "You cannot edit the claim",
 };

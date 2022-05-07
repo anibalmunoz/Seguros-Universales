@@ -129,8 +129,8 @@ class FormularioLogin extends StatelessWidget {
                                   Icons.login_sharp,
                                   color: MyApp.themeNotifier.value ==
                                           ThemeMode.light
-                                      ? Color.fromARGB(255, 41, 202, 154)
-                                      : Colors.teal[100],
+                                      ? Colors.blue
+                                      : Colors.blueAccent,
                                   size: 150.0,
                                 ),
                                 Container(
@@ -623,6 +623,7 @@ class FormularioLogin extends StatelessWidget {
       isBiometricAvailable = value;
     });
     await localAuth!.getAvailableBiometrics().then((value) => {
+          print("LA LISTA DE BIOMETRICOS DISPONIBLES ES: $value"),
           if (value.toString() != "[]")
             {hayHuellaDisponible = true}
           else

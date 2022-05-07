@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +70,9 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     Siniestro sin = new Siniestro();
 
     return Scaffold(
@@ -137,7 +142,8 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                       controller: fechaSiniestroController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         //valor = _currentSelectedDate.toString();
                                         sin.fechaSiniestro = valor;
@@ -147,9 +153,10 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
 
                                       //keyboardType: TextInputType.datetime,
                                       onTap: callDatePicker,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                           icon: Icon(Icons.date_range),
-                                          labelText: "Fecha del siniestro",
+                                          labelText: localizations.dictionary(
+                                              Strings.fechaSiniestro),
                                           border: OutlineInputBorder(),
                                           isDense: false,
                                           contentPadding: EdgeInsets.all(10)),
@@ -162,14 +169,16 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                       controller: fechaInicioController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sin.causas = valor;
                                         return null;
                                       },
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.short_text_rounded),
-                                        labelText: "Causas",
+                                        labelText: localizations.dictionary(
+                                            Strings.causasSiniestro),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -183,15 +192,17 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                       controller: fechaVencimientoController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sin.aceptado = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.short_text_sharp),
-                                        labelText: "Aceptado",
+                                        labelText: localizations
+                                            .dictionary(Strings.aceptado),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -206,15 +217,17 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                           condicionesParticularesController,
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sin.indemnizacion = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.number,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.money),
-                                        labelText: "Indemnización",
+                                        labelText: localizations
+                                            .dictionary(Strings.indemnizacion),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -238,8 +251,8 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                             });
                                           }
                                         },
-                                        child: const Text(
-                                            '               Guardar Seguro               '),
+                                        child: Text(localizations.dictionary(
+                                            Strings.botonRegistrarSiniestro)),
                                       ),
                                     ),
                                   ],
@@ -259,19 +272,22 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
   }
 
   Future<bool> guardarSiniestro(context, siniestro) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Guardar"),
-              content:
-                  const Text("¿Estas seguro de guardar el nuevo Siniestro? "),
+              title: Text(localizations.dictionary(Strings.botonGuardar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaRegistrarSiniestro)),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, false);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -329,9 +345,9 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Confirmar",
-                              style: TextStyle(color: Colors.green),
+                            child: Text(
+                              localizations.dictionary(Strings.botonConfirmar),
+                              style: const TextStyle(color: Colors.green),
                             ));
                       },
                     ),
@@ -356,10 +372,14 @@ class _CreacionSiniestro extends State<CreacionSiniestro> {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet.",
-        message: "No puedes registrar un nuevo cliente.",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations
+            .dictionary(Strings.flushbarNoPuedesRegistrarSiniestro),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

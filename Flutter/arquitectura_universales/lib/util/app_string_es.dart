@@ -48,7 +48,7 @@ const Map<Strings, String> dictionary_es = {
   Strings.tituloCrearNuevoClientePage: "Crear nuevo cliente",
   Strings.appbarSinConexion: "Sin conexión",
   Strings.listaClienteNombre: "Nombre: ",
-  Strings.tituloDetallesClientes: "Detalles",
+  Strings.tituloDetalles: "Detalles",
   Strings.eliminar: "Eliminar",
   Strings.consultaEliminarCliente: "¿Estas seguro de eliminar el cliente ",
   Strings.eliminado: "Eliminado",
@@ -96,5 +96,32 @@ const Map<Strings, String> dictionary_es = {
   //DETALLES SEGUROS
   Strings.numeroPoliza: "Número Poliza",
   Strings.condicionesParticulares: "Condicionnes Particulares",
-  Strings.botonModificarSeguro: "               Modificar Seguro               "
+  Strings.botonModificarSeguro:
+      "               Modificar Seguro               ",
+  Strings.consultaModificarSeguro: "¿Estas seguro de modificar el seguro ",
+  Strings.noPuedeEditarSeguro: "No puedes editar el seguro",
+  //SINIESTROS
+  Strings.tituloSiniestrosPage: "Siniestros",
+  Strings.tituloCrearNuevoSiniestroPage: "Registrar nuevo Siniestro",
+  Strings.listaCausas: " Causas: ",
+  Strings.listaFechaSiniestro: "Fecha de Siniestro: ",
+  Strings.consultaEliminarSiniestro: "¿Estas seguro de eliminar el siniestro  ",
+  //CREACION SINIESTROS
+  Strings.siniestroEliminado: "Siniestro eliminado correctamente",
+  Strings.fechaSiniestro: "Fecha del siniestro",
+  Strings.causasSiniestro: "Causas",
+  Strings.aceptado: "Aceptado",
+  Strings.indemnizacion: "Indemnización",
+  Strings.botonRegistrarSiniestro:
+      "               Registrar Siniestro               ",
+  Strings.consultaRegistrarSiniestro:
+      "¿Estas seguro de registrar el nuevo Siniestro? ",
+  Strings.flushbarNoPuedesRegistrarSiniestro:
+      "No puedes registrar un nuevo siniestro",
+  Strings.idSiniestro: "ID del siniestro",
+  Strings.botonModificarSiniestro:
+      "               Modificar Siniestro               ",
+  Strings.consultaModificarSiniestro:
+      "¿Estas seguro de modificar el siniestro ",
+  Strings.noPuedeEditarSiniestro: "No puedes editar el siniestro",
 };

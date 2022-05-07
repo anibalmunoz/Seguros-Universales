@@ -1,10 +1,12 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/creacion_siniestro.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/detalles_siniestro.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,9 @@ class SiniestrosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return SafeArea(
       child: Scaffold(
         appBar: MyApp.conectedToNetwork
@@ -27,8 +32,8 @@ class SiniestrosPage extends StatelessWidget {
                   preferredSize: Size(13, 13),
                   child: Text(""),
                 ),
-                title: const Text(
-                  "Siniestros",
+                title: Text(
+                  localizations.dictionary(Strings.tituloSiniestrosPage),
                   style: TextStyle(height: 4),
                 ),
                 actions: [
@@ -47,7 +52,8 @@ class SiniestrosPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (cxt) => CreacionSiniestro(
-                                          titulo: "Crear nuevo Siniestro")));
+                                          titulo: localizations.dictionary(Strings
+                                              .tituloCrearNuevoSiniestroPage))));
                               break;
                           }
                         },
@@ -79,11 +85,11 @@ class SiniestrosPage extends StatelessWidget {
               )
             : AppBar(
                 backgroundColor: Colors.red[900],
-                bottom: const PreferredSize(
+                bottom: PreferredSize(
                   preferredSize: Size(0, 0),
                   child: Text(
-                    "Sin conexión",
-                    style: TextStyle(color: Colors.white),
+                    localizations.dictionary(Strings.appbarSinConexion),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 title: const Text(
@@ -108,7 +114,7 @@ class SiniestrosPage extends StatelessWidget {
               // print("NO HAY INFORMACIÓN");
             }
 
-            print("Por defecto");
+            // print("Por defecto");
             return ListView.builder(
               itemCount: _siniestros.length,
               itemBuilder: (context, index) {
@@ -119,11 +125,12 @@ class SiniestrosPage extends StatelessWidget {
 
                   title: Text("ID # " +
                       _siniestros[index].idSiniestro +
-                      " Causas: " +
+                      localizations.dictionary(Strings.listaCausas) +
                       _siniestros[index].causas),
 
-                  subtitle: Text("Fecha de Siniestro: " +
-                      _siniestros[index].fechaSiniestro.toString()),
+                  subtitle: Text(
+                      localizations.dictionary(Strings.listaFechaSiniestro) +
+                          _siniestros[index].fechaSiniestro.toString()),
                   // subtitle: Text("Condiciones: " +
                   //     _seguros[index].condicionesParticulares),
                   leading: const CircleAvatar(
@@ -144,7 +151,8 @@ class SiniestrosPage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (cxt) => DetallesSiniestro(
                                         siniestro: _siniestros[index],
-                                        titulo: "Detalles")));
+                                        titulo: localizations.dictionary(
+                                            Strings.tituloDetalles))));
                             break;
                         }
                       },
@@ -184,20 +192,23 @@ class SiniestrosPage extends StatelessWidget {
   }
 
   eliminarSiniestro(context, siniestro) {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Eliminar"),
-              content: Text("¿Estas seguro de eliminar el siniestro  " +
-                  siniestro.idSiniestro +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.eliminar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaEliminarSiniestro) +
+                      siniestro.idSiniestro +
+                      "?"),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -211,8 +222,9 @@ class SiniestrosPage extends StatelessWidget {
                         case SiniestroEliminadoState:
                           Navigator.pop(context);
                           Flushbar(
-                            title: "Eliminado",
-                            message: "Siniestro eliminado correctamente",
+                            title: localizations.dictionary(Strings.eliminado),
+                            message: localizations
+                                .dictionary(Strings.siniestroEliminado),
                             duration: const Duration(seconds: 2),
                             margin: const EdgeInsets.only(
                                 top: 8, bottom: 55.0, left: 8, right: 8),
@@ -241,8 +253,8 @@ class SiniestrosPage extends StatelessWidget {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Eliminar",
+                            child: Text(
+                              localizations.dictionary(Strings.eliminar),
                               style: TextStyle(color: Colors.red),
                             ));
                       },
@@ -254,10 +266,13 @@ class SiniestrosPage extends StatelessWidget {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet.",
-        message: "No puedes eliminar el elemento.",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEliminar),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

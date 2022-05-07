@@ -290,20 +290,24 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
   }
 
   Future<bool> modificarSeguro(context, seguro) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Modificar"),
-              content: Text("¿Estas seguro de modificar el seguro " +
-                  seguro.numeroPoliza +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.modifcar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaModificarSeguro) +
+                      seguro.numeroPoliza +
+                      "?"),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, false);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -354,9 +358,9 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Confirmar",
-                              style: TextStyle(color: Colors.green),
+                            child: Text(
+                              localizations.dictionary(Strings.botonConfirmar),
+                              style: const TextStyle(color: Colors.green),
                             ));
                       },
                     ),
@@ -381,10 +385,13 @@ class _RegistrarSeguro extends State<DetallesSeguro> {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet",
-        message: "No puedes editar el cliente",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEditarSeguro),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:arquitectura_universales/blocs/siniestro_bloc/siniestro_bloc.dart';
+import 'package:arquitectura_universales/localizations/localization.dart';
 import 'package:arquitectura_universales/main.dart';
 import 'package:arquitectura_universales/model/siniestro_model.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
+import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:arquitectura_universales/util/app_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +37,9 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
   @override
   Widget build(BuildContext context) {
     Siniestro sinister = widget.siniestro;
+
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +109,8 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                       },
                                       keyboardType: TextInputType.number,
@@ -112,9 +118,10 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                           sinister.idSiniestro.toString(),
                                       //readOnly: true,
                                       enabled: false,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                           icon: Icon(Icons.numbers),
-                                          labelText: "ID siniestro",
+                                          labelText: localizations
+                                              .dictionary(Strings.idSiniestro),
                                           border: OutlineInputBorder(),
                                           isDense: false,
                                           contentPadding: EdgeInsets.all(10)),
@@ -126,16 +133,18 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return 'Campo vacío';
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sinister.fechaSiniestro = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.datetime,
                                       initialValue: sinister.fechaSiniestro,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                           icon: Icon(Icons.date_range),
-                                          labelText: "Fecha del Siniestro",
+                                          labelText: localizations.dictionary(
+                                              Strings.fechaSiniestro),
                                           border: OutlineInputBorder(),
                                           isDense: false,
                                           contentPadding: EdgeInsets.all(10)),
@@ -147,16 +156,18 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sinister.causas = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.text,
                                       initialValue: sinister.causas,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.short_text_sharp),
-                                        labelText: "Causas",
+                                        labelText: localizations.dictionary(
+                                            Strings.causasSiniestro),
                                         //helperText: "Aa@45678",
                                         border: OutlineInputBorder(),
                                         isDense: false,
@@ -170,16 +181,18 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sinister.aceptado = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.datetime,
                                       initialValue: sinister.aceptado,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.short_text_sharp),
-                                        labelText: "Aceptado",
+                                        labelText: localizations
+                                            .dictionary(Strings.aceptado),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -192,16 +205,18 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                     TextFormField(
                                       validator: (valor) {
                                         if (valor!.isEmpty) {
-                                          return "Campo vacío";
+                                          return localizations
+                                              .dictionary(Strings.campoVacio);
                                         }
                                         sinister.indemnizacion = valor;
                                         return null;
                                       },
                                       keyboardType: TextInputType.number,
                                       initialValue: sinister.indemnizacion,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         icon: Icon(Icons.money_sharp),
-                                        labelText: "Indemnización",
+                                        labelText: localizations
+                                            .dictionary(Strings.indemnizacion),
                                         border: OutlineInputBorder(),
                                         isDense: false,
                                         contentPadding: EdgeInsets.all(10),
@@ -230,8 +245,8 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                             // }
                                           }
                                         },
-                                        child: const Text(
-                                            '               Modificar Siniestro               '),
+                                        child: Text(localizations.dictionary(
+                                            Strings.botonModificarSiniestro)),
                                       ),
                                     ),
                                   ],
@@ -251,20 +266,24 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
   }
 
   Future<bool> modificarSiniestro(context, siniestro) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Modificar"),
-              content: Text("¿Estas seguro de modificar el siniestro " +
-                  siniestro.idSiniestro +
-                  "?"),
+              title: Text(localizations.dictionary(Strings.modifcar)),
+              content: Text(
+                  localizations.dictionary(Strings.consultaModificarSiniestro) +
+                      siniestro.idSiniestro +
+                      "?"),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, false);
                     },
-                    child: const Text("Cancelar",
-                        style: TextStyle(
+                    child: Text(localizations.dictionary(Strings.botonCancelar),
+                        style: const TextStyle(
                           color: Colors.blue,
                         ))),
                 BlocProvider(
@@ -314,8 +333,8 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
                                 mostrarFlushbar(context);
                               }
                             },
-                            child: const Text(
-                              "Confirmar",
+                            child: Text(
+                              localizations.dictionary(Strings.botonConfirmar),
                               style: TextStyle(color: Colors.green),
                             ));
                       },
@@ -341,10 +360,13 @@ class _RegistrarSiniestro extends State<DetallesSiniestro> {
   }
 
   mostrarFlushbar(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+
     if (!MyApp.conectedToNetwork) {
       Flushbar(
-        title: "Sin conexión a internet",
-        message: "No puedes editar el cliente",
+        title: localizations.dictionary(Strings.flushbarSinconexion),
+        message: localizations.dictionary(Strings.noPuedeEditarSiniestro),
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
         borderRadius: BorderRadius.circular(8),

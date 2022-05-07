@@ -193,8 +193,7 @@ class ClientesPage extends StatelessWidget {
                                       builder: (cxt) => DetallesCliente(
                                           cliente: _clientes[index],
                                           titulo: localizations.dictionary(
-                                              Strings
-                                                  .tituloDetallesClientes))));
+                                              Strings.tituloDetalles))));
                               break;
                           }
                         },
