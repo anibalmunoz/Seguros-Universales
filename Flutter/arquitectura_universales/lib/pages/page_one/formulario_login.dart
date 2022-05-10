@@ -144,19 +144,7 @@ class FormularioLogin extends StatelessWidget {
                                         height: 20.0,
                                       ),
                                       TextFormField(
-                                        onTap: () async {
-                                          await verificarDisponibilidadHuellas();
-
-                                          if (correoPrefs == null) {
-                                            await asignarDesdeSharedPreferences();
-                                          }
-                                          if (correoPrefs != null &&
-                                              isBiometricAvailable &&
-                                              hayHuellaDisponible) {
-                                            await mostrarSugerenciaLogin(
-                                                context);
-                                          }
-                                        },
+                                        onTap: () async {},
                                         //autofillHints: [AutofillHints.email],
                                         controller: correoController,
                                         validator: (valor) {
@@ -242,7 +230,48 @@ class FormularioLogin extends StatelessWidget {
                                           child: Text(localizations.dictionary(
                                               Strings.botonIngresar)),
                                         ),
-                                      )
+                                      ),
+                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 20),
+                                      Center(
+                                        child: Column(
+                                          children: isBiometricAvailable
+                                              ? [
+                                                  IconButton(
+                                                      onPressed: () async {
+                                                        await verificarDisponibilidadHuellas();
+
+                                                        await asignarDesdeSharedPreferences();
+
+                                                        if (correoPrefs !=
+                                                                null &&
+                                                            correoPrefs !=
+                                                                "null" &&
+                                                            isBiometricAvailable &&
+                                                            hayHuellaDisponible) {
+                                                          await mostrarSugerenciaLogin(
+                                                              context);
+                                                        } else if (correoPrefs ==
+                                                                null ||
+                                                            correoPrefs ==
+                                                                "null") {
+                                                          mostrarFlushbarNoCredencialesGuardadas(
+                                                              context);
+                                                        } else {
+                                                          mostrarFlushbarProblemasFingerprint(
+                                                              context);
+                                                        }
+                                                        // mostrarSugerenciaLogin(
+                                                        //     context);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.fingerprint)),
+                                                  Text(localizations.dictionary(
+                                                      Strings.accesoBiometrico))
+                                                ]
+                                              : [],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 )
@@ -324,6 +353,8 @@ class FormularioLogin extends StatelessWidget {
               if (value == true) {
                 await guardarEnSharedPreferences(
                     correoController.text, contrasenaController.text);
+              } else {
+                await guardarEnSharedPreferences("null", "null");
               }
             });
           }
@@ -617,7 +648,7 @@ class FormularioLogin extends StatelessWidget {
     return plainText;
   }
 
-  Future<void> verificarDisponibilidadHuellas() async {
+  static Future<void> verificarDisponibilidadHuellas() async {
     localAuth = LocalAuthentication();
     await localAuth!.canCheckBiometrics.then((value) {
       isBiometricAvailable = value;
@@ -659,5 +690,29 @@ class FormularioLogin extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ).show(context);
     }
+  }
+
+  mostrarFlushbarNoCredencialesGuardadas(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    Flushbar(
+      title: localizations.dictionary(Strings.noHayCredencialesAlmacenadas),
+      message: localizations.dictionary(Strings.ingresaUsuarioYContrasena),
+      duration: const Duration(seconds: 3),
+      margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+      borderRadius: BorderRadius.circular(8),
+    ).show(context);
+  }
+
+  mostrarFlushbarProblemasFingerprint(context) async {
+    AppLocalizations localizations =
+        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    Flushbar(
+      title: "No tienes huella registrada",
+      message: "Configura una huella para usar esta opción",
+      duration: const Duration(seconds: 3),
+      margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
+      borderRadius: BorderRadius.circular(8),
+    ).show(context);
   }
 }

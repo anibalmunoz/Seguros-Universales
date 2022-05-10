@@ -19,8 +19,8 @@ const Map<Strings, String> dictionary_es = {
       "Credenciales Inválidas, intenta nuevamente",
   Strings.flushbarSinconexion: "Sin conexión a internet",
   Strings.flushbarNoTienesConexion: "No tienes conexión a internet",
-  Strings.dialogUltimaSesionCon: "Ultima sesión registrada: ",
-  Strings.dialogQuieresIniciarCon: ", ¿Quieres iniciar sesión con este correo?",
+  Strings.dialogUltimaSesionCon: "Ultima sesión: ",
+  Strings.dialogQuieresIniciarCon: ", ¿Quieres iniciar sesión?",
   Strings.botonCancelar: "Cancelar",
   Strings.lectorSolicitudIdentificarse: "Por favor identifícate",
   Strings.flushbarBloqueoLectorTemporalTitulo:
@@ -124,4 +124,9 @@ const Map<Strings, String> dictionary_es = {
   Strings.consultaModificarSiniestro:
       "¿Estas seguro de modificar el siniestro ",
   Strings.noPuedeEditarSiniestro: "No puedes editar el siniestro",
+  Strings.accesoBiometrico: "Acceso biométrico",
+  Strings.noHayCredencialesAlmacenadas: "No hay credenciales",
+  Strings.ingresaUsuarioYContrasena: "Ingresa usuario y contraseña",
+  Strings.noTienesHuella: "No tienes huella registrada",
+  Strings.configuraHuella: "Configura una huella para usar esta opción",
 };

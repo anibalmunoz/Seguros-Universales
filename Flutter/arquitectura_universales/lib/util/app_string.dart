@@ -103,4 +103,9 @@ enum Strings {
   botonModificarSiniestro,
   consultaModificarSiniestro,
   noPuedeEditarSiniestro,
+  accesoBiometrico,
+  noHayCredencialesAlmacenadas,
+  ingresaUsuarioYContrasena,
+  noTienesHuella,
+  configuraHuella,
 }

@@ -19,8 +19,8 @@ const Map<Strings, String> dictionary_en = {
   Strings.errorCredencialesInvalidas: "Invalid credentials, please try again",
   Strings.flushbarSinconexion: "No internet connection",
   Strings.flushbarNoTienesConexion: "You don't have internet connection",
-  Strings.dialogUltimaSesionCon: "Last recorded session: ",
-  Strings.dialogQuieresIniciarCon: ", Do you want to log in with this email?",
+  Strings.dialogUltimaSesionCon: "Last session: ",
+  Strings.dialogQuieresIniciarCon: ", Do you want to log in?",
   Strings.botonCancelar: "Cancel",
   Strings.lectorSolicitudIdentificarse: "Please identify yourself",
   Strings.flushbarBloqueoLectorTemporalTitulo:
@@ -123,4 +123,9 @@ const Map<Strings, String> dictionary_en = {
       "                 Modify Claim                 ",
   Strings.consultaModificarSiniestro: "Are you sure to modify the claim ",
   Strings.noPuedeEditarSiniestro: "You cannot edit the claim",
+  Strings.accesoBiometrico: "Fingerprint access",
+  Strings.noHayCredencialesAlmacenadas: "No credentials",
+  Strings.ingresaUsuarioYContrasena: "Enter username and password",
+  Strings.noTienesHuella: "Does not have a registered fingerprint",
+  Strings.configuraHuella: "Set up a fingerprint to use this option",
 };

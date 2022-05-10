@@ -9,7 +9,6 @@ import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_p
 import 'package:arquitectura_universales/providers/api_manager_cliente.dart';
 import 'package:arquitectura_universales/providers/api_manager_seguro.dart';
 import 'package:arquitectura_universales/providers/api_manager_siniestro.dart';
-import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -19,7 +18,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -63,6 +61,8 @@ class _MyAppState extends State<MyApp> {
     await _inicializarCloudFirestore();
     await _seleccionarTemaDeSharedPreferences();
     await _seleccionarIdiomaDeSharedPreferences();
+    //await mostrarFingerprint();
+    await FormularioLogin.verificarDisponibilidadHuellas();
   }
 
   Future<void> _inicializarCrashlytics() async {
@@ -143,6 +143,14 @@ class _MyAppState extends State<MyApp> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
   }
 
+  // static Future<void> mostrarFingerprint() async {
+  //   await FormularioLogin.verificarDisponibilidadHuellas();
+
+  //   if (FormularioLogin.correoPrefs == null) {
+  //     await FormularioLogin.asignarDesdeSharedPreferences();
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -161,21 +169,6 @@ class _MyAppState extends State<MyApp> {
     }
 
     FormularioLogin.asignarDesdeSharedPreferences();
-
-    //Lector de huellas
-
-    // FormularioLogin.localAuth = LocalAuthentication();
-    // FormularioLogin.localAuth!.canCheckBiometrics.then((value) {
-    //   FormularioLogin.isBiometricAvailable = value;
-    // });
-    // FormularioLogin.localAuth!.getAvailableBiometrics().then((value) => {
-    //       print("el valor es"),
-    //       print(value),
-    //       if (value.toString() != "[]")
-    //         {FormularioLogin.hayHuellaDisponible = true}
-    //     });
-
-    //FIN DE LECTOR DE HUELLAS
   }
 
   @override
@@ -220,13 +213,6 @@ class _MyAppState extends State<MyApp> {
                         ApiManagerCliente.conectedToNetwork = connected;
                         ApiManagerSeguro.conectedToNetwork = connected;
                         ApiManagerSiniestro.conectedToNetwork = connected;
-
-                        // AppLocalizations localizations =
-                        //     Localizations.of<AppLocalizations>(
-                        //         context, AppLocalizations)!;
-
-                        // MyApp.idioma =
-                        //     localizations.dictionary(Strings.dispisitivo);
 
                         return Stack(
                           fit: StackFit.expand,
