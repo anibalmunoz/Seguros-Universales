@@ -4,7 +4,6 @@ import 'package:arquitectura_universales/pages/paginas_datos/clientes/clientes_p
 import 'package:arquitectura_universales/pages/paginas_datos/seguros/seguros_page.dart';
 import 'package:arquitectura_universales/pages/paginas_datos/siniestros/siniestros_page.dart';
 import 'package:arquitectura_universales/pages/settings_page/settings_page.dart';
-import 'package:arquitectura_universales/util/app_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

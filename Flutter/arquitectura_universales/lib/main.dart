@@ -87,11 +87,11 @@ class _MyAppState extends State<MyApp> {
 
     await firebaseRemoteConfig.fetchAndActivate();
 
-    print("EL CORREO QUE ESTABLECÍ EN FIREBASE ES: " +
-        firebaseRemoteConfig.getString("correo"));
+    // print("EL CORREO QUE ESTABLECÍ EN FIREBASE ES: " +
+    //     firebaseRemoteConfig.getString("correo"));
 
-    print("LA CONTRASEÑA QUE ESTABLECÍ EN FIREBASE ES: " +
-        firebaseRemoteConfig.getString("password"));
+    // print("LA CONTRASEÑA QUE ESTABLECÍ EN FIREBASE ES: " +
+    //     firebaseRemoteConfig.getString("password"));
   }
 
   Future<void> _inicializarCloudMessagin() async {
@@ -143,14 +143,6 @@ class _MyAppState extends State<MyApp> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
   }
 
-  // static Future<void> mostrarFingerprint() async {
-  //   await FormularioLogin.verificarDisponibilidadHuellas();
-
-  //   if (FormularioLogin.correoPrefs == null) {
-  //     await FormularioLogin.asignarDesdeSharedPreferences();
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -176,70 +168,74 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: _firebase,
         builder: (context, snapshot) {
-          return ValueListenableBuilder<ThemeMode>(
-              valueListenable: MyApp.themeNotifier,
-              builder: (_, ThemeMode currentMode, __) {
-                return MaterialApp(
-                    supportedLocales: const [
-                      Locale('es'),
-                      Locale('en'),
-                    ],
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    debugShowCheckedModeBanner: false,
-                    title: 'Flutter Demo',
-                    theme: ThemeData(
-                      primarySwatch: Colors.blue,
-                      visualDensity: VisualDensity.adaptivePlatformDensity,
-                    ),
-                    darkTheme: ThemeData.dark(),
-                    themeMode: currentMode,
-                    home: OfflineBuilder(
-                      connectivityBuilder: (
-                        BuildContext context,
-                        ConnectivityResult connectivity,
-                        Widget child,
-                      ) {
-                        final bool connected =
-                            connectivity != ConnectivityResult.none;
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ValueListenableBuilder<ThemeMode>(
+                valueListenable: MyApp.themeNotifier,
+                builder: (_, ThemeMode currentMode, __) {
+                  return MaterialApp(
+                      supportedLocales: const [
+                        Locale('es'),
+                        Locale('en'),
+                      ],
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      debugShowCheckedModeBanner: false,
+                      title: 'Flutter Demo',
+                      theme: ThemeData(
+                        primarySwatch: Colors.blue,
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                      ),
+                      darkTheme: ThemeData.dark(),
+                      themeMode: currentMode,
+                      home: OfflineBuilder(
+                        connectivityBuilder: (
+                          BuildContext context,
+                          ConnectivityResult connectivity,
+                          Widget child,
+                        ) {
+                          final bool connected =
+                              connectivity != ConnectivityResult.none;
 
-                        MyApp.conectedToNetwork = connected;
-                        FormularioLogin.conectedToNetwork = connected;
-                        ClientesPage.conectedToNetwork = connected;
-                        ApiManagerCliente.conectedToNetwork = connected;
-                        ApiManagerSeguro.conectedToNetwork = connected;
-                        ApiManagerSiniestro.conectedToNetwork = connected;
+                          MyApp.conectedToNetwork = connected;
+                          FormularioLogin.conectedToNetwork = connected;
+                          ClientesPage.conectedToNetwork = connected;
+                          ApiManagerCliente.conectedToNetwork = connected;
+                          ApiManagerSeguro.conectedToNetwork = connected;
+                          ApiManagerSiniestro.conectedToNetwork = connected;
 
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Positioned(
-                              height: 24.0,
-                              left: 0.0,
-                              right: 0.0,
-                              child: Container(
-                                color: connected
-                                    ? Color(0xFF00EE44)
-                                    : Color(0xFFEE4400),
-                                child: Center(
-                                  child: Text(
-                                      "${connected ? 'ONLINE' : 'OFFLINE'}"),
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned(
+                                height: 24.0,
+                                left: 0.0,
+                                right: 0.0,
+                                child: Container(
+                                  color: connected
+                                      ? Color(0xFF00EE44)
+                                      : Color(0xFFEE4400),
+                                  child: Center(
+                                    child: Text(
+                                        "${connected ? 'ONLINE' : 'OFFLINE'}"),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Scaffold(
-                              body: child,
-                            ),
-                          ],
-                        );
-                      },
-                      child: LoadingScreen(),
-                    ));
-              });
+                              Scaffold(
+                                body: child,
+                              ),
+                            ],
+                          );
+                        },
+                        child: LoadingScreen(),
+                      ));
+                });
+          } else {
+            return Container();
+          }
         });
   }
 }

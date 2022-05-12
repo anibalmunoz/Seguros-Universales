@@ -25,7 +25,8 @@ const Map<Strings, String> dictionary_en = {
   Strings.lectorSolicitudIdentificarse: "Please identify yourself",
   Strings.flushbarBloqueoLectorTemporalTitulo:
       "Fingerprint reader temporarily blocked",
-  Strings.flushbarBloqueoLectorTemporalMensaje: "Wait 30 seconds to try again",
+  Strings.flushbarBloqueoLectorTemporalMensaje:
+      "Wait a few moment to try again",
   Strings.flushbarBloqueoLectorPermanenteTitulo:
       "Fingerprint reader locked for security",
   Strings.flushbarBloqueoLectorPermanenteMensaje:

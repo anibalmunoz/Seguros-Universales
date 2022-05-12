@@ -7,10 +7,6 @@ part 'basic_event.dart';
 class BasicBloc extends Bloc<BasicEvent, BasicState> {
   BasicBloc() : super(AppStarted()) {
     on<LoginButtonPressed>((event, emit) {
-      // BasicBloc basicBloc;
-      // basicBloc = BlocProvider.of<BasicBloc>(context);
-
-      // basicBloc.add(LogueadoEvent());
       emit(PageChanged(title: "Bienvenido " + event.nombre));
       emit(UsuarioLogueado());
     });

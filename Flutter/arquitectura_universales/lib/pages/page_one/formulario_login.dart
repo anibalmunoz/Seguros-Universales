@@ -68,31 +68,31 @@ class FormularioLogin extends StatelessWidget {
 
     return Scaffold(
       //backgroundColor:  Color.fromARGB(255, 240, 240, 240),
-      appBar: AppBar(
-        backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
-            ? Colors.blue[900]
-            : Colors.grey[900],
-        title: Text(localizations.dictionary(Strings.tituloLogin)),
-        actions: [
-          IconButton(
-              icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
-              onPressed: () {
-                MyApp.themeNotifier.value =
-                    MyApp.themeNotifier.value == ThemeMode.light
-                        ? ThemeMode.dark
-                        : ThemeMode.light;
-                if (MyApp.themeNotifier.value == ThemeMode.dark) {
-                  cambiarADarck();
-                } else {
-                  cambiarALight();
-                }
-                print(
-                    "EL VALOR DEL THEME NOTIFIER ES ${MyApp.themeNotifier.value}");
-              }),
-        ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
+      //       ? Colors.blue[900]
+      //       : Colors.grey[900],
+      //   title: Text(localizations.dictionary(Strings.tituloLogin)),
+      //   actions: [
+      //     IconButton(
+      //         icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
+      //             ? Icons.dark_mode
+      //             : Icons.light_mode),
+      //         onPressed: () {
+      //           MyApp.themeNotifier.value =
+      //               MyApp.themeNotifier.value == ThemeMode.light
+      //                   ? ThemeMode.dark
+      //                   : ThemeMode.light;
+      //           if (MyApp.themeNotifier.value == ThemeMode.dark) {
+      //             cambiarADarck();
+      //           } else {
+      //             cambiarALight();
+      //           }
+      //           print(
+      //               "EL VALOR DEL THEME NOTIFIER ES ${MyApp.themeNotifier.value}");
+      //         }),
+      //   ],
+      // ),
 
       body: BlocProvider(
         create: (BuildContext context) => BasicBloc(),
@@ -115,6 +115,32 @@ class FormularioLogin extends StatelessWidget {
 
               return Stack(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 25.0),
+                        child: IconButton(
+                            icon: Icon(
+                                MyApp.themeNotifier.value == ThemeMode.light
+                                    ? Icons.dark_mode
+                                    : Icons.light_mode),
+                            onPressed: () {
+                              MyApp.themeNotifier.value =
+                                  MyApp.themeNotifier.value == ThemeMode.light
+                                      ? ThemeMode.dark
+                                      : ThemeMode.light;
+                              if (MyApp.themeNotifier.value == ThemeMode.dark) {
+                                cambiarADarck();
+                              } else {
+                                cambiarALight();
+                              }
+                              print(
+                                  "EL VALOR DEL THEME NOTIFIER ES ${MyApp.themeNotifier.value}");
+                            }),
+                      ),
+                    ],
+                  ),
                   Center(
                     child: SafeArea(
                         child: SingleChildScrollView(
@@ -304,10 +330,6 @@ class FormularioLogin extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("tema", "ThemeMode.light");
   }
-
-  //  update(data) {
-  //     return null;
-  //   }
 
   static Future<void> cambiarADarck() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("modo");
@@ -708,8 +730,8 @@ class FormularioLogin extends StatelessWidget {
     AppLocalizations localizations =
         Localizations.of<AppLocalizations>(context, AppLocalizations)!;
     Flushbar(
-      title: "No tienes huella registrada",
-      message: "Configura una huella para usar esta opción",
+      title: localizations.dictionary(Strings.noTienesHuella),
+      message: localizations.dictionary(Strings.configuraHuella),
       duration: const Duration(seconds: 3),
       margin: const EdgeInsets.only(top: 8, bottom: 55.0, left: 8, right: 8),
       borderRadius: BorderRadius.circular(8),

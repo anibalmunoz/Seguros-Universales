@@ -11,15 +11,15 @@ class TextBox extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(15.0),
       child: TextField(
-        controller: _textEditingController,
+        //controller: _textEditingController,
         decoration: InputDecoration(
             filled: true,
             labelText: label,
             suffix: GestureDetector(
               child: Icon(Icons.close),
-              onTap: () {
-                _textEditingController.clear();
-              },
+              // onTap: () {
+              //   _textEditingController.clear();
+              // },
             )),
       ),
     );

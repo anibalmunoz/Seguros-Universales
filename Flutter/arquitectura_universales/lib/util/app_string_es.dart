@@ -26,7 +26,7 @@ const Map<Strings, String> dictionary_es = {
   Strings.flushbarBloqueoLectorTemporalTitulo:
       "Lector de huellas bloqueado temporalmente",
   Strings.flushbarBloqueoLectorTemporalMensaje:
-      "Espera 30 segundos para intentarlo nuevamente",
+      "Espera unos momentos para intentarlo nuevamente",
   Strings.flushbarBloqueoLectorPermanenteTitulo:
       "Lector de huellas bloqueado por seguridad",
   Strings.flushbarBloqueoLectorPermanenteMensaje:

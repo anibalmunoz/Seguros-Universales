@@ -5,10 +5,6 @@ abstract class BasicState {
 
   bool get isAllGranted => isLogueado;
 
-  // BasicState({
-  //   this.isLogueado,
-  // });
-
   cambiarlogueado() {
     this.isLogueado = !this.isLogueado;
   }

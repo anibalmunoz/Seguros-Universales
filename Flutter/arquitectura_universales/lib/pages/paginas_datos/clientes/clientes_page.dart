@@ -22,7 +22,7 @@ class ClientesPage extends StatelessWidget {
   // final pathURL = "/users/1";
   final baseURL = MyApp().baseURL;
   final pathURL = "/cliente/buscar";
-  List _clientes = [];
+  List clientes = [];
   late ClienteBloc clienteBloc;
   final _scaffKey = GlobalKey<ScaffoldState>();
   static bool conectedToNetwork = false;
@@ -107,8 +107,6 @@ class ClientesPage extends StatelessWidget {
                           icon: const Icon(Icons.dangerous_outlined,
                               color: Colors.amber),
                           onPressed: () async {
-                            //ClienteRepository.shared.modificarTablaCliente();
-                            //snack();
                             Map<String, dynamic> bodyMap;
                             bodyMap = {
                               "correo": "asdf",
@@ -155,25 +153,25 @@ class ClientesPage extends StatelessWidget {
               if (snapshot.hasData) {
                 final ClientesLista clientesLista =
                     snapshot.requireData as ClientesLista;
-                _clientes = clientesLista.clientes;
+                clientes = clientesLista.clientes;
                 // print("SI HAY INFORMACIÓN");
               } else {
                 // print("NO HAY INFORMACIÓN");
               }
 
               return ListView.builder(
-                itemCount: _clientes.length,
+                itemCount: clientes.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onLongPress: () {
-                      eliminarCliente(context, _clientes[index]);
+                      eliminarCliente(context, clientes[index]);
                     },
                     title: Text(
                         localizations.dictionary(Strings.listaClienteNombre) +
-                            _clientes[index].nombrecl +
+                            clientes[index].nombrecl +
                             " " +
-                            _clientes[index].apellido1),
-                    subtitle: Text("DNI: " + _clientes[index].dnicl.toString()),
+                            clientes[index].apellido1),
+                    subtitle: Text("DNI: " + clientes[index].dnicl.toString()),
                     leading: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         child: Icon(
@@ -191,7 +189,7 @@ class ClientesPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (cxt) => DetallesCliente(
-                                          cliente: _clientes[index],
+                                          cliente: clientes[index],
                                           titulo: localizations.dictionary(
                                               Strings.tituloDetalles))));
                               break;
