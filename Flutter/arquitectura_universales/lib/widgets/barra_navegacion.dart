@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 class BarraNavegacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AppLocalizations localizations =
-        Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    // AppLocalizations localizations =
+    //     Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
     return Scaffold(
       bottomNavigationBar: CupertinoTabScaffold(
